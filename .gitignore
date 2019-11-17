@@ -44,3 +44,11 @@ testem.log
 # System Files
 .DS_Store
 Thumbs.db
+
+# Git bare
+/hooks
+config
+description
+exclude
+git
+HEAD
