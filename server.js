@@ -11,7 +11,7 @@ const forceSSL = function() {
       );
     }
     next();
-  }
+  };
 };
 
 app.use(express.static(__dirname + '/dist/IoT-front/'));
