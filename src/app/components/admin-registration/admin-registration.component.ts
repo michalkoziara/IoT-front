@@ -6,7 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./admin-registration.component.scss']
 })
 export class AdminRegistrationComponent implements OnInit {
-
+  // dummy comment for jenkins
   constructor() { }
 
   ngOnInit() {
