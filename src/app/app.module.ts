@@ -8,6 +8,13 @@ import {AngularMaterialModule} from './angular-material.module';
 import {FlexLayoutModule} from '@angular/flex-layout';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 
+import {AdminModule} from './admin/admin.module';
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
+import {ErrorInterceptor} from './services/authService/error.interceptor';
+import {JwtInterceptor} from './services/authService/auth.interceptor';
+import {UserModule} from './user/user.module';
+import {RoutingRoutingModule} from './routing/routing-routing.module';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -15,14 +22,21 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
   ],
   imports: [
     BrowserModule,
+    AngularMaterialModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     FlexLayoutModule,
     FormsModule,
-    AngularMaterialModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    HttpClientModule,
+    AdminModule,
+    UserModule,
+    RoutingRoutingModule
   ],
-  providers: [],
+  providers: [
+    {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true},
+    {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true},
+  ],
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })

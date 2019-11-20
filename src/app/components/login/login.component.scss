@@ -63,6 +63,10 @@
     width: 100%;
   }
 
+  .padding-top-10 {
+    padding-top: 10px;
+  }
+
   .btn-block {
     width: 100%;
   }
@@ -75,6 +79,7 @@
     border: 1px solid currentColor;
     line-height: 54px;
     background: #FFF7FA;
+    margin-top: 10px;
   }
 
   .mat-form-field-appearance-legacy {

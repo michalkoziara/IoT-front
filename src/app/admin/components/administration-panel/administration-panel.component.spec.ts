@@ -1,6 +1,6 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { AdministrationPanelComponent } from './administration-panel.component';
+import {AdministrationPanelComponent} from './administration-panel.component';
 
 describe('AdministrationPanelComponent', () => {
   let component: AdministrationPanelComponent;
