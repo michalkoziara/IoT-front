@@ -14,11 +14,14 @@ import {ErrorInterceptor} from './services/authService/error.interceptor';
 import {JwtInterceptor} from './services/authService/auth.interceptor';
 import {UserModule} from './user/user.module';
 import {RoutingRoutingModule} from './routing/routing-routing.module';
+import {SharedModule} from './shared/shared.module';
+import {TopToolbarComponent} from './components/top-toolbar/top-toolbar.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    routingComponents
+    TopToolbarComponent,
+    routingComponents,
   ],
   imports: [
     BrowserModule,
@@ -29,6 +32,7 @@ import {RoutingRoutingModule} from './routing/routing-routing.module';
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
+    SharedModule,
     AdminModule,
     UserModule,
     RoutingRoutingModule
