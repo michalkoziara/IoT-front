@@ -1,4 +1,5 @@
 export class AuthInfo {
   accessToken: string;
-  type: string;
+  isAdmin: string;
+  username: string;
 }
