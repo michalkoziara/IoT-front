@@ -52,7 +52,11 @@ export class LoginComponent implements OnInit {
       .pipe(first())
       .subscribe(
         data => {
-          this.router.navigate(['/user/dashboard']);
+          if (data.isAdmin) {
+            this.router.navigate(['/admin/dashboard']);
+          } else {
+            this.router.navigate(['/user/dashboard']);
+          }
         },
         error => {
           this.error = error;
