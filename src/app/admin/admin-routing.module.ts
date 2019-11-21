@@ -7,7 +7,7 @@ const routes: Routes = [
   {
     path: 'admin', component: AdministrationPanelComponent,
     children: [
-      {path: 'panel', component: AdministrationPanelComponent},
+      {path: 'dashboard', component: AdministrationPanelComponent},
     ],
     canActivate: [AuthGuard]
   },
