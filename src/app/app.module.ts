@@ -16,6 +16,7 @@ import {UserModule} from './user/user.module';
 import {RoutingRoutingModule} from './routing/routing-routing.module';
 import {SharedModule} from './shared/shared.module';
 import {TopToolbarComponent} from './components/top-toolbar/top-toolbar.component';
+import {MatCardModule} from '@angular/material/card';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,8 @@ import {TopToolbarComponent} from './components/top-toolbar/top-toolbar.componen
     SharedModule,
     AdminModule,
     UserModule,
-    RoutingRoutingModule
+    RoutingRoutingModule,
+    MatCardModule
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true},
