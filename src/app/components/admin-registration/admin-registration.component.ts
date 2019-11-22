@@ -1,8 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormControl, Validators} from '@angular/forms';
 import {ActivatedRoute, Router} from '@angular/router';
-import {AdminRegisterRequest} from '../../services/admin-registration/admin-register-request';
-import {AdminRegisterService} from '../../services/admin-registration/admin-register.service';
+import {AdminRegisterRequest} from '../../services/adminRegistration/admin-register-request';
+import {AdminRegisterService} from '../../services/adminRegistration/admin-register.service';
 import {MatSnackBar} from '@angular/material/snack-bar';
 
 @Component({
