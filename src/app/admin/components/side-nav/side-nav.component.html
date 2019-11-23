@@ -1,0 +1,42 @@
+<mat-sidenav-container>
+  <mat-sidenav mode="side" opened>
+    <div class="box" fxLayoutAlign="center center" fxLayout="column">
+      <button mat-flat-button>
+        <mat-icon>home</mat-icon>
+        Strona domowa
+      </button>
+      <mat-divider></mat-divider>
+      <button mat-flat-button>
+        <mat-icon>group</mat-icon>
+        Grupy użytkowników
+      </button>
+      <mat-divider></mat-divider>
+      <button mat-flat-button>
+        <mat-icon>usb</mat-icon>
+        Czujniki
+      </button>
+      <button mat-flat-button>
+        <mat-icon>power</mat-icon>
+        Urządzenia
+      </button>
+      <mat-divider></mat-divider>
+      <button mat-flat-button>
+        <mat-icon>device_unknown</mat-icon>
+        Nieskonfigurowane
+      </button>
+      <button mat-flat-button>
+        <mat-icon>usb</mat-icon>
+        Typy czujników
+      </button>
+      <button mat-flat-button>
+        <mat-icon>power</mat-icon>
+        Typy urządzeń
+      </button>
+      <mat-divider></mat-divider>
+
+    </div>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <ng-content></ng-content>
+  </mat-sidenav-content>
+</mat-sidenav-container>
