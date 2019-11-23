@@ -1,0 +1,27 @@
+<div fxLayout="column">
+
+  <mat-card class="welcome-card" fxFlex>
+    <mat-card-title>
+      Witaj, {{username}}!
+    </mat-card-title>
+  </mat-card>
+
+  <div fxLayout="row">
+    <mat-card fxFlex>
+      <mat-card-content fxLayout="column">
+        <p fxFlexAlign="center start">Przejdź do listy urządzeń głównych</p>
+
+        <button mat-stroked-button color="accent" class="btn-block" (click)="getDeviceGroupList()">Lista urządzeń głównych</button>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card fxFlex>
+      <mat-card-content fxLayout="column">
+        <p fxFlexAlign="center start">Dołącz nowe urządzenie główne do swojej listy</p>
+
+        <button mat-stroked-button color="accent" class="btn-block" (click)="addNewDeviceGroup()">Dodaj urządzenie główne</button>
+      </mat-card-content>
+    </mat-card>
+  </div>
+
+</div>

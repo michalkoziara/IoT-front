@@ -1,0 +1,5 @@
+<mat-toolbar color="primary" >
+  <p *ngIf="!isGetDeviceGroupListButtonClicked && !isAddDeviceGroupButtonClicked">Strona domowa</p>
+  <p *ngIf="isGetDeviceGroupListButtonClicked">Urządzenia główne</p>
+  <p *ngIf="isAddDeviceGroupButtonClicked">Dodaj urządzenie główne</p>
+</mat-toolbar>

@@ -10,7 +10,7 @@
     "test-headless": "ng test --watch=false --browsers=ChromeHeadless",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "postinstall": "bash postinstall.sh"
+    "heroku-postbuild": "bash postinstall.sh"
   },
   "engines": {
     "node": "12.12.0",

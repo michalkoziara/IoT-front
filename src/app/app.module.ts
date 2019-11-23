@@ -36,7 +36,6 @@ import {TopToolbarComponent} from './components/top-toolbar/top-toolbar.componen
     AdminModule,
     UserModule,
     RoutingRoutingModule,
-
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true},

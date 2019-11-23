@@ -1,0 +1,36 @@
+<div class="flex_box" fxLayout="column" fxFlexFill>
+  <mat-sidenav-container>
+    <mat-sidenav mode="side" opened>
+      <div class="box" fxLayoutAlign="center center" fxLayout="column">
+        <button mat-button routerLink="/user/dashboard" routerLinkActive="active" mat-flat-button>
+          <mat-icon>home</mat-icon>
+          Strona domowa
+        </button>
+        <mat-divider></mat-divider>
+        <button mat-flat-button>
+          <mat-icon>device_hub</mat-icon>
+          Urządzenia główne
+        </button>
+        <button mat-flat-button>
+          <mat-icon>group</mat-icon>
+          Grupy użytkowników
+        </button>
+        <mat-divider></mat-divider>
+        <button mat-flat-button>
+          <mat-icon>power</mat-icon>
+          Urządzenia
+        </button>
+        <button mat-flat-button>
+          <mat-icon>usb</mat-icon>
+          Czujniki
+        </button>
+        <mat-divider></mat-divider>
+      </div>
+    </mat-sidenav>
+    <mat-sidenav-content>
+      <ng-content select="div[role=dashboard]"></ng-content>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+
+  <ng-content fxFlexOffset="auto" select="div[role=footer]"></ng-content>
+</div>
