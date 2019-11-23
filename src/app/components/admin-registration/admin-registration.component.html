@@ -8,28 +8,56 @@
 
       <mat-card-content>
         <mat-form-field class="full-width">
-          <input matInput placeholder="Nazwa użytkownika">
+          <input matInput placeholder="Nazwa użytkownika" [formControl]="usernameFormControl">
+          <mat-error *ngIf="usernameFormControl.hasError('required')">
+            Nazwa użytkownika jest <strong>wymagana</strong>
+          </mat-error>
         </mat-form-field>
 
         <mat-form-field class="full-width">
-          <input matInput placeholder="Email">
+          <input matInput placeholder="Email" [formControl]="emailFormControl">
+          <mat-error *ngIf="emailFormControl.hasError('email') && !emailFormControl.hasError('required')">
+            Proszę podać poprawny adres email
+          </mat-error>
+          <mat-error *ngIf="emailFormControl.hasError('required')">
+            Email jest <strong>wymagany</strong>
+          </mat-error>
         </mat-form-field>
 
         <mat-form-field class="full-width">
-          <input matInput placeholder="Hasło">
+          <input matInput placeholder="Hasło" type="password" [formControl]="passwordFormControl">
+          <mat-error *ngIf="passwordFormControl.hasError('password') && !passwordFormControl.hasError('required')">
+            Proszę podać poprawne hasło
+          </mat-error>
+          <mat-error *ngIf="passwordFormControl.hasError('required')">
+            Hasło jest <strong>wymagane</strong>
+          </mat-error>
         </mat-form-field>
 
         <mat-form-field class="full-width">
-          <input matInput placeholder="Numer urządzenia głównego">
+          <input matInput placeholder="Klucz urządzenia głównego" [formControl]="deviceKeyFormControl">
+          <mat-error *ngIf="deviceKeyFormControl.hasError('email') && !emailFormControl.hasError('required')">
+            Proszę podać poprawny klucz urządzenia głównego
+          </mat-error>
+          <mat-error *ngIf="deviceKeyFormControl.hasError('required')">
+            Klucz urządzenia głównego jest <strong>wymagany</strong>
+          </mat-error>
         </mat-form-field>
 
         <mat-form-field class="full-width">
-          <input matInput placeholder="Hasło urządzenia głównego">
+          <input matInput placeholder="Hasło urządzenia głównego" type="password"
+                 [formControl]="devicePasswordFormControl">
+          <mat-error *ngIf="passwordFormControl.hasError('password') && !passwordFormControl.hasError('required')">
+            Proszę podać poprawne hasło urządzenia głównego
+          </mat-error>
+          <mat-error *ngIf="passwordFormControl.hasError('required')">
+            Hasło urządzenia głównego jest <strong>wymagane</strong>
+          </mat-error>
         </mat-form-field>
 
       </mat-card-content>
 
-      <button mat-stroked-button color="accent" class="btn-block">Zarejestruj się</button>
+      <button mat-stroked-button color="accent" class="btn-block" (click)="onRegister()">Zarejestruj się</button>
 
     </form>
   </mat-card>

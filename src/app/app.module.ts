@@ -35,11 +35,12 @@ import {TopToolbarComponent} from './components/top-toolbar/top-toolbar.componen
     SharedModule,
     AdminModule,
     UserModule,
-    RoutingRoutingModule
+    RoutingRoutingModule,
+
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true},
-    {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true},
+    {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true}
   ],
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]

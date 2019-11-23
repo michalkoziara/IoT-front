@@ -44,7 +44,8 @@ import {
     MatTooltipModule,
     MatTableModule,
     MatPaginatorModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+
   ],
   exports: [
     MatButtonModule,
