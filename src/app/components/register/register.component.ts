@@ -61,13 +61,19 @@ export class RegisterComponent implements OnInit {
         }
       },
       error => {
-
-        this.error = JSON.stringify(error)
-        console.log(this.error)
         this.error = error;
         this.loading = false;
-        console.log('response error ' + error.errorMessage);
-        this.snackBar.open('Wystąpił błąd poczas rejestracji, spróbuj ponownie', null, {duration: 2000});
+
+        let snackMessage = '';
+        if (error === 'CONFLICT') {
+          snackMessage = 'Istnieje już użytkownik o podanych danych';
+        } else if (error === 'BAD REQUEST') {
+          snackMessage = 'Podano błędne dane';
+        } else if (error === 'UNAUTHORIZED') {
+          snackMessage = 'Błędne hasło urządzenia głównego';
+        }
+
+        this.snackBar.open(snackMessage, null, {duration: 2000});
 
       }
     );

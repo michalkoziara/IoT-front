@@ -19,14 +19,9 @@ export class UserRegistrationService {
   }
 
   register(userData: UserRegistrationRequest) {
-    return this.http.post<any>(`${environment.apiUrl}/users`, userData, httpOptions).pipe(map(response => {
-        return response;
-      },
-      (data: any) => {
-        console.log(data);
-      }
-    ))
-      ;
+    return this.http.post<any>(`${environment.apiUrl}/users`, userData, httpOptions).pipe(map(Response => {
+      return Response;
+    }));
   }
 
 }
