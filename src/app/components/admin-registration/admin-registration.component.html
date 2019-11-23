@@ -36,10 +36,10 @@
 
         <mat-form-field class="full-width">
           <input matInput placeholder="Klucz urządzenia głównego" [formControl]="deviceKeyFormControl">
-          <mat-error *ngIf="emailFormControl.hasError('email') && !emailFormControl.hasError('required')">
+          <mat-error *ngIf="deviceKeyFormControl.hasError('email') && !emailFormControl.hasError('required')">
             Proszę podać poprawny klucz urządzenia głównego
           </mat-error>
-          <mat-error *ngIf="emailFormControl.hasError('required')">
+          <mat-error *ngIf="deviceKeyFormControl.hasError('required')">
             Klucz urządzenia głównego jest <strong>wymagany</strong>
           </mat-error>
         </mat-form-field>
