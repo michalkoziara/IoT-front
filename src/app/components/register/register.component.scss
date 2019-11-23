@@ -1,4 +1,4 @@
-.register-wrapper {
+.login-wrapper {
   height: 100%;
 
   mat-card-header {
@@ -11,6 +11,10 @@
       font-size: 30px;
       margin: 0;
     }
+  }
+
+  mat-form-field {
+    margin-top: 10px;
   }
 
   .box {
@@ -63,6 +67,10 @@
     width: 100%;
   }
 
+  .padding-top-10 {
+    padding-top: 10px;
+  }
+
   .btn-block {
     width: 100%;
   }
@@ -75,6 +83,7 @@
     border: 1px solid currentColor;
     line-height: 54px;
     background: #FFF7FA;
+    margin-top: 10px;
   }
 
   .mat-form-field-appearance-legacy {
