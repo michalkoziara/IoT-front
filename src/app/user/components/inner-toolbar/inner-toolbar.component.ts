@@ -1,6 +1,6 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Subscription} from 'rxjs';
-import {WelcomeService} from '../../services/welcome.service';
+import {WelcomeService} from '../../services/welcomeService/welcome.service';
 
 @Component({
   selector: 'app-inner-toolbar',

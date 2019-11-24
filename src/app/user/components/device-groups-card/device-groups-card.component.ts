@@ -1,24 +1,7 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
-import {MatSort, MatTableDataSource} from '@angular/material';
-
-export interface PeriodicElement {
-  position: number;
-  name: string;
-  symbol: string;
-}
-
-const ELEMENT_DATA: PeriodicElement[] = [
-  {position: 1, name: 'Hydrogen', symbol: 'H'},
-  {position: 2, name: 'Helium', symbol: 'He'},
-  {position: 3, name: 'Lithium', symbol: 'Li'},
-  {position: 4, name: 'Beryllium', symbol: 'Be'},
-  {position: 5, name: 'Boron', symbol: 'B'},
-  {position: 6, name: 'Carbon', symbol: 'C'},
-  {position: 7, name: 'Nitrogen', symbol: 'N'},
-  {position: 8, name: 'Oxygen', symbol: 'O'},
-  {position: 9, name: 'Fluorine', symbol: 'F'},
-  {position: 10, name: 'Neon', symbol: 'Ne'},
-];
+import {Component, OnInit, Output, ViewChild} from '@angular/core';
+import {MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
+import {DeviceGroupsApiService} from '../../services/apiService/device-groups-api.service';
+import {DeviceGroupInList} from '../../models/device-group-in-list';
 
 @Component({
   selector: 'app-device-groups-card',
@@ -26,17 +9,26 @@ const ELEMENT_DATA: PeriodicElement[] = [
   styleUrls: ['./device-groups-card.component.scss']
 })
 export class DeviceGroupsCardComponent implements OnInit {
-
-  displayedColumns: string[] = ['position', 'name', 'symbol'];
-  dataSource = new MatTableDataSource(ELEMENT_DATA);
+  displayedColumns: string[] = ['name', 'productKey'];
+  deviceGroups: any = [];
+  dataSource: MatTableDataSource<DeviceGroupInList>;
 
   @ViewChild(MatSort, {static: true}) sort: MatSort;
+  @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
 
-  constructor() {
+  constructor(private deviceGroupsApi: DeviceGroupsApiService) {
   }
 
   ngOnInit() {
-    this.dataSource.sort = this.sort;
+    this.loadDeviceGroupsInList();
   }
 
+  loadDeviceGroupsInList() {
+    return this.deviceGroupsApi.getDeviceGroups().subscribe((data: {}) => {
+      this.deviceGroups = data;
+      this.dataSource = new MatTableDataSource<DeviceGroupInList>(this.deviceGroups);
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
+    });
+  }
 }
