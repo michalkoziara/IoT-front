@@ -1,5 +1,5 @@
 export class AuthInfo {
-  accessToken: string;
+  authToken: string;
   isAdmin: string;
   username: string;
 }
