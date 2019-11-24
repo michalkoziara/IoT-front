@@ -1,36 +1,36 @@
+.flex_box {
+  mat-sidenav-container {
+    background-color: transparent;
 
-mat-sidenav-container {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background-color: transparent;
+    mat-sidenav {
+      position: fixed;
+      bottom: 0;
+      top: 64px;
+      width: 220px;
+      background-color: rgb(242, 242, 242);
 
-  mat-sidenav {
-    width: 200px;
-    background-color: rgb(242, 242, 242);
+      .box {
+        margin-top: 10px;
 
-    .box {
-      margin-top: 10px;
+        .mat-divider {
+          padding: 1px;
+          width: 90%;
+          margin: 10px 0 10px 10px;
+        }
 
-      .mat-divider {
-        padding: 1px;
-        width: 90%;
-        margin: 10px 0 10px 10px;
-      }
+        button {
+          background-color: transparent;
+          text-align: left;
+          width: 100%;
+          color: rgb(121, 121, 121);
 
-      button {
-        background-color: transparent;
-        text-align: left;
-        width: 100%;
-        color: rgb(121, 121, 121);
-
-        .mat-icon {
-          margin-bottom: 5px;
-          margin-right: 10px;
+          .mat-icon {
+            margin-bottom: 5px;
+            margin-right: 10px;
+          }
         }
       }
     }
   }
 }
+

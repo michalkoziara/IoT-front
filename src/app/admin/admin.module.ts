@@ -13,6 +13,7 @@ import {JwtInterceptor} from "../services/authService/auth.interceptor";
 import {ErrorInterceptor} from "../services/authService/error.interceptor";
 import {AdminWelcomeService} from "./services/adminWelcomeService/admin-welcome.service";
 import { AdminInnerToolbarComponent } from './components/admin-inner-toolbar/admin-inner-toolbar.component';
+import {FlexModule} from "@angular/flex-layout";
 
 @NgModule({
   declarations: [routingComponents, AdminComponent, SideNavComponent, DashboardComponent, AdminStartCardComponent, AdminInnerToolbarComponent],
@@ -21,6 +22,7 @@ import { AdminInnerToolbarComponent } from './components/admin-inner-toolbar/adm
     AdminRoutingModule,
     AngularMaterialModule,
     SharedModule,
+    FlexModule,
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true},
