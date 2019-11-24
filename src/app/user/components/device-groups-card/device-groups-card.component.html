@@ -1,5 +1,4 @@
-<mat-card style="
-  height: calc(70px * {{paginator.length}});">
+<mat-card [ngStyle]="{'height.px': (height)}">
   <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
 
     <ng-container matColumnDef="name">
@@ -17,7 +16,8 @@
   </table>
 
   <mat-paginator [pageSize]="10"
-                 [pageSizeOptions]="[5, 10, 25, 100]">
+                 [pageSizeOptions]="[5, 10, 25, 100]"
+                 (page)="pageEvent = getPaginatorData($event)">
   </mat-paginator>
 
 </mat-card>

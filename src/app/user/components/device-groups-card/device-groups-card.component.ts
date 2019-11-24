@@ -12,6 +12,7 @@ export class DeviceGroupsCardComponent implements OnInit {
   displayedColumns: string[] = ['name', 'productKey'];
   deviceGroups: any = [];
   dataSource: MatTableDataSource<DeviceGroupInList>;
+  height: number;
 
   @ViewChild(MatSort, {static: true}) sort: MatSort;
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
@@ -21,6 +22,23 @@ export class DeviceGroupsCardComponent implements OnInit {
 
   ngOnInit() {
     this.loadDeviceGroupsInList();
+  }
+
+  getPaginatorData() {
+    this.calculateTableHeight();
+  }
+
+  calculateTableHeight() {
+    if (this.paginator && this.paginator.length > 0 && this.paginator.pageSize > 0) {
+      const pages = Math.floor(this.paginator.length / this.paginator.pageSize);
+      if (pages === this.paginator.pageIndex && this.paginator.length / this.paginator.pageSize > pages) {
+        this.height = this.paginator.length % this.paginator.pageSize;
+      } else {
+        this.height = this.paginator.pageSize;
+      }
+    }
+    this.height *= 48;
+    this.height += 144;
   }
 
   loadDeviceGroupsInList() {
