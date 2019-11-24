@@ -14,6 +14,11 @@ import {DeviceGroupsApiService} from './services/apiService/device-groups-api.se
 import {HTTP_INTERCEPTORS} from '@angular/common/http';
 import {JwtInterceptor} from '../services/authService/auth.interceptor';
 import {ErrorInterceptor} from '../services/authService/error.interceptor';
+import {CustomPaginator} from '../shared/custom-paginator-conf';
+import {MatPaginatorIntl} from '@angular/material';
+import {UserGroupsComponent} from './components/user-groups/user-groups.component';
+import {UserGroupsApiService} from './services/apiService/user-groups-api.service';
+import {DeviceGroupsService} from './services/deviceGroupsService/device-groups.service';
 
 @NgModule({
   declarations: [
@@ -21,7 +26,8 @@ import {ErrorInterceptor} from '../services/authService/error.interceptor';
     SideNavComponent,
     InnerToolbarComponent,
     DeviceGroupsCardComponent,
-    StartCardComponent
+    StartCardComponent,
+    UserGroupsComponent
   ],
   imports: [
     CommonModule,
@@ -32,9 +38,12 @@ import {ErrorInterceptor} from '../services/authService/error.interceptor';
   ],
   providers: [
     WelcomeService,
+    DeviceGroupsService,
     DeviceGroupsApiService,
+    UserGroupsApiService,
     {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true},
-    {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true}
+    {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true},
+    {provide: MatPaginatorIntl, useValue: CustomPaginator()}
   ],
 })
 export class UserModule {

@@ -1,8 +1,14 @@
 <app-inner-toolbar></app-inner-toolbar>
-<div *ngIf="!isGetDeviceGroupListButtonClicked && !isAddDeviceGroupButtonClicked">
+<div *ngIf="!isGetDeviceGroupListButtonClicked
+&& !isAddDeviceGroupButtonClicked
+&& !selectedDeviceGroup">
   <app-start-card></app-start-card>
 </div>
 
 <div *ngIf="isGetDeviceGroupListButtonClicked">
   <app-device-groups-card></app-device-groups-card>
+</div>
+
+<div *ngIf="selectedDeviceGroup">
+  <app-user-groups [productKey]="selectedDeviceGroup"></app-user-groups>
 </div>

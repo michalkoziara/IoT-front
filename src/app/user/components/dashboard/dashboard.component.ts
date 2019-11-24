@@ -1,6 +1,7 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Subscription} from 'rxjs';
 import {WelcomeService} from '../../services/welcomeService/welcome.service';
+import {DeviceGroupsService} from '../../services/deviceGroupsService/device-groups.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -12,8 +13,11 @@ export class DashboardComponent implements OnInit, OnDestroy {
   isGetDeviceGroupListButtonClickedSubscription: Subscription;
   isAddDeviceGroupButtonClicked: boolean;
   isAddDeviceGroupButtonClickedSubscription: Subscription;
+  selectedDeviceGroup: string;
+  selectedDeviceGroupSubscription: Subscription;
 
-  constructor(private welcomeService: WelcomeService) {
+  constructor(private welcomeService: WelcomeService,
+              private deviceGroupsService: DeviceGroupsService) {
   }
 
   ngOnInit() {
@@ -23,10 +27,14 @@ export class DashboardComponent implements OnInit, OnDestroy {
     this.isAddDeviceGroupButtonClickedSubscription = this.welcomeService.isAddDeviceGroupButtonClicked$.subscribe(
       x => this.isAddDeviceGroupButtonClicked = x
     );
+    this.selectedDeviceGroupSubscription = this.deviceGroupsService.selectedDeviceGroup$.subscribe(
+      x => this.selectedDeviceGroup = x
+    );
   }
 
   ngOnDestroy() {
     this.isGetDeviceGroupListButtonClickedSubscription.unsubscribe();
     this.isAddDeviceGroupButtonClickedSubscription.unsubscribe();
+    this.selectedDeviceGroupSubscription.unsubscribe();
   }
 }

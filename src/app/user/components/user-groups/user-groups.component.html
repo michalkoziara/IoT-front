@@ -1,0 +1,62 @@
+<mat-card class="table-card" [ngStyle]="{'height.px': (height)}">
+  <mat-form-field>
+    <input matInput
+           (keyup)="applyFilter($event.target.value)"
+           placeholder="Filtr">
+  </mat-form-field>
+
+  <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
+
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Nazwa</th>
+      <td mat-cell *matCellDef="let element"> {{element.name}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="sensor">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Czujnik</th>
+      <td mat-cell *matCellDef="let element" class="td-btn">
+        <button mat-button class="group-btn">
+          <mat-icon>settings_input_antenna</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="executive">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Urządzenie</th>
+      <td mat-cell *matCellDef="let element" class="td-btn">
+        <button mat-button class="group-btn">
+          <mat-icon>power</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+
+  <mat-paginator [pageSize]="10"
+                 [pageSizeOptions]="[5, 10, 25, 100]"
+                 (page)="pageEvent = getPaginatorData($event)">
+  </mat-paginator>
+
+</mat-card>
+
+<div fxFlex fxLayout="column">
+  <mat-card class="add-user-group-card" fxFlex>
+    <mat-card-content fxLayout="column" fxLayoutAlign="center center">
+      <p>Stwórz nową grupę użytkowników</p>
+      <button mat-stroked-button color="accent" class="btn-block" (click)="addUserGroup()">
+        Stwórz grupę użytkowników
+      </button>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card class="add-device-card" fxFlex>
+    <mat-card-content fxLayout="column" fxLayoutAlign="center center">
+      <p>Dołącz do istniejącej grupy użytkowników</p>
+      <button mat-stroked-button color="accent" class="btn-block" (click)="joinUserGroup()">
+        Dołącz do grupy użytkowników
+      </button>
+    </mat-card-content>
+  </mat-card>
+</div>
