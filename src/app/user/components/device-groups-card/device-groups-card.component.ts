@@ -38,7 +38,11 @@ export class DeviceGroupsCardComponent implements OnInit {
       }
     }
     this.height *= 48;
-    this.height += 144;
+    this.height += 184;
+  }
+
+  applyFilter(filterValue: string) {
+    this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
   loadDeviceGroupsInList() {

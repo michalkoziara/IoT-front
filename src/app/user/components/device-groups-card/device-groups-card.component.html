@@ -1,4 +1,8 @@
 <mat-card [ngStyle]="{'height.px': (height)}">
+  <mat-form-field>
+    <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filtr">
+  </mat-form-field>
+
   <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
 
     <ng-container matColumnDef="name">
