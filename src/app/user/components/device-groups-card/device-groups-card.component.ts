@@ -2,6 +2,7 @@ import {Component, OnInit, Output, ViewChild} from '@angular/core';
 import {MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
 import {DeviceGroupsApiService} from '../../services/apiService/device-groups-api.service';
 import {DeviceGroupInList} from '../../models/device-group-in-list';
+import {SelectionModel} from '@angular/cdk/collections';
 
 @Component({
   selector: 'app-device-groups-card',
@@ -9,9 +10,10 @@ import {DeviceGroupInList} from '../../models/device-group-in-list';
   styleUrls: ['./device-groups-card.component.scss']
 })
 export class DeviceGroupsCardComponent implements OnInit {
-  displayedColumns: string[] = ['name', 'productKey'];
+  displayedColumns: string[] = ['name', 'productKey', 'actions'];
   deviceGroups: any = [];
   dataSource: MatTableDataSource<DeviceGroupInList>;
+  height: number;
 
   @ViewChild(MatSort, {static: true}) sort: MatSort;
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
@@ -21,6 +23,32 @@ export class DeviceGroupsCardComponent implements OnInit {
 
   ngOnInit() {
     this.loadDeviceGroupsInList();
+  }
+
+  getPaginatorData() {
+    this.calculateTableHeight();
+  }
+
+  calculateTableHeight() {
+    setTimeout(() => {
+        this.height = 0;
+        if (this.paginator && this.paginator.length > 0 && this.paginator.pageSize > 0) {
+          const pages = Math.floor(this.paginator.length / this.paginator.pageSize);
+          if (pages === this.paginator.pageIndex && this.paginator.length / this.paginator.pageSize > pages) {
+            this.height = this.paginator.length % this.paginator.pageSize;
+          } else {
+            this.height = this.paginator.pageSize;
+          }
+        }
+        this.height *= 48;
+        this.height += 160;
+      },
+      100);
+  }
+
+  applyFilter(filterValue: string) {
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+    this.calculateTableHeight();
   }
 
   loadDeviceGroupsInList() {
