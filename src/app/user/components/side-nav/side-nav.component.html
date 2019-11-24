@@ -2,7 +2,8 @@
   <mat-sidenav-container>
     <mat-sidenav mode="side" opened>
       <div class="box" fxLayoutAlign="center center" fxLayout="column">
-        <button mat-button routerLink="/user/dashboard" routerLinkActive="active" mat-flat-button>
+        <button mat-button routerLink="/user/dashboard" routerLinkActive="active" mat-flat-button
+                (click)="closeChildren()">
           <mat-icon>home</mat-icon>
           Strona domowa
         </button>

@@ -1,15 +1,18 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
+import {WelcomeService} from '../../services/welcome.service';
 
 @Component({
   selector: 'app-side-nav',
   templateUrl: './side-nav.component.html',
   styleUrls: ['./side-nav.component.scss']
 })
-export class SideNavComponent implements OnInit {
+export class SideNavComponent {
+  constructor(private welcomeService: WelcomeService) {
+  }
 
-  constructor() { }
-
-  ngOnInit() {
+  closeChildren() {
+    this.welcomeService.changeIsAddDeviceGroupButtonClick(false);
+    this.welcomeService.changeIsGetDeviceGroupListButtonClick(false);
   }
 
 }
