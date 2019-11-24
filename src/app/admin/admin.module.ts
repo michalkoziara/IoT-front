@@ -12,7 +12,7 @@ import {HTTP_INTERCEPTORS} from "@angular/common/http";
 import {JwtInterceptor} from "../services/authService/auth.interceptor";
 import {ErrorInterceptor} from "../services/authService/error.interceptor";
 import {AdminWelcomeService} from "./services/adminWelcomeService/admin-welcome.service";
-import { AdminInnerToolbarComponent } from './components/admin-inner-toolbar/admin-inner-toolbar.component';
+import {AdminInnerToolbarComponent} from './components/admin-inner-toolbar/admin-inner-toolbar.component';
 import {FlexModule} from "@angular/flex-layout";
 
 @NgModule({
