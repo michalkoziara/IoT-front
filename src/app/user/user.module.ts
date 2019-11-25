@@ -19,6 +19,9 @@ import {MatPaginatorIntl} from '@angular/material';
 import {UserGroupsComponent} from './components/user-groups/user-groups.component';
 import {UserGroupsApiService} from './services/apiService/user-groups-api.service';
 import {DeviceGroupsService} from './services/deviceGroupsService/device-groups.service';
+import {SensorsComponent} from './components/sensors/sensors.component';
+import {SensorsApiService} from './services/apiService/sensors-api.service';
+import {UserGroupsService} from './services/userGroupsService/user-groups.service';
 
 @NgModule({
   declarations: [
@@ -27,7 +30,8 @@ import {DeviceGroupsService} from './services/deviceGroupsService/device-groups.
     InnerToolbarComponent,
     DeviceGroupsCardComponent,
     StartCardComponent,
-    UserGroupsComponent
+    UserGroupsComponent,
+    SensorsComponent
   ],
   imports: [
     CommonModule,
@@ -41,6 +45,8 @@ import {DeviceGroupsService} from './services/deviceGroupsService/device-groups.
     DeviceGroupsService,
     DeviceGroupsApiService,
     UserGroupsApiService,
+    UserGroupsService,
+    SensorsApiService,
     {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true},
     {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true},
     {provide: MatPaginatorIntl, useValue: CustomPaginator()}

@@ -1,4 +1,4 @@
-import { UserGroupInList } from './user-group-in-list';
+import {UserGroupInList} from './user-group-in-list';
 
 describe('UserGroupInList', () => {
   it('should create an instance', () => {

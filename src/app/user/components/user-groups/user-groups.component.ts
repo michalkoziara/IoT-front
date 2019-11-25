@@ -1,8 +1,8 @@
 import {Component, Input, OnInit, ViewChild} from '@angular/core';
 import {MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
-import {DeviceGroupsService} from '../../services/deviceGroupsService/device-groups.service';
 import {UserGroupsApiService} from '../../services/apiService/user-groups-api.service';
-import {UserGroupInList} from '../../models/user-group-in-list';
+import {UserGroupInList} from '../../models/user-group-in-list/user-group-in-list';
+import {UserGroupsService} from '../../services/userGroupsService/user-groups.service';
 
 @Component({
   selector: 'app-user-groups',
@@ -10,7 +10,7 @@ import {UserGroupInList} from '../../models/user-group-in-list';
   styleUrls: ['./user-groups.component.scss']
 })
 export class UserGroupsComponent implements OnInit {
-  displayedColumns: string[] = ['name', 'sensor', 'executive'];
+  displayedColumns: string[] = ['name', 'sensor', 'executive', 'formula'];
   userGroups: any = [];
   dataSource: MatTableDataSource<UserGroupInList>;
   height: number;
@@ -22,7 +22,7 @@ export class UserGroupsComponent implements OnInit {
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
 
   constructor(private userGroupsApiService: UserGroupsApiService,
-              private deviceGroupService: DeviceGroupsService) {
+              private userGroupsService: UserGroupsService) {
   }
 
   ngOnInit() {
@@ -74,5 +74,20 @@ export class UserGroupsComponent implements OnInit {
 
   joinUserGroup() {
     console.log();
+  }
+
+  sensorsClicked(name: string) {
+    this.userGroupsService.changeSelectedUserGroup(name);
+    this.userGroupsService.changeSelectedSensorsInUserGroup(true);
+  }
+
+  executivesClicked(name: string) {
+    this.userGroupsService.changeSelectedUserGroup(name);
+    this.userGroupsService.changeSelectedExecutivesInUserGroup(true);
+  }
+
+  formulasClicked(name: string) {
+    this.userGroupsService.changeSelectedUserGroup(name);
+    this.userGroupsService.changeSelectedFormulasInUserGroup(true);
   }
 }

@@ -1,7 +1,7 @@
-import {Component, OnInit, Output, ViewChild} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
 import {DeviceGroupsApiService} from '../../services/apiService/device-groups-api.service';
-import {DeviceGroupInList} from '../../models/device-group-in-list';
+import {DeviceGroupInList} from '../../models/device-group-in-list/device-group-in-list';
 import {WelcomeService} from '../../services/welcomeService/welcome.service';
 import {DeviceGroupsService} from '../../services/deviceGroupsService/device-groups.service';
 

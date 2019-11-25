@@ -13,19 +13,28 @@
     </ng-container>
 
     <ng-container matColumnDef="sensor">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> Czujnik</th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Czujniki</th>
       <td mat-cell *matCellDef="let element" class="td-btn">
-        <button mat-button class="group-btn">
+        <button mat-button class="action-btn" (click)="sensorsClicked(element.name)">
           <mat-icon>settings_input_antenna</mat-icon>
         </button>
       </td>
     </ng-container>
 
     <ng-container matColumnDef="executive">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> Urządzenie</th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Urządzenia</th>
       <td mat-cell *matCellDef="let element" class="td-btn">
-        <button mat-button class="group-btn">
+        <button mat-button class="action-btn" (click)="executivesClicked(element.name)">
           <mat-icon>power</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="formula">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Formuły</th>
+      <td mat-cell *matCellDef="let element" class="td-btn">
+        <button mat-button class="action-btn" (click)="formulasClicked(element.name)">
+          <mat-icon>functions</mat-icon>
         </button>
       </td>
     </ng-container>

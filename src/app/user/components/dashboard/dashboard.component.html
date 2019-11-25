@@ -9,6 +9,10 @@
   <app-device-groups-card></app-device-groups-card>
 </div>
 
-<div *ngIf="selectedDeviceGroup">
+<div *ngIf="selectedDeviceGroup && !selectedUserGroup">
   <app-user-groups [productKey]="selectedDeviceGroup"></app-user-groups>
+</div>
+
+<div *ngIf="selectedUserGroup && selectedSensorsInUserGroup">
+  <app-sensors [productKey]="selectedDeviceGroup" [userGroupName]="selectedUserGroup"></app-sensors>
 </div>
