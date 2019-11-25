@@ -13,5 +13,19 @@
     <mat-icon>arrow_forward_ios</mat-icon>
     Sensory
   </p>
+  <p *ngSwitchCase="'executivesInUserGroup'" fxLayoutAlign="center center">
+    {{selectedDeviceGroup}}
+    <mat-icon>arrow_forward_ios</mat-icon>
+    {{selectedUserGroup}}
+    <mat-icon>arrow_forward_ios</mat-icon>
+    Urządzenia
+  </p>
+  <p *ngSwitchCase="'formulasInUserGroup'" fxLayoutAlign="center center">
+    {{selectedDeviceGroup}}
+    <mat-icon>arrow_forward_ios</mat-icon>
+    {{selectedUserGroup}}
+    <mat-icon>arrow_forward_ios</mat-icon>
+    Formuły
+  </p>
   <p *ngSwitchDefault>Strona domowa</p>
 </mat-toolbar>

@@ -100,4 +100,8 @@ export class ExecutivesComponent implements OnInit {
   viewExecutive(deviceKey: string) {
     console.log();
   }
+
+  addExecutive() {
+    console.log();
+  }
 }

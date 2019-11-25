@@ -7,7 +7,10 @@
                [productKey]="selectedDeviceGroup"
                [userGroupName]="selectedUserGroup"></app-sensors>
   <app-executives *ngSwitchCase="'executivesInUserGroup'"
-               [productKey]="selectedDeviceGroup"
-               [userGroupName]="selectedUserGroup"></app-executives>
+                  [productKey]="selectedDeviceGroup"
+                  [userGroupName]="selectedUserGroup"></app-executives>
+  <app-formulas *ngSwitchCase="'formulasInUserGroup'"
+                [productKey]="selectedDeviceGroup"
+                [userGroupName]="selectedUserGroup"></app-formulas>
   <app-start-card *ngSwitchDefault></app-start-card>
 </div>
