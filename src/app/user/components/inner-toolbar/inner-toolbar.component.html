@@ -27,5 +27,10 @@
     <mat-icon>arrow_forward_ios</mat-icon>
     Formuły
   </p>
+  <p *ngSwitchCase="'joiningUserGroupsInDevice'" fxLayoutAlign="center center">
+    {{selectedDeviceGroup}}
+    <mat-icon>arrow_forward_ios</mat-icon>
+    Dostępne grupy użytkowników
+  </p>
   <p *ngSwitchDefault>Strona domowa</p>
 </mat-toolbar>

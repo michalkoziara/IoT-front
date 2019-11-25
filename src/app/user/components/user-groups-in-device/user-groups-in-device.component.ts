@@ -1,17 +1,17 @@
 import {Component, Input, OnInit, ViewChild} from '@angular/core';
 import {MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
-import {UserGroupsApiService} from '../../services/apiService/user-groups-api.service';
 import {UserGroupInList} from '../../models/user-group-in-list/user-group-in-list';
+import {UserGroupsApiService} from '../../services/apiService/user-groups-api.service';
 import {UserGroupsService} from '../../services/userGroupsService/user-groups.service';
 import {ViewCommunicationService} from '../../services/viewCommunicationService/view-communication.service';
 
 @Component({
-  selector: 'app-user-groups',
-  templateUrl: './user-groups.component.html',
-  styleUrls: ['./user-groups.component.scss']
+  selector: 'app-user-groups-in-device',
+  templateUrl: './user-groups-in-device.component.html',
+  styleUrls: ['./user-groups-in-device.component.scss']
 })
-export class UserGroupsComponent implements OnInit {
-  displayedColumns: string[] = ['name', 'sensor', 'executive', 'formula'];
+export class UserGroupsInDeviceComponent implements OnInit {
+  displayedColumns: string[] = ['name', 'join'];
   userGroups: any = [];
   dataSource: MatTableDataSource<UserGroupInList>;
   height: number;
@@ -61,7 +61,7 @@ export class UserGroupsComponent implements OnInit {
     return this.userGroupsApiService.getUserGroups(this.productKey).subscribe((data) => {
       this.userGroups = data.userGroups
         .filter(x => {
-          return x.isAssignedTo;
+          return (!x.isAssignedTo);
         }, {})
         .map(x => {
           const userGroup = new UserGroupInList();
@@ -79,26 +79,8 @@ export class UserGroupsComponent implements OnInit {
     });
   }
 
-  addUserGroup() {
-    console.log();
-  }
-
-  joinUserGroup() {
-    this.viewCommunicationService.changeCurrentView('joiningUserGroupsInDevice');
-  }
-
-  sensorsClicked(name: string) {
-    this.userGroupsService.changeSelectedUserGroup(name);
-    this.viewCommunicationService.changeCurrentView('sensorsInUserGroup');
-  }
-
-  executivesClicked(name: string) {
-    this.userGroupsService.changeSelectedUserGroup(name);
-    this.viewCommunicationService.changeCurrentView('executivesInUserGroup');
-  }
-
-  formulasClicked(name: string) {
-    this.userGroupsService.changeSelectedUserGroup(name);
-    this.viewCommunicationService.changeCurrentView('formulasInUserGroup');
+  joinUserGroup(name: string) {
+    this.userGroupsService.changeSelectedJoiningUserGroup(name);
+    this.viewCommunicationService.changeCurrentView('joiningUserGroup');
   }
 }

@@ -26,6 +26,7 @@ import {ExecutivesComponent} from './components/executives/executives.component'
 import {ExecutivesApiService} from './services/apiService/executives-api.service';
 import { FormulasComponent } from './components/formulas/formulas.component';
 import {FormulasApiService} from './services/apiService/formulas-api.service';
+import { UserGroupsInDeviceComponent } from './components/user-groups-in-device/user-groups-in-device.component';
 
 @NgModule({
   declarations: [
@@ -37,7 +38,8 @@ import {FormulasApiService} from './services/apiService/formulas-api.service';
     UserGroupsComponent,
     SensorsComponent,
     ExecutivesComponent,
-    FormulasComponent
+    FormulasComponent,
+    UserGroupsInDeviceComponent
   ],
   imports: [
     CommonModule,

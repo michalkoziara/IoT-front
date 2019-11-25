@@ -12,5 +12,7 @@
   <app-formulas *ngSwitchCase="'formulasInUserGroup'"
                 [productKey]="selectedDeviceGroup"
                 [userGroupName]="selectedUserGroup"></app-formulas>
+  <app-user-groups-in-device *ngSwitchCase="'joiningUserGroupsInDevice'"
+                [productKey]="selectedDeviceGroup"></app-user-groups-in-device>
   <app-start-card *ngSwitchDefault></app-start-card>
 </div>
