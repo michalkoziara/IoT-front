@@ -3,6 +3,7 @@ import {MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
 import {UserGroupsApiService} from '../../services/apiService/user-groups-api.service';
 import {UserGroupInList} from '../../models/user-group-in-list/user-group-in-list';
 import {UserGroupsService} from '../../services/userGroupsService/user-groups.service';
+import {ViewCommunicationService} from '../../services/viewCommunicationService/view-communication.service';
 
 @Component({
   selector: 'app-user-groups',
@@ -22,7 +23,8 @@ export class UserGroupsComponent implements OnInit {
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
 
   constructor(private userGroupsApiService: UserGroupsApiService,
-              private userGroupsService: UserGroupsService) {
+              private userGroupsService: UserGroupsService,
+              private viewCommunicationService: ViewCommunicationService) {
   }
 
   ngOnInit() {
@@ -57,11 +59,15 @@ export class UserGroupsComponent implements OnInit {
 
   loadUserGroupsInList() {
     return this.userGroupsApiService.getUserGroups(this.productKey).subscribe((data) => {
-      this.userGroups = data.map(x => {
-        const userGroup = new UserGroupInList();
-        userGroup.name = x;
-        return userGroup;
-      }, {});
+      this.userGroups = data.userGroups
+        .filter(x => {
+          return x.isAssignedTo;
+        }, {})
+        .map(x => {
+          const userGroup = new UserGroupInList();
+          userGroup.name = x.name;
+          return userGroup;
+        }, {});
       this.dataSource = new MatTableDataSource<UserGroupInList>(this.userGroups);
       this.dataSource.paginator = this.paginator;
       this.sort.sort({
@@ -83,16 +89,16 @@ export class UserGroupsComponent implements OnInit {
 
   sensorsClicked(name: string) {
     this.userGroupsService.changeSelectedUserGroup(name);
-    this.userGroupsService.changeSelectedSensorsInUserGroup(true);
+    this.viewCommunicationService.changeCurrentView('sensorsInUserGroup');
   }
 
   executivesClicked(name: string) {
     this.userGroupsService.changeSelectedUserGroup(name);
-    this.userGroupsService.changeSelectedExecutivesInUserGroup(true);
+    this.viewCommunicationService.changeCurrentView('executivesInUserGroup');
   }
 
   formulasClicked(name: string) {
     this.userGroupsService.changeSelectedUserGroup(name);
-    this.userGroupsService.changeSelectedFormulasInUserGroup(true);
+    this.viewCommunicationService.changeCurrentView('formulasInUserGroup');
   }
 }

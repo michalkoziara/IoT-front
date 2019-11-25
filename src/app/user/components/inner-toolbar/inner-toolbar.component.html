@@ -1,12 +1,17 @@
-<mat-toolbar color="primary">
-  <p *ngIf="!isGetDeviceGroupListButtonClicked
-  && !isAddDeviceGroupButtonClicked
-&& !selectedDeviceGroup">Strona domowa</p>
-  <p *ngIf="isGetDeviceGroupListButtonClicked">Urządzenia główne</p>
-  <p *ngIf="isAddDeviceGroupButtonClicked">Dodaj urządzenie główne</p>
-  <p *ngIf="selectedDeviceGroup" fxLayoutAlign="center center">
+<mat-toolbar [ngSwitch]="currentView" color="primary">
+  <p *ngSwitchCase="'deviceGroupList'">Urządzenia główne</p>
+  <p *ngSwitchCase="'addNewDviceGroup'">Dodaj urządzenie główne</p>
+  <p *ngSwitchCase="'userGroupAssignedToList'" fxLayoutAlign="center center">
     {{selectedDeviceGroup}}
     <mat-icon>arrow_forward_ios</mat-icon>
     Grupy użytkowników
   </p>
+  <p *ngSwitchCase="'sensorsInUserGroup'" fxLayoutAlign="center center">
+    {{selectedDeviceGroup}}
+    <mat-icon>arrow_forward_ios</mat-icon>
+    {{selectedUserGroup}}
+    <mat-icon>arrow_forward_ios</mat-icon>
+    Sensory
+  </p>
+  <p *ngSwitchDefault>Strona domowa</p>
 </mat-toolbar>

@@ -12,7 +12,7 @@
           <mat-icon>device_hub</mat-icon>
           Urządzenia główne
         </button>
-        <div *ngIf="selectedDeviceGroup">
+        <div *ngIf="currentView === 'userGroupAssignedToList'">
           <button mat-flat-button>
             <mat-icon>group</mat-icon>
             Grupy użytkowników

@@ -9,7 +9,6 @@ import {SharedModule} from '../shared/shared.module';
 import {InnerToolbarComponent} from './components/inner-toolbar/inner-toolbar.component';
 import {DeviceGroupsCardComponent} from './components/device-groups-card/device-groups-card.component';
 import {StartCardComponent} from './components/start-card/start-card.component';
-import {WelcomeService} from './services/welcomeService/welcome.service';
 import {DeviceGroupsApiService} from './services/apiService/device-groups-api.service';
 import {HTTP_INTERCEPTORS} from '@angular/common/http';
 import {JwtInterceptor} from '../services/authService/auth.interceptor';
@@ -22,6 +21,7 @@ import {DeviceGroupsService} from './services/deviceGroupsService/device-groups.
 import {SensorsComponent} from './components/sensors/sensors.component';
 import {SensorsApiService} from './services/apiService/sensors-api.service';
 import {UserGroupsService} from './services/userGroupsService/user-groups.service';
+import {ViewCommunicationService} from './services/viewCommunicationService/view-communication.service';
 
 @NgModule({
   declarations: [
@@ -41,12 +41,12 @@ import {UserGroupsService} from './services/userGroupsService/user-groups.servic
     UserRoutingModule,
   ],
   providers: [
-    WelcomeService,
     DeviceGroupsService,
     DeviceGroupsApiService,
     UserGroupsApiService,
     UserGroupsService,
     SensorsApiService,
+    ViewCommunicationService,
     {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true},
     {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true},
     {provide: MatPaginatorIntl, useValue: CustomPaginator()}

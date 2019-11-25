@@ -1,7 +1,8 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Subscription} from 'rxjs';
-import {WelcomeService} from '../../services/welcomeService/welcome.service';
 import {DeviceGroupsService} from '../../services/deviceGroupsService/device-groups.service';
+import {ViewCommunicationService} from '../../services/viewCommunicationService/view-communication.service';
+import {UserGroupsService} from '../../services/userGroupsService/user-groups.service';
 
 @Component({
   selector: 'app-inner-toolbar',
@@ -9,32 +10,38 @@ import {DeviceGroupsService} from '../../services/deviceGroupsService/device-gro
   styleUrls: ['./inner-toolbar.component.scss']
 })
 export class InnerToolbarComponent implements OnInit, OnDestroy {
-  isGetDeviceGroupListButtonClicked: boolean;
-  isGetDeviceGroupListButtonClickedSubscription: Subscription;
-  isAddDeviceGroupButtonClicked: boolean;
-  isAddDeviceGroupButtonClickedSubscription: Subscription;
+  currentView: string;
+  currentViewSubscription: Subscription;
+
   selectedDeviceGroup: string;
   selectedDeviceGroupSubscription: Subscription;
+  selectedUserGroup: string;
+  selectedUserGroupSubscription: Subscription;
 
-  constructor(private welcomeService: WelcomeService,
-              private deviceGroupsService: DeviceGroupsService) {
+  constructor(private viewCommunicationService: ViewCommunicationService,
+              private deviceGroupsService: DeviceGroupsService,
+              private userGroupsService: UserGroupsService) {
   }
 
   ngOnInit() {
-    this.isGetDeviceGroupListButtonClickedSubscription = this.welcomeService.isGetDeviceGroupListButtonClicked$.subscribe(
-      x => this.isGetDeviceGroupListButtonClicked = x
+    this.currentViewSubscription = this.viewCommunicationService.currentView$.subscribe(
+      x => {
+        this.currentView = x;
+      }
     );
-    this.isAddDeviceGroupButtonClickedSubscription = this.welcomeService.isAddDeviceGroupButtonClicked$.subscribe(
-      x => this.isAddDeviceGroupButtonClicked = x
-    );
+
     this.selectedDeviceGroupSubscription = this.deviceGroupsService.selectedDeviceGroup$.subscribe(
       x => this.selectedDeviceGroup = x
+    );
+    this.selectedUserGroupSubscription = this.userGroupsService.selectedUserGroup$.subscribe(
+      x => this.selectedUserGroup = x
     );
   }
 
   ngOnDestroy() {
-    this.isGetDeviceGroupListButtonClickedSubscription.unsubscribe();
-    this.isAddDeviceGroupButtonClickedSubscription.unsubscribe();
+    this.currentViewSubscription.unsubscribe();
+
     this.selectedDeviceGroupSubscription.unsubscribe();
+    this.selectedUserGroupSubscription.unsubscribe();
   }
 }
