@@ -14,9 +14,10 @@ import {ErrorInterceptor} from "../services/authService/error.interceptor";
 import {AdminWelcomeService} from "./services/adminWelcomeService/admin-welcome.service";
 import {AdminInnerToolbarComponent} from './components/admin-inner-toolbar/admin-inner-toolbar.component';
 import {FlexModule} from "@angular/flex-layout";
+import { UserGroupComponent } from './components/user-group/user-group.component';
 
 @NgModule({
-  declarations: [routingComponents, AdminComponent, SideNavComponent, DashboardComponent, AdminStartCardComponent, AdminInnerToolbarComponent],
+  declarations: [routingComponents, AdminComponent, SideNavComponent, DashboardComponent, AdminStartCardComponent, AdminInnerToolbarComponent, UserGroupComponent],
   imports: [
     CommonModule,
     AdminRoutingModule,
