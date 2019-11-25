@@ -63,6 +63,11 @@ export class SensorsComponent implements OnInit {
       this.sensors = data;
       this.dataSource = new MatTableDataSource<SensorInUserGroup>(this.sensors);
       this.dataSource.paginator = this.paginator;
+      this.sort.sort({
+        id: 'name',
+        start: 'asc',
+        disableClear: false
+      });
       this.dataSource.sort = this.sort;
     });
   }

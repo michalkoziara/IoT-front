@@ -59,6 +59,11 @@ export class DeviceGroupsCardComponent implements OnInit {
       this.deviceGroups = data;
       this.dataSource = new MatTableDataSource<DeviceGroupInList>(this.deviceGroups);
       this.dataSource.paginator = this.paginator;
+      this.sort.sort({
+        id: 'name',
+        start: 'asc',
+        disableClear: false
+      });
       this.dataSource.sort = this.sort;
     });
   }
