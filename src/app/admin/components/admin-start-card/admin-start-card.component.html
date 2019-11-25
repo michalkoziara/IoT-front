@@ -1,0 +1,70 @@
+<div fxLayout="column">
+
+  <mat-card class="welcome-card" fxFlex>
+    <mat-card-title>
+      Witaj, {{username}}!
+    </mat-card-title>
+  </mat-card>
+
+  <div fxLayout="row">
+    <mat-card fxFlex>
+      <mat-card-content fxLayout="column">
+        <p fxFlexAlign="center start">Przejdź do listy grup użytkowników</p>
+
+        <button mat-stroked-button color="accent" class="btn-block" (click)="getUserGroupList()">Lista grup
+          użytkowników
+        </button>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card fxFlex>
+      <mat-card-content fxLayout="column">
+        <p fxFlexAlign="center start">Przejdź do nieskonfigurowanych</p>
+
+        <button mat-stroked-button color="accent" class="btn-block" (click)="getUnconfiguredList()">Lista
+          nieskonfigurowanych
+        </button>
+      </mat-card-content>
+    </mat-card>
+  </div>
+  <div fxLayout="row">
+    <mat-card fxFlex>
+      <mat-card-content fxLayout="column">
+        <p fxFlexAlign="center start">Przejdź do listy urządzeń</p>
+
+        <button mat-stroked-button color="accent" class="btn-block" (click)="getDeviceList()">Lista urządzeń</button>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card fxFlex>
+      <mat-card-content fxLayout="column">
+        <p fxFlexAlign="center start">Przejdź do listy czujników</p>
+
+        <button mat-stroked-button color="accent" class="btn-block" (click)="getSensorList()">Lista czujników</button>
+      </mat-card-content>
+    </mat-card>
+  </div>
+  <div fxLayout="row">
+
+
+    <mat-card fxFlex>
+      <mat-card-content fxLayout="column">
+        <p fxFlexAlign="center start">Przejdź do listy typów urządzeń</p>
+
+        <button mat-stroked-button color="accent" class="btn-block" (click)="getDeviceTypeList()">Lista typów urządzeń
+        </button>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card fxFlex>
+      <mat-card-content fxLayout="column">
+        <p fxFlexAlign="center start">Przejdź do listy typów czujników</p>
+
+        <button mat-stroked-button color="accent" class="btn-block" (click)="getSensorTypeList()">Lista typów
+          czujników
+        </button>
+      </mat-card-content>
+    </mat-card>
+  </div>
+
+</div>
