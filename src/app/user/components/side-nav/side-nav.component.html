@@ -8,24 +8,26 @@
           Strona domowa
         </button>
         <mat-divider></mat-divider>
-        <button mat-flat-button>
+        <button mat-flat-button (click)="getDeviceGroupList()">
           <mat-icon>device_hub</mat-icon>
           Urządzenia główne
         </button>
-        <button mat-flat-button>
-          <mat-icon>group</mat-icon>
-          Grupy użytkowników
-        </button>
-        <mat-divider></mat-divider>
-        <button mat-flat-button>
-          <mat-icon>power</mat-icon>
-          Urządzenia
-        </button>
-        <button mat-flat-button>
-          <mat-icon>usb</mat-icon>
-          Czujniki
-        </button>
-        <mat-divider></mat-divider>
+        <div *ngIf="selectedDeviceGroup">
+          <button mat-flat-button>
+            <mat-icon>group</mat-icon>
+            Grupy użytkowników
+          </button>
+          <mat-divider></mat-divider>
+          <!--<button mat-flat-button>-->
+            <!--<mat-icon>power</mat-icon>-->
+            <!--Urządzenia-->
+          <!--</button>-->
+          <!--<button mat-flat-button>-->
+            <!--<mat-icon>settings_input_antenna</mat-icon>-->
+            <!--Czujniki-->
+          <!--</button>-->
+          <!--<mat-divider></mat-divider>-->
+        </div>
       </div>
     </mat-sidenav>
     <mat-sidenav-content>

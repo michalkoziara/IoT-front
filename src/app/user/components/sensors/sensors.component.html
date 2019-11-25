@@ -12,16 +12,21 @@
       <td mat-cell *matCellDef="let element"> {{element.name}}</td>
     </ng-container>
 
-    <ng-container matColumnDef="productKey">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> Klucz produktu</th>
-      <td mat-cell *matCellDef="let element"> {{element.productKey}}</td>
+    <ng-container matColumnDef="isActive">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Aktywny</th>
+      <td mat-cell *matCellDef="let element"> {{element.name}}</td>
     </ng-container>
 
-    <ng-container matColumnDef="actions">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> Grupy użytkowników</th>
+    <ng-container matColumnDef="sensorReadingValue">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Ostatni odczyt</th>
+      <td mat-cell *matCellDef="let element"> {{element.name}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="view">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Szczegóły</th>
       <td mat-cell *matCellDef="let element" class="td-btn">
-        <button mat-button class="group-btn" (click)="userGroupClicked(element.productKey)">
-          <mat-icon>group</mat-icon>
+        <button mat-button class="group-btn" (click)="viewSensor(element.name)">
+          <mat-icon>zoom_in</mat-icon>
         </button>
       </td>
     </ng-container>
@@ -35,11 +40,4 @@
                  (page)="pageEvent = getPaginatorData($event)">
   </mat-paginator>
 
-</mat-card>
-
-<mat-card class="add-device-card" fxFlex>
-  <mat-card-content fxLayout="column" fxLayoutAlign="center center">
-    <p>Dodaj nowe urządzenie główne do swojej listy</p>
-    <button mat-stroked-button color="accent" class="btn-block" (click)="addNewDeviceGroup()">Dołącz urządzenie główne</button>
-  </mat-card-content>
 </mat-card>

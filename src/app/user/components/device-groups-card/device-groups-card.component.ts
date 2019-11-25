@@ -1,8 +1,9 @@
-import {Component, OnInit, Output, ViewChild} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
 import {DeviceGroupsApiService} from '../../services/apiService/device-groups-api.service';
-import {DeviceGroupInList} from '../../models/device-group-in-list';
-import {SelectionModel} from '@angular/cdk/collections';
+import {DeviceGroupInList} from '../../models/device-group-in-list/device-group-in-list';
+import {WelcomeService} from '../../services/welcomeService/welcome.service';
+import {DeviceGroupsService} from '../../services/deviceGroupsService/device-groups.service';
 
 @Component({
   selector: 'app-device-groups-card',
@@ -18,7 +19,9 @@ export class DeviceGroupsCardComponent implements OnInit {
   @ViewChild(MatSort, {static: true}) sort: MatSort;
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
 
-  constructor(private deviceGroupsApi: DeviceGroupsApiService) {
+  constructor(private deviceGroupsApi: DeviceGroupsApiService,
+              private welcomeService: WelcomeService,
+              private deviceGroupService: DeviceGroupsService) {
   }
 
   ngOnInit() {
@@ -52,11 +55,21 @@ export class DeviceGroupsCardComponent implements OnInit {
   }
 
   loadDeviceGroupsInList() {
-    return this.deviceGroupsApi.getDeviceGroups().subscribe((data: {}) => {
+    return this.deviceGroupsApi.getDeviceGroups().subscribe((data) => {
       this.deviceGroups = data;
       this.dataSource = new MatTableDataSource<DeviceGroupInList>(this.deviceGroups);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
     });
+  }
+
+  userGroupClicked(productKey: string) {
+    this.deviceGroupService.changeSelectedDeviceGroup(productKey);
+    this.welcomeService.changeIsGetDeviceGroupListButtonClick(false);
+  }
+
+  addNewDeviceGroup() {
+    this.welcomeService.changeIsGetDeviceGroupListButtonClick(false);
+    this.welcomeService.changeIsAddDeviceGroupButtonClick(true);
   }
 }
