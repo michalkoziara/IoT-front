@@ -1,0 +1,43 @@
+mat-card {
+  margin: 50px;
+}
+
+.add-executive-card {
+  height: 125px;
+}
+
+.table-card {
+  width: 700px;
+
+  mat-form-field {
+    font-size: 14px;
+    width: 100%;
+  }
+
+  table {
+    width: 100%;
+    box-shadow: none;
+
+    tr {
+      vertical-align: top;
+
+      td {
+        padding-top: 12px;
+        padding-bottom: 12px;
+      }
+
+      .td-btn {
+        padding-left: 0;
+        padding-top: 8px;
+
+        .group-btn {
+          height: 24px;
+          width: 24px;
+          padding: 0;
+          margin: 0;
+          line-height: 0;
+        }
+      }
+    }
+  }
+}

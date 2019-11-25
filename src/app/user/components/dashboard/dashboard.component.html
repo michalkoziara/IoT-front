@@ -6,5 +6,8 @@
   <app-sensors *ngSwitchCase="'sensorsInUserGroup'"
                [productKey]="selectedDeviceGroup"
                [userGroupName]="selectedUserGroup"></app-sensors>
+  <app-executives *ngSwitchCase="'executivesInUserGroup'"
+               [productKey]="selectedDeviceGroup"
+               [userGroupName]="selectedUserGroup"></app-executives>
   <app-start-card *ngSwitchDefault></app-start-card>
 </div>

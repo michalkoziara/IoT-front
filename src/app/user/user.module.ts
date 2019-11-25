@@ -22,6 +22,8 @@ import {SensorsComponent} from './components/sensors/sensors.component';
 import {SensorsApiService} from './services/apiService/sensors-api.service';
 import {UserGroupsService} from './services/userGroupsService/user-groups.service';
 import {ViewCommunicationService} from './services/viewCommunicationService/view-communication.service';
+import {ExecutivesComponent} from './components/executives/executives.component';
+import {ExecutivesApiService} from './services/apiService/executives-api.service';
 
 @NgModule({
   declarations: [
@@ -31,7 +33,8 @@ import {ViewCommunicationService} from './services/viewCommunicationService/view
     DeviceGroupsCardComponent,
     StartCardComponent,
     UserGroupsComponent,
-    SensorsComponent
+    SensorsComponent,
+    ExecutivesComponent
   ],
   imports: [
     CommonModule,
@@ -47,6 +50,7 @@ import {ViewCommunicationService} from './services/viewCommunicationService/view
     UserGroupsService,
     SensorsApiService,
     ViewCommunicationService,
+    ExecutivesApiService,
     {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true},
     {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true},
     {provide: MatPaginatorIntl, useValue: CustomPaginator()}

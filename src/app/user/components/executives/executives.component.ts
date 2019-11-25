@@ -1,18 +1,17 @@
 import {Component, Input, OnInit, ViewChild} from '@angular/core';
 import {MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
-import {SensorInUserGroup} from '../../models/sensor-in-user-group/sensor-in-user-group';
-import {SensorsApiService} from '../../services/apiService/sensors-api.service';
-import {UserGroupsService} from '../../services/userGroupsService/user-groups.service';
+import {ExecutiveInUserGroup} from '../../models/executive-in-user-group/executive-in-user-group';
+import {ExecutivesApiService} from '../../services/apiService/executives-api.service';
 
 @Component({
-  selector: 'app-sensors',
-  templateUrl: './sensors.component.html',
-  styleUrls: ['./sensors.component.scss']
+  selector: 'app-executives',
+  templateUrl: './executives.component.html',
+  styleUrls: ['./executives.component.scss']
 })
-export class SensorsComponent implements OnInit {
-  displayedColumns: string[] = ['name', 'isActive', 'sensorReadingValue', 'view'];
-  sensors: any = [];
-  dataSource: MatTableDataSource<SensorInUserGroup>;
+export class ExecutivesComponent implements OnInit {
+  displayedColumns: string[] = ['name', 'state', 'isActive', 'formulaName', 'isFormulaUsed', 'view'];
+  executives: any = [];
+  dataSource: MatTableDataSource<ExecutiveInUserGroup>;
   height: number;
 
   @Input()
@@ -24,11 +23,11 @@ export class SensorsComponent implements OnInit {
   @ViewChild(MatSort, {static: true}) sort: MatSort;
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
 
-  constructor(private sensorsApiService: SensorsApiService) {
+  constructor(private executivesApiService: ExecutivesApiService) {
   }
 
   ngOnInit() {
-    this.loadSensorsInList();
+    this.loadExecutivesInList();
   }
 
   getPaginatorData() {
@@ -57,16 +56,24 @@ export class SensorsComponent implements OnInit {
     this.calculateTableHeight();
   }
 
-  loadSensorsInList() {
-    return this.sensorsApiService.getSensors(this.productKey, this.userGroupName).subscribe((data) => {
-      this.sensors = data.map(
+  loadExecutivesInList() {
+    return this.executivesApiService.getExecutives(this.productKey, this.userGroupName).subscribe((data) => {
+      this.executives = data.map(
         x => {
-          if (x.sensorReadingValue === true) {
-            x.sensorReadingValue = 'Podstawowy';
+          if (x.state === true) {
+            x.state = 'Podstawowy';
           }
 
-          if (x.sensorReadingValue === false) {
-            x.sensorReadingValue = 'Alternatywny';
+          if (x.state === false) {
+            x.state = 'Alternatywny';
+          }
+
+          if (x.isFormulaUsed === true) {
+            x.isFormulaUsed = 'Tak';
+          }
+
+          if (x.isFormulaUsed === false) {
+            x.isFormulaUsed = 'Nie';
           }
 
           if (x.isActive === true) {
@@ -79,7 +86,7 @@ export class SensorsComponent implements OnInit {
           return x;
         }
       );
-      this.dataSource = new MatTableDataSource<SensorInUserGroup>(this.sensors);
+      this.dataSource = new MatTableDataSource<ExecutiveInUserGroup>(this.executives);
       this.dataSource.paginator = this.paginator;
       this.sort.sort({
         id: 'name',
@@ -90,7 +97,7 @@ export class SensorsComponent implements OnInit {
     });
   }
 
-  addSensor(deviceKey: string) {
+  viewExecutive(deviceKey: string) {
     console.log();
   }
 }
