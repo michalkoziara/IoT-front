@@ -64,6 +64,11 @@ export class UserGroupsComponent implements OnInit {
       }, {});
       this.dataSource = new MatTableDataSource<UserGroupInList>(this.userGroups);
       this.dataSource.paginator = this.paginator;
+      this.sort.sort({
+        id: 'name',
+        start: 'asc',
+        disableClear: false
+      });
       this.dataSource.sort = this.sort;
     });
   }
