@@ -1,1 +1,36 @@
-<p>user-group works!</p>
+<mat-card class="table-card" [ngStyle]="{'height.px': (height)}">
+  <mat-form-field>
+    <input matInput
+           (keyup)="applyFilter($event.target.value)"
+           placeholder="Filtr">
+  </mat-form-field>
+
+  <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
+
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Nazwa</th>
+      <td mat-cell *matCellDef="let element"> {{element.name}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="sensor">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Usuń</th>
+      <td mat-cell *matCellDef="let element" class="td-btn">
+        <button mat-button class="action-btn" (click)="deleteUserGroup(element.name)">
+          <mat-icon>settings_input_antenna</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+
+
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+
+  <mat-paginator [pageSize]="10"
+                 [pageSizeOptions]="[5, 10, 25, 100]"
+                 (page)="pageEvent = getPaginatorData($event)">
+  </mat-paginator>
+
+</mat-card>
+

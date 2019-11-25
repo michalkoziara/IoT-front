@@ -1,7 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {AdminWelcomeService} from '../../../admin/services/adminWelcomeService/admin-welcome.service';
 import {AuthService} from '../../../services/authService/auth.service';
-import {ProductKeyApiService} from '../../services/apiService/product-key-api.service';
 
 @Component({
   selector: 'app-admin-start-card',
@@ -10,11 +9,9 @@ import {ProductKeyApiService} from '../../services/apiService/product-key-api.se
 })
 export class AdminStartCardComponent implements OnInit {
   username = 'Nieznajomy';
-  productKey: string;
-  deviceGroupName: string;
 
   constructor(private welcomeService: AdminWelcomeService, private authenticationService: AuthService,
-              private productKeyApiService: ProductKeyApiService) {
+  ) {
   }
 
   ngOnInit() {
@@ -24,12 +21,7 @@ export class AdminStartCardComponent implements OnInit {
       }
     });
 
-    this.productKeyApiService.getDeviceGroup().subscribe(x => {
-      if (x != null) {
-        this.productKey = x[0].productKey;
-        this.deviceGroupName = x[0].name;
-      }
-    });
+
 
 
   }

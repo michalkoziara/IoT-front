@@ -32,6 +32,11 @@ export class UserGroupComponent implements OnInit {
     this.loadUserGroupsInList();
   }
 
+  getPaginatorData() {
+    this.calculateTableHeight();
+  }
+
+
   calculateTableHeight() {
     setTimeout(() => {
         this.height = 0;
@@ -62,5 +67,10 @@ export class UserGroupComponent implements OnInit {
       this.dataSource.sort = this.sort;
     });
   }
+
+  deleteUserGroup(userGroupName: string) {
+    console.log(userGroupName);
+  }
+
 
 }

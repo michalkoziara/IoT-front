@@ -1,6 +1,7 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Subscription} from 'rxjs';
 import {AdminWelcomeService} from '../../services/adminWelcomeService/admin-welcome.service';
+import {ProductKeyApiService} from '../../services/apiService/product-key-api.service';
 
 
 @Component({
@@ -9,6 +10,9 @@ import {AdminWelcomeService} from '../../services/adminWelcomeService/admin-welc
   styleUrls: ['./dashboard.component.scss']
 })
 export class DashboardComponent implements OnInit, OnDestroy {
+
+  productKey: string;
+  deviceGroupName: string;
 
   isGetUsersGroupsListButtonClicked: boolean;
   isGetUsersGroupsListButtonClickedSubscription: Subscription;
@@ -28,10 +32,18 @@ export class DashboardComponent implements OnInit, OnDestroy {
   isGetDevicesTypesListButtonClicked: boolean;
   isGetDevicesTypesListButtonClickedSubscription: Subscription;
 
-  constructor(private welcomeService: AdminWelcomeService) {
+  constructor(private welcomeService: AdminWelcomeService,
+              private productKeyApiService: ProductKeyApiService) {
   }
 
   ngOnInit() {
+    this.productKeyApiService.getDeviceGroup().subscribe(x => {
+      if (x != null) {
+        this.productKey = x[0].productKey;
+        this.deviceGroupName = x[0].name;
+      }
+    });
+
     this.isGetUsersGroupsListButtonClickedSubscription = this.welcomeService.isGetUsersGroupsListButtonClicked$.subscribe(
       x => this.isGetUsersGroupsListButtonClicked = x
     );
