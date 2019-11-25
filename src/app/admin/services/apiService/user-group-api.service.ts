@@ -1,9 +1,9 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Observable, throwError} from 'rxjs';
-import {DeviceGroupInList} from '../../../user/models/device-group-in-list';
 import {environment} from '../../../../environments/environment';
 import {catchError, retry} from 'rxjs/operators';
+import {UserGroupInList} from '../../models/user-group-in-list';
 
 @Injectable({
   providedIn: 'root'
@@ -19,8 +19,8 @@ export class UserGroupApiService {
   constructor(private http: HttpClient) {
   }
 
-  getDeviceGroups(productKey: string): Observable<DeviceGroupInList> {
-    return this.http.get<DeviceGroupInList>(`${environment.apiUrl}/hubs/${productKey}/user-groups`)
+  getUserGroups(productKey: string): Observable<UserGroupInList> {
+    return this.http.get<UserGroupInList>(`${environment.apiUrl}/hubs/${productKey}/user-groups`)
       .pipe(
         retry(1),
         catchError(this.handleError)
