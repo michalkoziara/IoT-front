@@ -1,13 +1,10 @@
 <app-admin-inner-toolbar></app-admin-inner-toolbar>
-<div *ngIf="!isGetUsersGroupsListButtonClicked &&
- !isGetSensorsListButtonClicked &&
- !isGetDeviceListButtonClicked&&
- !isGetUnconfiguredListButtonClicked&&
- !isGetSensorTypesListButtonClicked&&
- !isGetDevicesTypesListButtonClicked">
-  <app-admin-start-card></app-admin-start-card>
-</div>
+<div [ngSwitch]="currentView">
 
-<div *ngIf="isGetUsersGroupsListButtonClicked">
-  <app-user-group [productKey]="productKey"></app-user-group>
+
+  <app-user-group *ngSwitchCase="'userGroupList'"
+                  [productKey]="productKey"></app-user-group>
+
+  <app-admin-start-card *ngSwitchDefault></app-admin-start-card>
+
 </div>

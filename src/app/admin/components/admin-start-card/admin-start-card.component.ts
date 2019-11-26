@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {AdminWelcomeService} from '../../../admin/services/adminWelcomeService/admin-welcome.service';
 import {AuthService} from '../../../services/authService/auth.service';
+import {AdminViewCommunicationService} from '../../services/admin-view-communication.service';
 
 @Component({
   selector: 'app-admin-start-card',
@@ -10,7 +11,9 @@ import {AuthService} from '../../../services/authService/auth.service';
 export class AdminStartCardComponent implements OnInit {
   username = 'Nieznajomy';
 
-  constructor(private welcomeService: AdminWelcomeService, private authenticationService: AuthService,
+  constructor(private viewCommunicationService: AdminViewCommunicationService,
+              private welcomeService: AdminWelcomeService,
+              private authenticationService: AuthService,
   ) {
   }
 
@@ -22,12 +25,11 @@ export class AdminStartCardComponent implements OnInit {
     });
 
 
-
-
   }
 
+
   getUserGroupList() {
-    this.welcomeService.changeIsGetUsersGroupsListButtonClicked(true);
+    this.viewCommunicationService.changeCurrentView('userGroupList');
   }
 
   getDeviceList() {

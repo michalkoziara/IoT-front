@@ -19,8 +19,8 @@ export class UserGroupApiService {
   constructor(private http: HttpClient) {
   }
 
-  getUserGroups(productKey: string): Observable<UserGroupInList> {
-    return this.http.get<UserGroupInList>(`${environment.apiUrl}/hubs/${productKey}/user-groups`)
+  getUserGroups(productKey: string): Observable<{'userGroups': [UserGroupInList]}> {
+    return this.http.get<{'userGroups': [UserGroupInList]}>(`${environment.apiUrl}/hubs/${productKey}/user-groups`)
       .pipe(
         retry(1),
         catchError(this.handleError)

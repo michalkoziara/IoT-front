@@ -15,6 +15,7 @@ import {AdminWelcomeService} from "./services/adminWelcomeService/admin-welcome.
 import {AdminInnerToolbarComponent} from './components/admin-inner-toolbar/admin-inner-toolbar.component';
 import {FlexModule} from "@angular/flex-layout";
 import { UserGroupComponent } from './components/user-group/user-group.component';
+import {AdminViewCommunicationService} from './services/admin-view-communication.service';
 
 @NgModule({
   declarations: [routingComponents, AdminComponent, SideNavComponent, DashboardComponent, AdminStartCardComponent, AdminInnerToolbarComponent, UserGroupComponent],
@@ -28,7 +29,8 @@ import { UserGroupComponent } from './components/user-group/user-group.component
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true},
     {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true},
-    AdminWelcomeService
+    AdminWelcomeService,
+    AdminViewCommunicationService
   ],
 })
 export class AdminModule {

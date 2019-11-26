@@ -2,7 +2,6 @@ import {Component, Input, OnInit, ViewChild} from '@angular/core';
 import {MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
 import {UserGroupInList} from '../../models/user-group-in-list';
 import {UserGroupApiService} from '../../services/apiService/user-group-api.service';
-import {AdminWelcomeService} from '../../services/adminWelcomeService/admin-welcome.service';
 import {UserGroupService} from '../../services/user-group.service';
 
 @Component({
@@ -23,7 +22,6 @@ export class UserGroupComponent implements OnInit {
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
 
   constructor(private userGroupApi: UserGroupApiService,
-              private welcomeService: AdminWelcomeService,
               private userGroupService: UserGroupService
   ) {
   }
@@ -61,9 +59,13 @@ export class UserGroupComponent implements OnInit {
 
   loadUserGroupsInList() {
     return this.userGroupApi.getUserGroups(this.productKey).subscribe((data) => {
-      this.userGroups = data;
+      this.userGroups = data.userGroups;
       this.dataSource = new MatTableDataSource<UserGroupInList>(this.userGroups);
-      this.dataSource.paginator = this.paginator;
+      this.sort.sort({
+        id: 'name',
+        start: 'asc',
+        disableClear: false
+      });
       this.dataSource.sort = this.sort;
     });
   }
