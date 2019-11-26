@@ -2,8 +2,8 @@ import {Component, OnInit, ViewChild} from '@angular/core';
 import {MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
 import {DeviceGroupsApiService} from '../../services/apiService/device-groups-api.service';
 import {DeviceGroupInList} from '../../models/device-group-in-list/device-group-in-list';
-import {WelcomeService} from '../../services/welcomeService/welcome.service';
 import {DeviceGroupsService} from '../../services/deviceGroupsService/device-groups.service';
+import {ViewCommunicationService} from '../../services/viewCommunicationService/view-communication.service';
 
 @Component({
   selector: 'app-device-groups-card',
@@ -19,8 +19,8 @@ export class DeviceGroupsCardComponent implements OnInit {
   @ViewChild(MatSort, {static: true}) sort: MatSort;
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
 
-  constructor(private deviceGroupsApi: DeviceGroupsApiService,
-              private welcomeService: WelcomeService,
+  constructor(private viewCommunicationService: ViewCommunicationService,
+              private deviceGroupsApi: DeviceGroupsApiService,
               private deviceGroupService: DeviceGroupsService) {
   }
 
@@ -70,11 +70,10 @@ export class DeviceGroupsCardComponent implements OnInit {
 
   userGroupClicked(productKey: string) {
     this.deviceGroupService.changeSelectedDeviceGroup(productKey);
-    this.welcomeService.changeIsGetDeviceGroupListButtonClick(false);
+    this.viewCommunicationService.changeCurrentView('userGroupAssignedToList');
   }
 
   addNewDeviceGroup() {
-    this.welcomeService.changeIsGetDeviceGroupListButtonClick(false);
-    this.welcomeService.changeIsAddDeviceGroupButtonClick(true);
+    this.viewCommunicationService.changeCurrentView('addNewDviceGroup');
   }
 }

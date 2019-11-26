@@ -1,12 +1,11 @@
-import {Injectable} from '@angular/core';
+import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Observable, throwError} from 'rxjs';
 import {environment} from '../../../../environments/environment';
 import {catchError, retry} from 'rxjs/operators';
-import {UserGroupInList} from '../../models/user-group-in-list/user-group-in-list';
 
 @Injectable()
-export class UserGroupsApiService {
+export class FormulasApiService {
   httpOptions = {
     headers: new HttpHeaders({
       'Content-Type': 'application/json'
@@ -16,8 +15,8 @@ export class UserGroupsApiService {
   constructor(private http: HttpClient) {
   }
 
-  getUserGroups(productKey: string): Observable<{'userGroups': [UserGroupInList]}> {
-    return this.http.get<{'userGroups': [UserGroupInList]}>(`${environment.apiUrl}/hubs/${productKey}/user-groups`)
+  getFormulas(productKey: string, name: string): Observable<{'names': [string]}> {
+    return this.http.get<{'names': [string]}>(`${environment.apiUrl}/hubs/${productKey}/user-groups/${name}/formulas`)
       .pipe(
         retry(1),
         catchError(this.handleError)

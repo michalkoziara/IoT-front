@@ -1,18 +1,18 @@
 <app-inner-toolbar></app-inner-toolbar>
-<div *ngIf="!isGetDeviceGroupListButtonClicked
-&& !isAddDeviceGroupButtonClicked
-&& !selectedDeviceGroup">
-  <app-start-card></app-start-card>
-</div>
-
-<div *ngIf="isGetDeviceGroupListButtonClicked">
-  <app-device-groups-card></app-device-groups-card>
-</div>
-
-<div *ngIf="selectedDeviceGroup && !selectedUserGroup">
-  <app-user-groups [productKey]="selectedDeviceGroup"></app-user-groups>
-</div>
-
-<div *ngIf="selectedUserGroup && selectedSensorsInUserGroup">
-  <app-sensors [productKey]="selectedDeviceGroup" [userGroupName]="selectedUserGroup"></app-sensors>
+<div [ngSwitch]="currentView">
+  <app-device-groups-card *ngSwitchCase="'deviceGroupList'"></app-device-groups-card>
+  <app-user-groups *ngSwitchCase="'userGroupAssignedToList'"
+                   [productKey]="selectedDeviceGroup"></app-user-groups>
+  <app-sensors *ngSwitchCase="'sensorsInUserGroup'"
+               [productKey]="selectedDeviceGroup"
+               [userGroupName]="selectedUserGroup"></app-sensors>
+  <app-executives *ngSwitchCase="'executivesInUserGroup'"
+                  [productKey]="selectedDeviceGroup"
+                  [userGroupName]="selectedUserGroup"></app-executives>
+  <app-formulas *ngSwitchCase="'formulasInUserGroup'"
+                [productKey]="selectedDeviceGroup"
+                [userGroupName]="selectedUserGroup"></app-formulas>
+  <app-user-groups-in-device *ngSwitchCase="'joiningUserGroupsInDevice'"
+                [productKey]="selectedDeviceGroup"></app-user-groups-in-device>
+  <app-start-card *ngSwitchDefault></app-start-card>
 </div>

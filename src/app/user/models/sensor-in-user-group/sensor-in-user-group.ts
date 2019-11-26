@@ -1,5 +1,6 @@
 export class SensorInUserGroup {
   name: string;
-  isActive: boolean;
+  isActive: string;
   sensorReadingValue: string;
+  deviceKey: string;
 }

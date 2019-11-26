@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
-import {WelcomeService} from '../../services/welcomeService/welcome.service';
 import {AuthService} from '../../../services/authService/auth.service';
+import {ViewCommunicationService} from '../../services/viewCommunicationService/view-communication.service';
 
 @Component({
   selector: 'app-start-card',
@@ -10,7 +10,8 @@ import {AuthService} from '../../../services/authService/auth.service';
 export class StartCardComponent implements OnInit {
   username = 'Nieznajomy';
 
-  constructor(private welcomeService: WelcomeService, private authenticationService: AuthService) {
+  constructor(private viewCommunicationService: ViewCommunicationService,
+              private authenticationService: AuthService) {
   }
 
   ngOnInit() {
@@ -22,10 +23,10 @@ export class StartCardComponent implements OnInit {
   }
 
   getDeviceGroupList() {
-    this.welcomeService.changeIsGetDeviceGroupListButtonClick(true);
+    this.viewCommunicationService.changeCurrentView('deviceGroupList');
   }
 
   addNewDeviceGroup() {
-    this.welcomeService.changeIsAddDeviceGroupButtonClick(true);
+    this.viewCommunicationService.changeCurrentView('addNewDviceGroup');
   }
 }

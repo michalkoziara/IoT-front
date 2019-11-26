@@ -9,7 +9,6 @@ import {SharedModule} from '../shared/shared.module';
 import {InnerToolbarComponent} from './components/inner-toolbar/inner-toolbar.component';
 import {DeviceGroupsCardComponent} from './components/device-groups-card/device-groups-card.component';
 import {StartCardComponent} from './components/start-card/start-card.component';
-import {WelcomeService} from './services/welcomeService/welcome.service';
 import {DeviceGroupsApiService} from './services/apiService/device-groups-api.service';
 import {HTTP_INTERCEPTORS} from '@angular/common/http';
 import {JwtInterceptor} from '../services/authService/auth.interceptor';
@@ -22,6 +21,12 @@ import {DeviceGroupsService} from './services/deviceGroupsService/device-groups.
 import {SensorsComponent} from './components/sensors/sensors.component';
 import {SensorsApiService} from './services/apiService/sensors-api.service';
 import {UserGroupsService} from './services/userGroupsService/user-groups.service';
+import {ViewCommunicationService} from './services/viewCommunicationService/view-communication.service';
+import {ExecutivesComponent} from './components/executives/executives.component';
+import {ExecutivesApiService} from './services/apiService/executives-api.service';
+import { FormulasComponent } from './components/formulas/formulas.component';
+import {FormulasApiService} from './services/apiService/formulas-api.service';
+import { UserGroupsInDeviceComponent } from './components/user-groups-in-device/user-groups-in-device.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +36,10 @@ import {UserGroupsService} from './services/userGroupsService/user-groups.servic
     DeviceGroupsCardComponent,
     StartCardComponent,
     UserGroupsComponent,
-    SensorsComponent
+    SensorsComponent,
+    ExecutivesComponent,
+    FormulasComponent,
+    UserGroupsInDeviceComponent
   ],
   imports: [
     CommonModule,
@@ -41,12 +49,14 @@ import {UserGroupsService} from './services/userGroupsService/user-groups.servic
     UserRoutingModule,
   ],
   providers: [
-    WelcomeService,
     DeviceGroupsService,
     DeviceGroupsApiService,
     UserGroupsApiService,
     UserGroupsService,
     SensorsApiService,
+    ViewCommunicationService,
+    ExecutivesApiService,
+    FormulasApiService,
     {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true},
     {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true},
     {provide: MatPaginatorIntl, useValue: CustomPaginator()}

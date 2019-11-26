@@ -39,9 +39,10 @@
       </div>
     </mat-sidenav>
     <mat-sidenav-content>
-      <ng-content></ng-content>
+      <ng-content select="div[role=dashboard]"></ng-content>
     </mat-sidenav-content>
   </mat-sidenav-container>
+
   <ng-content fxFlexOffset="auto" select="div[role=footer]"></ng-content>
 </div>
 

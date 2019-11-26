@@ -1,17 +1,16 @@
 import {Component, Input, OnInit, ViewChild} from '@angular/core';
 import {MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
-import {SensorInUserGroup} from '../../models/sensor-in-user-group/sensor-in-user-group';
-import {SensorsApiService} from '../../services/apiService/sensors-api.service';
+import {FormulasApiService} from '../../services/apiService/formulas-api.service';
 
 @Component({
-  selector: 'app-sensors',
-  templateUrl: './sensors.component.html',
-  styleUrls: ['./sensors.component.scss']
+  selector: 'app-formulas',
+  templateUrl: './formulas.component.html',
+  styleUrls: ['./formulas.component.scss']
 })
-export class SensorsComponent implements OnInit {
-  displayedColumns: string[] = ['name', 'isActive', 'sensorReadingValue', 'view'];
-  sensors: any = [];
-  dataSource: MatTableDataSource<SensorInUserGroup>;
+export class FormulasComponent implements OnInit {
+  displayedColumns: string[] = ['name', 'view'];
+  formulas: any = [];
+  dataSource: MatTableDataSource<{ 'name': string }>;
   height: number;
 
   @Input()
@@ -23,11 +22,11 @@ export class SensorsComponent implements OnInit {
   @ViewChild(MatSort, {static: true}) sort: MatSort;
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
 
-  constructor(private sensorsApiService: SensorsApiService) {
+  constructor(private formulasApiService: FormulasApiService) {
   }
 
   ngOnInit() {
-    this.loadSensorsInList();
+    this.loadFormulasInList();
   }
 
   getPaginatorData() {
@@ -56,29 +55,14 @@ export class SensorsComponent implements OnInit {
     this.calculateTableHeight();
   }
 
-  loadSensorsInList() {
-    return this.sensorsApiService.getSensors(this.productKey, this.userGroupName).subscribe((data) => {
-      this.sensors = data.map(
+  loadFormulasInList() {
+    return this.formulasApiService.getFormulas(this.productKey, this.userGroupName).subscribe((data) => {
+      this.formulas = data.names.map(
         x => {
-          if (x.sensorReadingValue === true) {
-            x.sensorReadingValue = 'Podstawowy';
-          }
-
-          if (x.sensorReadingValue === false) {
-            x.sensorReadingValue = 'Alternatywny';
-          }
-
-          if (x.isActive === true) {
-            x.isActive = 'Tak';
-          }
-
-          if (x.isActive === false) {
-            x.isActive = 'Nie';
-          }
-          return x;
+          return {name: x};
         }
       );
-      this.dataSource = new MatTableDataSource<SensorInUserGroup>(this.sensors);
+      this.dataSource = new MatTableDataSource<{ 'name': string }>(this.formulas);
       this.dataSource.paginator = this.paginator;
       this.sort.sort({
         id: 'name',
@@ -89,11 +73,11 @@ export class SensorsComponent implements OnInit {
     });
   }
 
-  viewSensor(deviceKey: string) {
+  viewFormula(name: string) {
     console.log();
   }
 
-  addSensor() {
+  createFormula() {
     console.log();
   }
 }
