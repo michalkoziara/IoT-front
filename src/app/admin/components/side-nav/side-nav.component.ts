@@ -36,4 +36,8 @@ export class SideNavComponent implements OnInit, OnDestroy {
     this.closeChildren();
     this.viewCommunicationService.changeCurrentView('userGroupList');
   }
+  getUnconfiguredList() {
+    this.closeChildren();
+    this.viewCommunicationService.changeCurrentView('unconfiguredList');
+  }
 }

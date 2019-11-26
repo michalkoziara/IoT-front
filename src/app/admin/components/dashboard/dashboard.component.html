@@ -5,6 +5,7 @@
   <app-user-group *ngSwitchCase="'userGroupList'"
                   [productKey]="productKey"></app-user-group>
 
+  <app-unconfigured-devices *ngSwitchCase="'unconfiguredList'"
+                            [productKey]="productKey"></app-unconfigured-devices>
   <app-admin-start-card *ngSwitchDefault></app-admin-start-card>
-
 </div>

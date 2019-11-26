@@ -1,6 +1,5 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Subscription} from 'rxjs';
-import {AdminWelcomeService} from '../../services/adminWelcomeService/admin-welcome.service';
 import {AdminViewCommunicationService} from '../../services/admin-view-communication.service';
 
 @Component({

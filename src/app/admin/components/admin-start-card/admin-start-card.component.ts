@@ -41,7 +41,7 @@ export class AdminStartCardComponent implements OnInit {
   }
 
   getUnconfiguredList() {
-    this.welcomeService.changeIsGetUnconfigureListButtonClicked(true);
+    this.viewCommunicationService.changeCurrentView('unconfiguredList');
   }
 
   getDeviceTypeList() {

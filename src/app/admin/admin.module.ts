@@ -16,9 +16,10 @@ import {AdminInnerToolbarComponent} from './components/admin-inner-toolbar/admin
 import {FlexModule} from "@angular/flex-layout";
 import { UserGroupComponent } from './components/user-group/user-group.component';
 import {AdminViewCommunicationService} from './services/admin-view-communication.service';
+import { UnconfiguredDevicesComponent } from './components/unconfigured-devices/unconfigured-devices.component';
 
 @NgModule({
-  declarations: [routingComponents, AdminComponent, SideNavComponent, DashboardComponent, AdminStartCardComponent, AdminInnerToolbarComponent, UserGroupComponent],
+  declarations: [routingComponents, AdminComponent, SideNavComponent, DashboardComponent, AdminStartCardComponent, AdminInnerToolbarComponent, UserGroupComponent, UnconfiguredDevicesComponent],
   imports: [
     CommonModule,
     AdminRoutingModule,
