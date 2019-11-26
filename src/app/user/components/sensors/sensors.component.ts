@@ -60,19 +60,19 @@ export class SensorsComponent implements OnInit {
     return this.sensorsApiService.getSensors(this.productKey, this.userGroupName).subscribe((data) => {
       this.sensors = data.map(
         x => {
-          if (x.sensorReadingValue === true) {
+          if (x.sensorReadingValue === 'true') {
             x.sensorReadingValue = 'Podstawowy';
           }
 
-          if (x.sensorReadingValue === false) {
+          if (x.sensorReadingValue === 'false') {
             x.sensorReadingValue = 'Alternatywny';
           }
 
-          if (x.isActive === true) {
+          if (x.isActive === 'true') {
             x.isActive = 'Tak';
           }
 
-          if (x.isActive === false) {
+          if (x.isActive === 'false') {
             x.isActive = 'Nie';
           }
           return x;

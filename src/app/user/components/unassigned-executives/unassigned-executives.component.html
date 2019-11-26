@@ -1,0 +1,47 @@
+<mat-card class="table-card" [ngStyle]="{'height.px': (height)}">
+  <mat-form-field>
+    <input matInput
+           (keyup)="applyFilter($event.target.value)"
+           placeholder="Filtr">
+  </mat-form-field>
+
+  <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
+
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Nazwa</th>
+      <td mat-cell *matCellDef="let element"> {{element.name}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="isActive">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Aktywny</th>
+      <td mat-cell *matCellDef="let element"> {{element.isActive}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="view">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Szczegóły</th>
+      <td mat-cell *matCellDef="let element" class="td-btn">
+        <button mat-button class="btn" (click)="viewExecutive(element.deviceKey)">
+          <mat-icon>zoom_in</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="add">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Dodaj</th>
+      <td mat-cell *matCellDef="let element" class="td-btn">
+        <button mat-button class="btn" (click)="addExecutive(element.deviceKey)">
+          <mat-icon>add</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+
+  <mat-paginator [pageSize]="10"
+                 [pageSizeOptions]="[5, 10, 25, 100]"
+                 (page)="pageEvent = getPaginatorData($event)">
+  </mat-paginator>
+
+</mat-card>

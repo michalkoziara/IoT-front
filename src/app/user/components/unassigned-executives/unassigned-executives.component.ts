@@ -1,18 +1,17 @@
 import {Component, Input, OnInit, ViewChild} from '@angular/core';
 import {MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
-import {ExecutiveInUserGroup} from '../../models/executive-in-user-group/executive-in-user-group';
 import {ExecutivesApiService} from '../../services/apiService/executives-api.service';
-import {ViewCommunicationService} from '../../services/viewCommunicationService/view-communication.service';
+import {ExecutiveInList} from '../../models/executive-in-list/executive-in-list';
 
 @Component({
-  selector: 'app-executives',
-  templateUrl: './executives.component.html',
-  styleUrls: ['./executives.component.scss']
+  selector: 'app-unassigned-executives',
+  templateUrl: './unassigned-executives.component.html',
+  styleUrls: ['./unassigned-executives.component.scss']
 })
-export class ExecutivesComponent implements OnInit {
-  displayedColumns: string[] = ['name', 'state', 'isActive', 'formulaName', 'isFormulaUsed', 'view'];
+export class UnassignedExecutivesComponent implements OnInit {
+  displayedColumns: string[] = ['name', 'isActive', 'view', 'add'];
   executives: any = [];
-  dataSource: MatTableDataSource<ExecutiveInUserGroup>;
+  dataSource: MatTableDataSource<ExecutiveInList>;
   height: number;
 
   @Input()
@@ -24,8 +23,7 @@ export class ExecutivesComponent implements OnInit {
   @ViewChild(MatSort, {static: true}) sort: MatSort;
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
 
-  constructor(private viewCommunicationService: ViewCommunicationService,
-              private executivesApiService: ExecutivesApiService) {
+  constructor(private executivesApiService: ExecutivesApiService) {
   }
 
   ngOnInit() {
@@ -59,25 +57,9 @@ export class ExecutivesComponent implements OnInit {
   }
 
   loadExecutivesInList() {
-    return this.executivesApiService.getExecutives(this.productKey, this.userGroupName).subscribe((data) => {
+    return this.executivesApiService.getUnassignedExecutives(this.productKey).subscribe((data) => {
       this.executives = data.map(
         x => {
-          if (x.state === 'true') {
-            x.state = 'Podstawowy';
-          }
-
-          if (x.state === 'false') {
-            x.state = 'Alternatywny';
-          }
-
-          if (x.isFormulaUsed === 'true') {
-            x.isFormulaUsed = 'Tak';
-          }
-
-          if (x.isFormulaUsed === 'false') {
-            x.isFormulaUsed = 'Nie';
-          }
-
           if (x.isActive === 'true') {
             x.isActive = 'Tak';
           }
@@ -88,7 +70,7 @@ export class ExecutivesComponent implements OnInit {
           return x;
         }
       );
-      this.dataSource = new MatTableDataSource<ExecutiveInUserGroup>(this.executives);
+      this.dataSource = new MatTableDataSource<ExecutiveInList>(this.executives);
       this.dataSource.paginator = this.paginator;
       this.sort.sort({
         id: 'name',
@@ -103,7 +85,7 @@ export class ExecutivesComponent implements OnInit {
     console.log();
   }
 
-  addExecutive() {
-    this.viewCommunicationService.changeCurrentView('addUnassignedExecutive');
+  addExecutive(deviceKey: string) {
+    console.log();
   }
 }
