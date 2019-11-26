@@ -17,9 +17,10 @@ import {FlexModule} from "@angular/flex-layout";
 import { UserGroupComponent } from './components/user-group/user-group.component';
 import {AdminViewCommunicationService} from './services/admin-view-communication.service';
 import { UnconfiguredDevicesComponent } from './components/unconfigured-devices/unconfigured-devices.component';
+import { DevicesComponent } from './components/devices/devices.component';
 
 @NgModule({
-  declarations: [routingComponents, AdminComponent, SideNavComponent, DashboardComponent, AdminStartCardComponent, AdminInnerToolbarComponent, UserGroupComponent, UnconfiguredDevicesComponent],
+  declarations: [routingComponents, AdminComponent, SideNavComponent, DashboardComponent, AdminStartCardComponent, AdminInnerToolbarComponent, UserGroupComponent, UnconfiguredDevicesComponent, DevicesComponent],
   imports: [
     CommonModule,
     AdminRoutingModule,

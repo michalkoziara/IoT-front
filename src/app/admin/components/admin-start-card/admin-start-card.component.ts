@@ -33,7 +33,7 @@ export class AdminStartCardComponent implements OnInit {
   }
 
   getDeviceList() {
-    this.welcomeService.changeIsGetDeviceListButtonClicked(true);
+    this.viewCommunicationService.changeCurrentView('devicesList');
   }
 
   getSensorList() {
