@@ -14,7 +14,9 @@
                 [userGroupName]="selectedUserGroup"></app-formulas>
   <app-user-groups-in-device *ngSwitchCase="'joiningUserGroupsInDevice'"
                              [productKey]="selectedDeviceGroup"></app-user-groups-in-device>
-  <app-unassigned-executives *ngSwitchCase="'addUnassignedExecutive'"
+  <app-unassigned-executives *ngSwitchCase="'listUnassignedExecutives'"
                              [productKey]="selectedDeviceGroup"></app-unassigned-executives>
+  <app-unassigned-sensors *ngSwitchCase="'listUnassignedSensors'"
+                             [productKey]="selectedDeviceGroup"></app-unassigned-sensors>
   <app-start-card *ngSwitchDefault></app-start-card>
 </div>

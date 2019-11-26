@@ -1,18 +1,18 @@
 import {Component, Input, OnInit, ViewChild} from '@angular/core';
 import {MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
-import {SensorInUserGroup} from '../../models/sensor-in-user-group/sensor-in-user-group';
+import {ExecutiveInList} from '../../models/executive-in-list/executive-in-list';
+import {ExecutivesApiService} from '../../services/apiService/executives-api.service';
 import {SensorsApiService} from '../../services/apiService/sensors-api.service';
-import {ViewCommunicationService} from '../../services/viewCommunicationService/view-communication.service';
 
 @Component({
-  selector: 'app-sensors',
-  templateUrl: './sensors.component.html',
-  styleUrls: ['./sensors.component.scss']
+  selector: 'app-unassigned-sensors',
+  templateUrl: './unassigned-sensors.component.html',
+  styleUrls: ['./unassigned-sensors.component.scss']
 })
-export class SensorsComponent implements OnInit {
-  displayedColumns: string[] = ['name', 'isActive', 'sensorReadingValue', 'view'];
+export class UnassignedSensorsComponent implements OnInit {
+  displayedColumns: string[] = ['name', 'isActive', 'view', 'add'];
   sensors: any = [];
-  dataSource: MatTableDataSource<SensorInUserGroup>;
+  dataSource: MatTableDataSource<ExecutiveInList>;
   height: number;
 
   @Input()
@@ -24,8 +24,7 @@ export class SensorsComponent implements OnInit {
   @ViewChild(MatSort, {static: true}) sort: MatSort;
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
 
-  constructor(private viewCommunicationService: ViewCommunicationService,
-              private sensorsApiService: SensorsApiService) {
+  constructor(private sensorsApiService: SensorsApiService) {
   }
 
   ngOnInit() {
@@ -59,17 +58,9 @@ export class SensorsComponent implements OnInit {
   }
 
   loadSensorsInList() {
-    return this.sensorsApiService.getSensors(this.productKey, this.userGroupName).subscribe((data) => {
+    return this.sensorsApiService.getUnassignedSensors(this.productKey).subscribe((data) => {
       this.sensors = data.map(
         x => {
-          if (x.sensorReadingValue === 'true') {
-            x.sensorReadingValue = 'Podstawowy';
-          }
-
-          if (x.sensorReadingValue === 'false') {
-            x.sensorReadingValue = 'Alternatywny';
-          }
-
           if (x.isActive === 'true') {
             x.isActive = 'Tak';
           }
@@ -80,7 +71,7 @@ export class SensorsComponent implements OnInit {
           return x;
         }
       );
-      this.dataSource = new MatTableDataSource<SensorInUserGroup>(this.sensors);
+      this.dataSource = new MatTableDataSource<ExecutiveInList>(this.sensors);
       this.dataSource.paginator = this.paginator;
       this.sort.sort({
         id: 'name',
@@ -95,7 +86,7 @@ export class SensorsComponent implements OnInit {
     console.log();
   }
 
-  addSensor() {
-    this.viewCommunicationService.changeCurrentView('listUnassignedSensors');
+  addSensor(deviceKey: string) {
+    console.log();
   }
 }

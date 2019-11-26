@@ -4,6 +4,8 @@ import {Observable, throwError} from 'rxjs';
 import {environment} from '../../../../environments/environment';
 import {catchError, retry} from 'rxjs/operators';
 import {SensorInUserGroup} from '../../models/sensor-in-user-group/sensor-in-user-group';
+import {ExecutiveInList} from '../../models/executive-in-list/executive-in-list';
+import {SensorInList} from '../../models/sensor-in-list/sensor-in-list';
 
 @Injectable()
 export class SensorsApiService {
@@ -18,6 +20,15 @@ export class SensorsApiService {
 
   getSensors(productKey: string, name: string): Observable<[SensorInUserGroup]> {
     return this.http.get<[SensorInUserGroup]>(`${environment.apiUrl}/hubs/${productKey}/user-groups/${name}/sensors`)
+      .pipe(
+        retry(1),
+        catchError(this.handleError)
+      );
+  }
+
+  getUnassignedSensors(productKey: string): Observable<[SensorInList]> {
+    return this.http.get<[SensorInList]>(
+      `${environment.apiUrl}/hubs/${productKey}/sensors/unassigned`)
       .pipe(
         retry(1),
         catchError(this.handleError)

@@ -104,6 +104,6 @@ export class ExecutivesComponent implements OnInit {
   }
 
   addExecutive() {
-    this.viewCommunicationService.changeCurrentView('addUnassignedExecutive');
+    this.viewCommunicationService.changeCurrentView('listUnassignedExecutives');
   }
 }

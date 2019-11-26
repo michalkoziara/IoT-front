@@ -28,6 +28,7 @@ import { FormulasComponent } from './components/formulas/formulas.component';
 import {FormulasApiService} from './services/apiService/formulas-api.service';
 import { UserGroupsInDeviceComponent } from './components/user-groups-in-device/user-groups-in-device.component';
 import { UnassignedExecutivesComponent } from './components/unassigned-executives/unassigned-executives.component';
+import { UnassignedSensorsComponent } from './components/unassigned-sensors/unassigned-sensors.component';
 
 @NgModule({
   declarations: [
@@ -41,7 +42,8 @@ import { UnassignedExecutivesComponent } from './components/unassigned-executive
     ExecutivesComponent,
     FormulasComponent,
     UserGroupsInDeviceComponent,
-    UnassignedExecutivesComponent
+    UnassignedExecutivesComponent,
+    UnassignedSensorsComponent
   ],
   imports: [
     CommonModule,
