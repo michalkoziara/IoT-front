@@ -1,17 +1,11 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 import {DashboardComponent} from './components/dashboard/dashboard.component';
-import {AuthGuard} from '../guards/auth.guard';
 import {UserComponent} from './user.component';
 
 const routes: Routes = [
-  {
-    path: 'user', component: UserComponent,
-    children: [
-      {path: 'dashboard', component: UserComponent},
-    ],
-    canActivate: [AuthGuard]
-  },
+  {path: '', component: UserComponent},
+  {path: 'dashboard', component: UserComponent}
 ];
 
 @NgModule({

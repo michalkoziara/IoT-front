@@ -6,13 +6,8 @@ import {DashboardComponent} from './components/dashboard/dashboard.component';
 import {AdminComponent} from './admin.component';
 
 const routes: Routes = [
-  {
-    path: 'admin', component: AdminComponent,
-    children: [
-      {path: 'dashboard', component: AdminComponent},
-    ],
-    canActivate: [AuthGuard]
-  },
+  {path: '', component: AdminComponent},
+  {path: 'dashboard', component: AdminComponent}
 ];
 
 @NgModule({

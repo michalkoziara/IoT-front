@@ -32,13 +32,13 @@ export class DeviceGroupsApiService {
       );
   }
 
-  handleError(error) {
-    let errorMessage = '';
-    if (error.error instanceof ErrorEvent) {
-      errorMessage = error.error.message;
+  handleError(response) {
+    if (response.error instanceof ErrorEvent) {
+      console.log(response.error.message);
+      return throwError(response.error.message);
     } else {
-      errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
+      console.log(`Error Code: ${response.status}\nMessage: ${response.error.errorMessage}`);
+      return throwError({errorCode: response.status, message: response.error.errorMessage});
     }
-    return throwError(errorMessage);
   }
 }
