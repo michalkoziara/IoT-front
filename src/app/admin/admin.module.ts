@@ -15,9 +15,15 @@ import {AdminWelcomeService} from './services/adminWelcomeService/admin-welcome.
 import {AdminInnerToolbarComponent} from './components/admin-inner-toolbar/admin-inner-toolbar.component';
 import {FlexModule} from '@angular/flex-layout';
 import {UserGroupComponent} from './components/user-group/user-group.component';
+import {AdminViewCommunicationService} from './services/admin-view-communication.service';
+import { UnconfiguredDevicesComponent } from './components/unconfigured-devices/unconfigured-devices.component';
+import { DevicesComponent } from './components/devices/devices.component';
+import { SensorsComponent } from './components/sensors/sensors.component';
+import { ExecutiveTypeComponent } from './components/executive-type/executive-type.component';
+import { SensorTypeComponent } from './components/sensor-type/sensor-type.component';
 
 @NgModule({
-  declarations: [routingComponents, AdminComponent, SideNavComponent, DashboardComponent, AdminStartCardComponent, AdminInnerToolbarComponent, UserGroupComponent],
+  declarations: [routingComponents, AdminComponent, SideNavComponent, DashboardComponent, AdminStartCardComponent, AdminInnerToolbarComponent, UserGroupComponent, UnconfiguredDevicesComponent, DevicesComponent, SensorsComponent, ExecutiveTypeComponent, SensorTypeComponent],
   imports: [
     CommonModule,
     AdminRoutingModule,
@@ -28,7 +34,8 @@ import {UserGroupComponent} from './components/user-group/user-group.component';
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true},
     {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true},
-    AdminWelcomeService
+    AdminWelcomeService,
+    AdminViewCommunicationService
   ],
 })
 export class AdminModule {

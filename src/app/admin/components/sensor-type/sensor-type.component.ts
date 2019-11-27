@@ -1,18 +1,17 @@
 import {Component, Input, OnInit, ViewChild} from '@angular/core';
 import {MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
-import {UserGroupInList} from '../../models/user-group-in-list';
-import {UserGroupApiService} from '../../services/apiService/user-group-api.service';
-import {UserGroupService} from '../../services/user-group.service';
+import {SensorTypeApiService} from '../../services/apiService/sensor-type-api.service';
 
 @Component({
-  selector: 'app-user-group',
-  templateUrl: './user-group.component.html',
-  styleUrls: ['./user-group.component.scss']
+  selector: 'app-sensor-type',
+  templateUrl: './sensor-type.component.html',
+  styleUrls: ['./sensor-type.component.scss']
 })
-export class UserGroupComponent implements OnInit {
+export class SensorTypeComponent implements OnInit {
+
   displayedColumns: string[] = ['name', 'actions'];
-  userGroups: any = [];
-  dataSource: MatTableDataSource<UserGroupInList>;
+  sensorType: any = [];
+  dataSource: MatTableDataSource<string>;
   height: number;
 
   @Input()
@@ -21,13 +20,12 @@ export class UserGroupComponent implements OnInit {
   @ViewChild(MatSort, {static: true}) sort: MatSort;
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
 
-  constructor(private userGroupApi: UserGroupApiService,
-              private userGroupService: UserGroupService
-  ) {
+
+  constructor(private sensorTypeApiService: SensorTypeApiService) {
   }
 
   ngOnInit() {
-    this.loadUserGroupsInList();
+    this.loadExecutiveTypesList();
   }
 
   getPaginatorData() {
@@ -57,12 +55,14 @@ export class UserGroupComponent implements OnInit {
     this.calculateTableHeight();
   }
 
-  loadUserGroupsInList() {
-    return this.userGroupApi.getUserGroups(this.productKey).subscribe((data) => {
-      this.userGroups = data.userGroups;
-      this.dataSource = new MatTableDataSource<UserGroupInList>(this.userGroups);
+  loadExecutiveTypesList() {
+    return this.sensorTypeApiService.getSensorTypes(this.productKey).subscribe((data) => {
+      this.sensorType = data.map(x => {
+        return {name: x};
+      });
+      this.dataSource = new MatTableDataSource<string>(this.sensorType);
       this.sort.sort({
-        id: 'name',
+        id: 'deviceKey',
         start: 'asc',
         disableClear: false
       });
@@ -70,9 +70,8 @@ export class UserGroupComponent implements OnInit {
     });
   }
 
-  deleteUserGroup(userGroupName: string) {
-    console.log(userGroupName);
+  deleteExecutiveType(typeName: string) {
+    console.log(typeName);
   }
-
 
 }
