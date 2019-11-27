@@ -2,6 +2,7 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Subscription} from 'rxjs';
 import {AdminWelcomeService} from '../../services/adminWelcomeService/admin-welcome.service';
 import {ProductKeyApiService} from '../../services/apiService/product-key-api.service';
+import {AdminViewCommunicationService} from '../../services/admin-view-communication.service';
 
 
 @Component({
@@ -13,6 +14,11 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   productKey: string;
   deviceGroupName: string;
+  productKeyApiSubscription: Subscription;
+
+
+  currentView: string;
+  currentViewSubscription: Subscription;
 
   isGetUsersGroupsListButtonClicked: boolean;
   isGetUsersGroupsListButtonClickedSubscription: Subscription;
@@ -32,12 +38,20 @@ export class DashboardComponent implements OnInit, OnDestroy {
   isGetDevicesTypesListButtonClicked: boolean;
   isGetDevicesTypesListButtonClickedSubscription: Subscription;
 
-  constructor(private welcomeService: AdminWelcomeService,
+  constructor(private viewCommunicationService: AdminViewCommunicationService,
+              private welcomeService: AdminWelcomeService,
               private productKeyApiService: ProductKeyApiService) {
   }
 
   ngOnInit() {
-    this.productKeyApiService.getDeviceGroup().subscribe(x => {
+
+    this.currentViewSubscription = this.viewCommunicationService.currentView$.subscribe(
+      x => {
+        this.currentView = x;
+      }
+    );
+
+    this.productKeyApiSubscription = this.productKeyApiService.getDeviceGroup().subscribe(x => {
       if (x != null) {
         this.productKey = x[0].productKey;
         this.deviceGroupName = x[0].name;
@@ -66,6 +80,10 @@ export class DashboardComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
+    this.productKeyApiSubscription.unsubscribe();
+    this.currentViewSubscription.unsubscribe();
+
+
     this.isGetUsersGroupsListButtonClickedSubscription.unsubscribe();
     this.isGetSensorsListButtonClickedSubscription.unsubscribe();
     this.isGetDeviceListButtonClickedSubscription.unsubscribe();

@@ -1,18 +1,17 @@
 import {Component, Input, OnInit, ViewChild} from '@angular/core';
 import {MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
-import {UserGroupInList} from '../../models/user-group-in-list';
-import {UserGroupApiService} from '../../services/apiService/user-group-api.service';
-import {UserGroupService} from '../../services/user-group.service';
+import {Sensor} from '../../models/sensor';
+import {SensorApiService} from '../../services/apiService/sensor-api.service';
 
 @Component({
-  selector: 'app-user-group',
-  templateUrl: './user-group.component.html',
-  styleUrls: ['./user-group.component.scss']
+  selector: 'app-sensors',
+  templateUrl: './sensors.component.html',
+  styleUrls: ['./sensors.component.scss']
 })
-export class UserGroupComponent implements OnInit {
-  displayedColumns: string[] = ['name', 'actions'];
-  userGroups: any = [];
-  dataSource: MatTableDataSource<UserGroupInList>;
+export class SensorsComponent implements OnInit {
+  displayedColumns: string[] = ['name', 'isActive', 'deviceKey', 'actions'];
+  sensors: any = [];
+  dataSource: MatTableDataSource<[Sensor]>;
   height: number;
 
   @Input()
@@ -21,13 +20,12 @@ export class UserGroupComponent implements OnInit {
   @ViewChild(MatSort, {static: true}) sort: MatSort;
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
 
-  constructor(private userGroupApi: UserGroupApiService,
-              private userGroupService: UserGroupService
-  ) {
+  constructor( private sensorApiService: SensorApiService) {
+    console.log(this.sensorApiService);
   }
 
   ngOnInit() {
-    this.loadUserGroupsInList();
+    this.loadSenorsInList();
   }
 
   getPaginatorData() {
@@ -57,10 +55,22 @@ export class UserGroupComponent implements OnInit {
     this.calculateTableHeight();
   }
 
-  loadUserGroupsInList() {
-    return this.userGroupApi.getUserGroups(this.productKey).subscribe((data) => {
-      this.userGroups = data.userGroups;
-      this.dataSource = new MatTableDataSource<UserGroupInList>(this.userGroups);
+  loadSenorsInList() {
+    return this.sensorApiService.getSensors(this.productKey).subscribe((data) => {
+      this.sensors = data.map(
+        x => {
+
+          if (x.isActive === 'true') {
+            x.isActive = 'Tak';
+          }
+
+          if (x.isActive === 'false') {
+            x.isActive = 'Nie';
+          }
+          return x;
+        }
+      );
+      this.dataSource = new MatTableDataSource<[Sensor]>(this.sensors);
       this.sort.sort({
         id: 'name',
         start: 'asc',
@@ -70,9 +80,8 @@ export class UserGroupComponent implements OnInit {
     });
   }
 
-  deleteUserGroup(userGroupName: string) {
-    console.log(userGroupName);
+  modifySensor(deviceKey: string) {
+    console.log(deviceKey);
   }
-
 
 }

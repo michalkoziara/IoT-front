@@ -1,18 +1,16 @@
 import {Component, Input, OnInit, ViewChild} from '@angular/core';
 import {MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
-import {UserGroupInList} from '../../models/user-group-in-list';
-import {UserGroupApiService} from '../../services/apiService/user-group-api.service';
-import {UserGroupService} from '../../services/user-group.service';
+import {UnconfiguredApiService} from '../../services/apiService/unconfigured-api.service';
 
 @Component({
-  selector: 'app-user-group',
-  templateUrl: './user-group.component.html',
-  styleUrls: ['./user-group.component.scss']
+  selector: 'app-unconfigured-devices',
+  templateUrl: './unconfigured-devices.component.html',
+  styleUrls: ['./unconfigured-devices.component.scss']
 })
-export class UserGroupComponent implements OnInit {
+export class UnconfiguredDevicesComponent implements OnInit {
   displayedColumns: string[] = ['name', 'actions'];
-  userGroups: any = [];
-  dataSource: MatTableDataSource<UserGroupInList>;
+  unconfigured: any = [];
+  dataSource: MatTableDataSource<string>;
   height: number;
 
   @Input()
@@ -21,13 +19,12 @@ export class UserGroupComponent implements OnInit {
   @ViewChild(MatSort, {static: true}) sort: MatSort;
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
 
-  constructor(private userGroupApi: UserGroupApiService,
-              private userGroupService: UserGroupService
-  ) {
+
+  constructor(private unconfiguredApiService: UnconfiguredApiService) {
   }
 
   ngOnInit() {
-    this.loadUserGroupsInList();
+    this.loadUnconfiguredList();
   }
 
   getPaginatorData() {
@@ -57,12 +54,14 @@ export class UserGroupComponent implements OnInit {
     this.calculateTableHeight();
   }
 
-  loadUserGroupsInList() {
-    return this.userGroupApi.getUserGroups(this.productKey).subscribe((data) => {
-      this.userGroups = data.userGroups;
-      this.dataSource = new MatTableDataSource<UserGroupInList>(this.userGroups);
+  loadUnconfiguredList() {
+    return this.unconfiguredApiService.getUnconfigured(this.productKey).subscribe((data) => {
+      this.unconfigured = data.map(x => {
+        return {deviceKey: x};
+      });
+      this.dataSource = new MatTableDataSource<string>(this.unconfigured);
       this.sort.sort({
-        id: 'name',
+        id: 'deviceKey',
         start: 'asc',
         disableClear: false
       });
@@ -70,8 +69,8 @@ export class UserGroupComponent implements OnInit {
     });
   }
 
-  deleteUserGroup(userGroupName: string) {
-    console.log(userGroupName);
+  configureUnconfigured(unconfiguredDeviceKey: string) {
+    console.log(unconfiguredDeviceKey);
   }
 
 

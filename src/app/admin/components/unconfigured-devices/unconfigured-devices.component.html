@@ -8,14 +8,14 @@
   <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
 
     <ng-container matColumnDef="name">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> Nazwa</th>
-      <td mat-cell *matCellDef="let element"> {{element.name}}</td>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Klucz urządzenia</th>
+      <td mat-cell *matCellDef="let element"> {{element.deviceKey}}</td>
     </ng-container>
 
     <ng-container matColumnDef="actions">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> Usuń</th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Skonfiguruj</th>
       <td mat-cell *matCellDef="let element" class="td-btn">
-        <button mat-button class="group-btn" (click)="deleteUserGroup(element.name)">
+        <button mat-button class="group-btn" (click)="configureUnconfigured(element.deviceKey)">
           <mat-icon>group</mat-icon>
         </button>
       </td>

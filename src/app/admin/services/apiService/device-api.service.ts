@@ -3,13 +3,12 @@ import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Observable, throwError} from 'rxjs';
 import {environment} from '../../../../environments/environment';
 import {catchError, retry} from 'rxjs/operators';
-import {UserGroupInList} from '../../models/user-group-in-list';
+import {Devices} from '../../models/devices';
 
 @Injectable({
   providedIn: 'root'
 })
-export class UserGroupApiService {
-
+export class DeviceApiService {
   httpOptions = {
     headers: new HttpHeaders({
       'Content-Type': 'application/json'
@@ -19,8 +18,8 @@ export class UserGroupApiService {
   constructor(private http: HttpClient) {
   }
 
-  getUserGroups(productKey: string): Observable<{'userGroups': [UserGroupInList]}> {
-    return this.http.get<{'userGroups': [UserGroupInList]}>(`${environment.apiUrl}/hubs/${productKey}/user-groups`)
+  getDevices(productKey: string): Observable<[Devices]> {
+    return this.http.get<[Devices]>(`${environment.apiUrl}/hubs/${productKey}/executive-devices`)
       .pipe(
         retry(1),
         catchError(this.handleError)
