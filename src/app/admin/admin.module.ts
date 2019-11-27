@@ -19,9 +19,10 @@ import {AdminViewCommunicationService} from './services/admin-view-communication
 import { UnconfiguredDevicesComponent } from './components/unconfigured-devices/unconfigured-devices.component';
 import { DevicesComponent } from './components/devices/devices.component';
 import { SensorsComponent } from './components/sensors/sensors.component';
+import { ExecutiveTypeComponent } from './components/executive-type/executive-type.component';
 
 @NgModule({
-  declarations: [routingComponents, AdminComponent, SideNavComponent, DashboardComponent, AdminStartCardComponent, AdminInnerToolbarComponent, UserGroupComponent, UnconfiguredDevicesComponent, DevicesComponent, SensorsComponent],
+  declarations: [routingComponents, AdminComponent, SideNavComponent, DashboardComponent, AdminStartCardComponent, AdminInnerToolbarComponent, UserGroupComponent, UnconfiguredDevicesComponent, DevicesComponent, SensorsComponent, ExecutiveTypeComponent],
   imports: [
     CommonModule,
     AdminRoutingModule,

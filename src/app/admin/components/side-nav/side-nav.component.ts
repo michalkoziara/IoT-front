@@ -36,6 +36,7 @@ export class SideNavComponent implements OnInit, OnDestroy {
     this.closeChildren();
     this.viewCommunicationService.changeCurrentView('userGroupList');
   }
+
   getUnconfiguredList() {
     this.closeChildren();
     this.viewCommunicationService.changeCurrentView('unconfiguredList');
@@ -49,6 +50,11 @@ export class SideNavComponent implements OnInit, OnDestroy {
   getSensors() {
     this.closeChildren();
     this.viewCommunicationService.changeCurrentView('sensorsList');
+  }
+
+  getDevicesTypes() {
+    this.closeChildren();
+    this.viewCommunicationService.changeCurrentView('executiveTypesList');
   }
 
 

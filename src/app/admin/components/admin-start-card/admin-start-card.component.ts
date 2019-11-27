@@ -45,7 +45,7 @@ export class AdminStartCardComponent implements OnInit {
   }
 
   getDeviceTypeList() {
-    this.welcomeService.changeIsGetDevicesTypesListButtonClicked(true);
+    this.viewCommunicationService.changeCurrentView('executiveTypesList');
   }
 
   getSensorTypeList() {
