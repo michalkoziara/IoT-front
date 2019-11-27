@@ -24,9 +24,13 @@ import {UserGroupsService} from './services/userGroupsService/user-groups.servic
 import {ViewCommunicationService} from './services/viewCommunicationService/view-communication.service';
 import {ExecutivesComponent} from './components/executives/executives.component';
 import {ExecutivesApiService} from './services/apiService/executives-api.service';
-import { FormulasComponent } from './components/formulas/formulas.component';
+import {FormulasComponent} from './components/formulas/formulas.component';
 import {FormulasApiService} from './services/apiService/formulas-api.service';
-import { UserGroupsInDeviceComponent } from './components/user-groups-in-device/user-groups-in-device.component';
+import {UserGroupsInDeviceComponent} from './components/user-groups-in-device/user-groups-in-device.component';
+import {UnassignedExecutivesComponent} from './components/unassigned-executives/unassigned-executives.component';
+import {UnassignedSensorsComponent} from './components/unassigned-sensors/unassigned-sensors.component';
+import {AddDeviceGroupComponent} from './components/add-device-group/add-device-group.component';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -39,7 +43,10 @@ import { UserGroupsInDeviceComponent } from './components/user-groups-in-device/
     SensorsComponent,
     ExecutivesComponent,
     FormulasComponent,
-    UserGroupsInDeviceComponent
+    UserGroupsInDeviceComponent,
+    UnassignedExecutivesComponent,
+    UnassignedSensorsComponent,
+    AddDeviceGroupComponent
   ],
   imports: [
     CommonModule,
@@ -47,6 +54,8 @@ import { UserGroupsInDeviceComponent } from './components/user-groups-in-device/
     AngularMaterialModule,
     FlexLayoutModule,
     UserRoutingModule,
+    ReactiveFormsModule,
+    FormsModule
   ],
   providers: [
     DeviceGroupsService,

@@ -8,11 +8,9 @@ import {AngularMaterialModule} from './angular-material.module';
 import {FlexLayoutModule} from '@angular/flex-layout';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 
-import {AdminModule} from './admin/admin.module';
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {ErrorInterceptor} from './services/authService/error.interceptor';
 import {JwtInterceptor} from './services/authService/auth.interceptor';
-import {UserModule} from './user/user.module';
 import {RoutingRoutingModule} from './routing/routing-routing.module';
 import {SharedModule} from './shared/shared.module';
 import {TopToolbarComponent} from './components/top-toolbar/top-toolbar.component';
@@ -33,8 +31,6 @@ import {TopToolbarComponent} from './components/top-toolbar/top-toolbar.componen
     ReactiveFormsModule,
     HttpClientModule,
     SharedModule,
-    AdminModule,
-    UserModule,
     RoutingRoutingModule,
   ],
   providers: [

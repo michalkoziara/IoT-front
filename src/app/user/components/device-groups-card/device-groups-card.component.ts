@@ -74,6 +74,6 @@ export class DeviceGroupsCardComponent implements OnInit {
   }
 
   addNewDeviceGroup() {
-    this.viewCommunicationService.changeCurrentView('addNewDviceGroup');
+    this.viewCommunicationService.changeCurrentView('addNewDeviceGroup');
   }
 }

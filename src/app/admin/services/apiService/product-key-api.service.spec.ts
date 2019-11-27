@@ -1,6 +1,6 @@
-import { TestBed } from '@angular/core/testing';
+import {TestBed} from '@angular/core/testing';
 
-import { ProductKeyApiService } from './product-key-api.service';
+import {ProductKeyApiService} from './product-key-api.service';
 
 describe('ProductKeyApiService', () => {
   beforeEach(() => TestBed.configureTestingModule({}));

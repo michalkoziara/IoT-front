@@ -14,14 +14,16 @@ import {
   MatListModule,
   MatNativeDateModule,
   MatPaginatorModule,
+  MatProgressBarModule,
   MatRadioModule,
   MatSelectModule,
   MatSidenavModule,
   MatSnackBarModule,
   MatSortModule,
+  MatStepperModule,
   MatTableModule,
   MatToolbarModule,
-  MatTooltipModule,
+  MatTooltipModule
 } from '@angular/material';
 
 @NgModule({
@@ -31,6 +33,7 @@ import {
     MatButtonModule,
     MatToolbarModule,
     MatIconModule,
+    MatStepperModule,
     MatSidenavModule,
     MatBadgeModule,
     MatListModule,
@@ -47,6 +50,7 @@ import {
     MatTableModule,
     MatPaginatorModule,
     MatSnackBarModule,
+    MatProgressBarModule
 
   ],
   exports: [
@@ -58,6 +62,7 @@ import {
     MatBadgeModule,
     MatListModule,
     MatSortModule,
+    MatStepperModule,
     MatGridListModule,
     MatInputModule,
     MatFormFieldModule,
@@ -68,7 +73,8 @@ import {
     MatTooltipModule,
     MatTableModule,
     MatPaginatorModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatProgressBarModule
   ],
   providers: [
     MatDatepickerModule,

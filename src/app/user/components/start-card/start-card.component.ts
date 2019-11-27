@@ -27,6 +27,6 @@ export class StartCardComponent implements OnInit {
   }
 
   addNewDeviceGroup() {
-    this.viewCommunicationService.changeCurrentView('addNewDviceGroup');
+    this.viewCommunicationService.changeCurrentView('addNewDeviceGroup');
   }
 }

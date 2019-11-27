@@ -2,6 +2,7 @@ import {Component, Input, OnInit, ViewChild} from '@angular/core';
 import {MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
 import {ExecutiveInUserGroup} from '../../models/executive-in-user-group/executive-in-user-group';
 import {ExecutivesApiService} from '../../services/apiService/executives-api.service';
+import {ViewCommunicationService} from '../../services/viewCommunicationService/view-communication.service';
 
 @Component({
   selector: 'app-executives',
@@ -23,7 +24,8 @@ export class ExecutivesComponent implements OnInit {
   @ViewChild(MatSort, {static: true}) sort: MatSort;
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
 
-  constructor(private executivesApiService: ExecutivesApiService) {
+  constructor(private viewCommunicationService: ViewCommunicationService,
+              private executivesApiService: ExecutivesApiService) {
   }
 
   ngOnInit() {
@@ -102,6 +104,6 @@ export class ExecutivesComponent implements OnInit {
   }
 
   addExecutive() {
-    console.log();
+    this.viewCommunicationService.changeCurrentView('listUnassignedExecutives');
   }
 }

@@ -1,20 +1,20 @@
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
-import {DashboardComponent} from './dashboard.component';
+import {UnassignedSensorsComponent} from './unassigned-sensors.component';
 
-describe('DashboardComponent', () => {
-  let component: DashboardComponent;
-  let fixture: ComponentFixture<DashboardComponent>;
+describe('UnassignedSensorsComponent', () => {
+  let component: UnassignedSensorsComponent;
+  let fixture: ComponentFixture<UnassignedSensorsComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ DashboardComponent ]
+      declarations: [ UnassignedSensorsComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(DashboardComponent);
+    fixture = TestBed.createComponent(UnassignedSensorsComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
