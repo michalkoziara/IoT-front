@@ -3,12 +3,12 @@ import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Observable, throwError} from 'rxjs';
 import {environment} from '../../../../environments/environment';
 import {catchError, retry} from 'rxjs/operators';
-import {Devices} from '../../models/devices';
+import {Sensor} from '../../models/sensor';
 
 @Injectable({
   providedIn: 'root'
 })
-export class DeviceApiService {
+export class SensorApiService {
   httpOptions = {
     headers: new HttpHeaders({
       'Content-Type': 'application/json'
@@ -18,8 +18,8 @@ export class DeviceApiService {
   constructor(private http: HttpClient) {
   }
 
-  getDevices(productKey: string): Observable<[Devices]> {
-    return this.http.get<[Devices]>(`${environment.apiUrl}/hubs/${productKey}/executive-devices`)
+  getSensors(productKey: string): Observable<[Sensor]> {
+    return this.http.get<[Sensor]>(`${environment.apiUrl}/hubs/${productKey}/sensors`)
       .pipe(
         retry(1),
         catchError(this.handleError)

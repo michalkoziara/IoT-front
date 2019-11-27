@@ -46,5 +46,10 @@ export class SideNavComponent implements OnInit, OnDestroy {
     this.viewCommunicationService.changeCurrentView('devicesList');
   }
 
+  getSensors() {
+    this.closeChildren();
+    this.viewCommunicationService.changeCurrentView('sensorsList');
+  }
+
 
 }

@@ -37,7 +37,7 @@ export class AdminStartCardComponent implements OnInit {
   }
 
   getSensorList() {
-    this.welcomeService.changeIsGetSensorsListButtonClickedSource(true);
+    this.viewCommunicationService.changeCurrentView('sensorsList');
   }
 
   getUnconfiguredList() {

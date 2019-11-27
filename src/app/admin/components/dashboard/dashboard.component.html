@@ -10,5 +10,9 @@
 
   <app-devices *ngSwitchCase="'devicesList'"
                [productKey]="productKey"></app-devices>
+
+  <app-sensors *ngSwitchCase="'sensorsList'"
+               [productKey]="productKey"></app-sensors>
+
   <app-admin-start-card *ngSwitchDefault></app-admin-start-card>
 </div>
