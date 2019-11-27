@@ -24,13 +24,21 @@ export class UserGroupsApiService {
       );
   }
 
-  handleError(error) {
-    let errorMessage = '';
-    if (error.error instanceof ErrorEvent) {
-      errorMessage = error.error.message;
+  createUserGroup(productKey: string, requestData) {
+    return this.http.post<any>(`${environment.apiUrl}/hubs/${productKey}/user-groups`, requestData, this.httpOptions)
+      .pipe(
+        retry(1),
+        catchError(this.handleError)
+      );
+  }
+
+  handleError(response) {
+    if (response.error instanceof ErrorEvent) {
+      console.log(response.error.message);
+      return throwError(response.error.message);
     } else {
-      errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
+      console.log(`Error Code: ${response.status}\nMessage: ${response.error.errorMessage}`);
+      return throwError({errorCode: response.status, message: response.error.errorMessage});
     }
-    return throwError(errorMessage);
   }
 }
