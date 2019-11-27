@@ -1,16 +1,16 @@
 import {Component, Input, OnInit, ViewChild} from '@angular/core';
 import {MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
-import {ExecutiveTypeApiService} from '../../services/apiService/executive-type-api.service';
+import {SensorTypeApiService} from '../../services/apiService/sensor-type-api.service';
 
 @Component({
-  selector: 'app-executive-type',
-  templateUrl: './executive-type.component.html',
-  styleUrls: ['./executive-type.component.scss']
+  selector: 'app-sensor-type',
+  templateUrl: './sensor-type.component.html',
+  styleUrls: ['./sensor-type.component.scss']
 })
-export class ExecutiveTypeComponent implements OnInit {
+export class SensorTypeComponent implements OnInit {
 
   displayedColumns: string[] = ['name', 'actions'];
-  executiveType: any = [];
+  sensorType: any = [];
   dataSource: MatTableDataSource<string>;
   height: number;
 
@@ -21,7 +21,7 @@ export class ExecutiveTypeComponent implements OnInit {
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
 
 
-  constructor(private executiveTypeApiService: ExecutiveTypeApiService) {
+  constructor(private sensorTypeApiService: SensorTypeApiService) {
   }
 
   ngOnInit() {
@@ -56,11 +56,11 @@ export class ExecutiveTypeComponent implements OnInit {
   }
 
   loadExecutiveTypesList() {
-    return this.executiveTypeApiService.getExecutiveTypes(this.productKey).subscribe((data) => {
-      this.executiveType = data.map(x => {
+    return this.sensorTypeApiService.getSensorTypes(this.productKey).subscribe((data) => {
+      this.sensorType = data.map(x => {
         return {name: x};
       });
-      this.dataSource = new MatTableDataSource<string>(this.executiveType);
+      this.dataSource = new MatTableDataSource<string>(this.sensorType);
       this.sort.sort({
         id: 'deviceKey',
         start: 'asc',
@@ -73,4 +73,5 @@ export class ExecutiveTypeComponent implements OnInit {
   deleteExecutiveType(typeName: string) {
     console.log(typeName);
   }
+
 }

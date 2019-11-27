@@ -49,7 +49,7 @@ export class AdminStartCardComponent implements OnInit {
   }
 
   getSensorTypeList() {
-    this.welcomeService.changeIsGetSensorTypesListButtonClicked(true);
+    this.viewCommunicationService.changeCurrentView('sensorTypesList');
   }
 
 
