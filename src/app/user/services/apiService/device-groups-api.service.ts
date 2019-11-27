@@ -3,7 +3,7 @@ import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Observable, throwError} from 'rxjs';
 import {DeviceGroupInList} from '../../models/device-group-in-list/device-group-in-list';
 import {environment} from '../../../../environments/environment';
-import {catchError, retry} from 'rxjs/operators';
+import {catchError, map, retry} from 'rxjs/operators';
 
 @Injectable()
 export class DeviceGroupsApiService {
@@ -18,6 +18,14 @@ export class DeviceGroupsApiService {
 
   getDeviceGroups(): Observable<[DeviceGroupInList]> {
     return this.http.get<[DeviceGroupInList]>(`${environment.apiUrl}/hubs`)
+      .pipe(
+        retry(1),
+        catchError(this.handleError)
+      );
+  }
+
+  addDeviceGroup(requestData) {
+    return this.http.put<any>(`${environment.apiUrl}/users`, requestData, this.httpOptions)
       .pipe(
         retry(1),
         catchError(this.handleError)

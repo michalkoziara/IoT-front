@@ -1,0 +1,46 @@
+<mat-card class="add-device-card">
+  <mat-card-content>
+    <section>
+      <mat-progress-bar *ngIf="progressBar"
+                        [color]="'primary'"
+                        [mode]="'indeterminate'">
+      </mat-progress-bar>
+    </section>
+    <mat-horizontal-stepper [linear]="true" #stepper>
+      <mat-step [stepControl]="deviceKeyFormGroup">
+        <form [formGroup]="deviceKeyFormGroup">
+          <ng-template matStepLabel>Podaj klucz produktu</ng-template>
+          <mat-form-field>
+            <input matInput placeholder="Klucz produktu" formControlName="deviceKeyCtrl" required>
+          </mat-form-field>
+          <div>
+            <button mat-button matStepperNext>Dalej</button>
+          </div>
+        </form>
+      </mat-step>
+      <mat-step [stepControl]="passwordFormGroup">
+        <form [formGroup]="passwordFormGroup">
+          <ng-template matStepLabel>Podaj hasło</ng-template>
+          <mat-form-field>
+            <input matInput placeholder="Hasło" type="password" formControlName="passwordCtrl" required>
+          </mat-form-field>
+          <div>
+            <button mat-button matStepperPrevious>Cofnij</button>
+            <button mat-button matStepperNext>Dalej</button>
+          </div>
+        </form>
+      </mat-step>
+      <mat-step>
+        <ng-template matStepLabel>Zatwierdź</ng-template>
+        <div fxLayout="column" fxLayoutAlign="center">
+          <p>Wybrane nowe urządzenie: {{deviceKeyFormGroup.get('deviceKeyCtrl').value}}</p>
+          <button mat-stroked-button color="accent" class="btn-block" (click)="addDeviceGroup()">Dodaj</button>
+          <div>
+            <button mat-button matStepperPrevious>Cofnij</button>
+            <button mat-button (click)="stepper.reset()">Zacznij od początku</button>
+          </div>
+        </div>
+      </mat-step>
+    </mat-horizontal-stepper>
+  </mat-card-content>
+</mat-card>

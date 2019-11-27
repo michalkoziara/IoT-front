@@ -18,5 +18,6 @@
                              [productKey]="selectedDeviceGroup"></app-unassigned-executives>
   <app-unassigned-sensors *ngSwitchCase="'listUnassignedSensors'"
                              [productKey]="selectedDeviceGroup"></app-unassigned-sensors>
+  <app-add-device-group *ngSwitchCase="'addNewDeviceGroup'"></app-add-device-group>
   <app-start-card *ngSwitchDefault></app-start-card>
 </div>
