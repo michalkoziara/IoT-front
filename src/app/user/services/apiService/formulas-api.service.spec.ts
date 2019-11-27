@@ -1,6 +1,6 @@
-import { TestBed } from '@angular/core/testing';
+import {TestBed} from '@angular/core/testing';
 
-import { FormulasApiService } from './formulas-api.service';
+import {FormulasApiService} from './formulas-api.service';
 
 describe('FormulasApiService', () => {
   beforeEach(() => TestBed.configureTestingModule({}));

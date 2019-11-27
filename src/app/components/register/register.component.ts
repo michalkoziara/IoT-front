@@ -51,7 +51,6 @@ export class RegisterComponent implements OnInit {
     this.registerService.register(new UserRegistrationRequest(this.usernameFormControl.value, this.emailFormControl.value,
       this.passwordFormControl.value)).subscribe(
       response => {
-        console.log(response)
         if (response.status === 201) {
           this.snackBar.open('Rejestracja zakończona pomyślnie', null, {duration: 2000});
           this.router.navigate(['/login']);

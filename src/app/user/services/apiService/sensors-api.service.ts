@@ -4,7 +4,6 @@ import {Observable, throwError} from 'rxjs';
 import {environment} from '../../../../environments/environment';
 import {catchError, retry} from 'rxjs/operators';
 import {SensorInUserGroup} from '../../models/sensor-in-user-group/sensor-in-user-group';
-import {ExecutiveInList} from '../../models/executive-in-list/executive-in-list';
 import {SensorInList} from '../../models/sensor-in-list/sensor-in-list';
 
 @Injectable()

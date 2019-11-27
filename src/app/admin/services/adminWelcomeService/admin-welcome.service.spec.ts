@@ -1,6 +1,6 @@
-import { TestBed } from '@angular/core/testing';
+import {TestBed} from '@angular/core/testing';
 
-import { AdminWelcomeService } from './admin-welcome.service';
+import {AdminWelcomeService} from './admin-welcome.service';
 
 describe('AdminWelcomeService', () => {
   beforeEach(() => TestBed.configureTestingModule({}));

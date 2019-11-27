@@ -1,7 +1,6 @@
 import {Component, Input, OnInit, ViewChild} from '@angular/core';
 import {MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
 import {ExecutiveInList} from '../../models/executive-in-list/executive-in-list';
-import {ExecutivesApiService} from '../../services/apiService/executives-api.service';
 import {SensorsApiService} from '../../services/apiService/sensors-api.service';
 
 @Component({

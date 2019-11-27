@@ -1,4 +1,4 @@
-import { ExecutiveInList } from './executive-in-list';
+import {ExecutiveInList} from './executive-in-list';
 
 describe('ExecutiveInList', () => {
   it('should create an instance', () => {

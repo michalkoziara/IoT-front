@@ -1,6 +1,6 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { UnassignedExecutivesComponent } from './unassigned-executives.component';
+import {UnassignedExecutivesComponent} from './unassigned-executives.component';
 
 describe('UnassignedExecutivesComponent', () => {
   let component: UnassignedExecutivesComponent;

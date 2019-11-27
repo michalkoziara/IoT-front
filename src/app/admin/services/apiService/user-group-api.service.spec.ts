@@ -1,6 +1,6 @@
-import { TestBed } from '@angular/core/testing';
+import {TestBed} from '@angular/core/testing';
 
-import { UserGroupApiService } from './user-group-api.service';
+import {UserGroupApiService} from './user-group-api.service';
 
 describe('UserGroupApiService', () => {
   beforeEach(() => TestBed.configureTestingModule({}));

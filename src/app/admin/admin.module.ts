@@ -7,14 +7,14 @@ import {SideNavComponent} from './components/side-nav/side-nav.component';
 import {AngularMaterialModule} from '../angular-material.module';
 import {DashboardComponent} from './components/dashboard/dashboard.component';
 import {AdminStartCardComponent} from './components/admin-start-card/admin-start-card.component';
-import {SharedModule} from "../shared/shared.module";
-import {HTTP_INTERCEPTORS} from "@angular/common/http";
-import {JwtInterceptor} from "../services/authService/auth.interceptor";
-import {ErrorInterceptor} from "../services/authService/error.interceptor";
-import {AdminWelcomeService} from "./services/adminWelcomeService/admin-welcome.service";
+import {SharedModule} from '../shared/shared.module';
+import {HTTP_INTERCEPTORS} from '@angular/common/http';
+import {JwtInterceptor} from '../services/authService/auth.interceptor';
+import {ErrorInterceptor} from '../services/authService/error.interceptor';
+import {AdminWelcomeService} from './services/adminWelcomeService/admin-welcome.service';
 import {AdminInnerToolbarComponent} from './components/admin-inner-toolbar/admin-inner-toolbar.component';
-import {FlexModule} from "@angular/flex-layout";
-import { UserGroupComponent } from './components/user-group/user-group.component';
+import {FlexModule} from '@angular/flex-layout';
+import {UserGroupComponent} from './components/user-group/user-group.component';
 
 @NgModule({
   declarations: [routingComponents, AdminComponent, SideNavComponent, DashboardComponent, AdminStartCardComponent, AdminInnerToolbarComponent, UserGroupComponent],

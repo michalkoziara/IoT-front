@@ -9,21 +9,21 @@ import {
   MatDatepickerModule,
   MatFormFieldModule,
   MatGridListModule,
-  MatStepperModule,
   MatIconModule,
   MatInputModule,
   MatListModule,
   MatNativeDateModule,
   MatPaginatorModule,
+  MatProgressBarModule,
   MatRadioModule,
   MatSelectModule,
   MatSidenavModule,
   MatSnackBarModule,
   MatSortModule,
+  MatStepperModule,
   MatTableModule,
   MatToolbarModule,
-  MatTooltipModule,
-  MatProgressBarModule
+  MatTooltipModule
 } from '@angular/material';
 
 @NgModule({

@@ -3,7 +3,7 @@ import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Observable, throwError} from 'rxjs';
 import {DeviceGroupInList} from '../../models/device-group-in-list/device-group-in-list';
 import {environment} from '../../../../environments/environment';
-import {catchError, map, retry} from 'rxjs/operators';
+import {catchError, retry} from 'rxjs/operators';
 
 @Injectable()
 export class DeviceGroupsApiService {

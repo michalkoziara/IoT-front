@@ -1,6 +1,6 @@
-import { TestBed } from '@angular/core/testing';
+import {TestBed} from '@angular/core/testing';
 
-import { ViewCommunicationService } from './view-communication.service';
+import {ViewCommunicationService} from './view-communication.service';
 
 describe('ViewCommunicationService', () => {
   beforeEach(() => TestBed.configureTestingModule({}));
