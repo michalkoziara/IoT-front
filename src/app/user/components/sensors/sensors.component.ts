@@ -3,6 +3,8 @@ import {MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
 import {SensorInUserGroup} from '../../models/sensor-in-user-group/sensor-in-user-group';
 import {SensorsApiService} from '../../services/apiService/sensors-api.service';
 import {ViewCommunicationService} from '../../services/viewCommunicationService/view-communication.service';
+import {flatMap, startWith} from 'rxjs/operators';
+import {interval} from 'rxjs';
 
 @Component({
   selector: 'app-sensors',
@@ -30,6 +32,11 @@ export class SensorsComponent implements OnInit {
 
   ngOnInit() {
     this.loadSensorsInList();
+    this.sort.sort({
+      id: 'name',
+      start: 'asc',
+      disableClear: false
+    });
   }
 
   getPaginatorData() {
@@ -59,36 +66,36 @@ export class SensorsComponent implements OnInit {
   }
 
   loadSensorsInList() {
-    return this.sensorsApiService.getSensors(this.productKey, this.userGroupName).subscribe((data) => {
-      this.sensors = data.map(
-        x => {
-          if (x.sensorReadingValue === 'true') {
-            x.sensorReadingValue = 'Podstawowy';
-          }
+    return interval(5000)
+      .pipe(
+        startWith(0),
+        flatMap(() => this.sensorsApiService.getSensors(this.productKey, this.userGroupName))
+      )
+      .subscribe((data) => {
+        this.sensors = data.map(
+          x => {
+            if (x.sensorReadingValue === true) {
+              x.sensorReadingValue = 'Podstawowy';
+            }
 
-          if (x.sensorReadingValue === 'false') {
-            x.sensorReadingValue = 'Alternatywny';
-          }
+            if (x.sensorReadingValue === false) {
+              x.sensorReadingValue = 'Alternatywny';
+            }
 
-          if (x.isActive === 'true') {
-            x.isActive = 'Tak';
-          }
+            if (x.isActive === true) {
+              x.isActive = 'Tak';
+            }
 
-          if (x.isActive === 'false') {
-            x.isActive = 'Nie';
+            if (x.isActive === false) {
+              x.isActive = 'Nie';
+            }
+            return x;
           }
-          return x;
-        }
-      );
-      this.dataSource = new MatTableDataSource<SensorInUserGroup>(this.sensors);
-      this.dataSource.paginator = this.paginator;
-      this.sort.sort({
-        id: 'name',
-        start: 'asc',
-        disableClear: false
+        );
+        this.dataSource = new MatTableDataSource<SensorInUserGroup>(this.sensors);
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
       });
-      this.dataSource.sort = this.sort;
-    });
   }
 
   viewSensor(deviceKey: string) {

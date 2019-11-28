@@ -17,16 +17,16 @@ export class ExecutivesApiService {
   constructor(private http: HttpClient) {
   }
 
-  getExecutives(productKey: string, name: string): Observable<[ExecutiveInUserGroup]> {
-    return this.http.get<[ExecutiveInUserGroup]>(`${environment.apiUrl}/hubs/${productKey}/user-groups/${name}/executive-devices`)
+  getExecutives(productKey: string, name: string): Observable<ExecutiveInUserGroup[]> {
+    return this.http.get<ExecutiveInUserGroup[]>(`${environment.apiUrl}/hubs/${productKey}/user-groups/${name}/executive-devices`)
       .pipe(
         retry(1),
         catchError(this.handleError)
       );
   }
 
-  getUnassignedExecutives(productKey: string): Observable<[ExecutiveInList]> {
-    return this.http.get<[ExecutiveInList]>(
+  getUnassignedExecutives(productKey: string): Observable<ExecutiveInList[]> {
+    return this.http.get<ExecutiveInList[]>(
       `${environment.apiUrl}/hubs/${productKey}/executive-devices/unassigned`)
       .pipe(
         retry(1),

@@ -16,8 +16,8 @@ export class DeviceGroupsApiService {
   constructor(private http: HttpClient) {
   }
 
-  getDeviceGroups(): Observable<[DeviceGroupInList]> {
-    return this.http.get<[DeviceGroupInList]>(`${environment.apiUrl}/hubs`)
+  getDeviceGroups(): Observable<DeviceGroupInList[]> {
+    return this.http.get<DeviceGroupInList[]>(`${environment.apiUrl}/hubs`)
       .pipe(
         retry(1),
         catchError(this.handleError)

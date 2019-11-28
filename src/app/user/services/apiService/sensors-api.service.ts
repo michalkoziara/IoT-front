@@ -17,16 +17,16 @@ export class SensorsApiService {
   constructor(private http: HttpClient) {
   }
 
-  getSensors(productKey: string, name: string): Observable<[SensorInUserGroup]> {
-    return this.http.get<[SensorInUserGroup]>(`${environment.apiUrl}/hubs/${productKey}/user-groups/${name}/sensors`)
+  getSensors(productKey: string, name: string): Observable<SensorInUserGroup[]> {
+    return this.http.get<SensorInUserGroup[]>(`${environment.apiUrl}/hubs/${productKey}/user-groups/${name}/sensors`)
       .pipe(
         retry(1),
         catchError(this.handleError)
       );
   }
 
-  getUnassignedSensors(productKey: string): Observable<[SensorInList]> {
-    return this.http.get<[SensorInList]>(
+  getUnassignedSensors(productKey: string): Observable<SensorInList[]> {
+    return this.http.get<SensorInList[]>(
       `${environment.apiUrl}/hubs/${productKey}/sensors/unassigned`)
       .pipe(
         retry(1),
