@@ -16,16 +16,30 @@ export class UserGroupsApiService {
   constructor(private http: HttpClient) {
   }
 
-  getUserGroups(productKey: string): Observable<{'userGroups': [UserGroupInList]}> {
-    return this.http.get<{'userGroups': [UserGroupInList]}>(`${environment.apiUrl}/hubs/${productKey}/user-groups`)
+  getUserGroups(productKey: string): Observable<{ 'userGroups': [UserGroupInList] }> {
+    return this.http.get<{ 'userGroups': [UserGroupInList] }>(`${environment.apiUrl}/hubs/${productKey}/user-groups`)
       .pipe(
         retry(1),
         catchError(this.handleError)
       );
   }
 
-  createUserGroup(productKey: string, requestData) {
+  createUserGroup(productKey: string,
+                  requestData: {
+                    groupName: string,
+                    password: string
+                  }) {
     return this.http.post<any>(`${environment.apiUrl}/hubs/${productKey}/user-groups`, requestData, this.httpOptions)
+      .pipe(
+        retry(1),
+        catchError(this.handleError)
+      );
+  }
+
+  joinUserGroup(productKey: string,
+                userGroupName: string,
+                requestData: { password: string }) {
+    return this.http.post<any>(`${environment.apiUrl}/hubs/${productKey}/user-groups/${userGroupName}/users`, requestData, this.httpOptions)
       .pipe(
         retry(1),
         catchError(this.handleError)

@@ -32,6 +32,7 @@ import {UnassignedSensorsComponent} from './components/unassigned-sensors/unassi
 import {AddDeviceGroupComponent} from './components/add-device-group/add-device-group.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { CreateUserGroupComponent } from './components/create-user-group/create-user-group.component';
+import { JoinUserGroupComponent } from './components/join-user-group/join-user-group.component';
 
 @NgModule({
   declarations: [
@@ -48,7 +49,8 @@ import { CreateUserGroupComponent } from './components/create-user-group/create-
     UnassignedExecutivesComponent,
     UnassignedSensorsComponent,
     AddDeviceGroupComponent,
-    CreateUserGroupComponent
+    CreateUserGroupComponent,
+    JoinUserGroupComponent
   ],
   imports: [
     CommonModule,

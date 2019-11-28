@@ -17,6 +17,8 @@ export class DashboardComponent implements OnInit, OnDestroy {
   selectedDeviceGroupSubscription: Subscription;
   selectedUserGroup: string;
   selectedUserGroupSubscription: Subscription;
+  selectedJoiningUserGroup: string;
+  selectedJoiningUserGroupSubscription: Subscription;
 
   constructor(private viewCommunicationService: ViewCommunicationService,
               private deviceGroupsService: DeviceGroupsService,
@@ -36,6 +38,9 @@ export class DashboardComponent implements OnInit, OnDestroy {
     this.selectedUserGroupSubscription = this.userGroupsService.selectedUserGroup$.subscribe(
       x => this.selectedUserGroup = x
     );
+    this.selectedJoiningUserGroupSubscription = this.userGroupsService.selectedJoiningUserGroup$.subscribe(
+      x => this.selectedJoiningUserGroup = x
+    );
   }
 
   ngOnDestroy() {
@@ -43,5 +48,6 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
     this.selectedDeviceGroupSubscription.unsubscribe();
     this.selectedUserGroupSubscription.unsubscribe();
+    this.selectedJoiningUserGroupSubscription.unsubscribe();
   }
 }

@@ -47,5 +47,10 @@
     <mat-icon>arrow_forward_ios</mat-icon>
     Stwórz grupę użytkowników
   </p>
+  <p *ngSwitchCase="'joiningUserGroup'" fxLayoutAlign="center center">
+    {{selectedDeviceGroup}}
+    <mat-icon>arrow_forward_ios</mat-icon>
+    Dołącz do grupy użytkowników
+  </p>
   <p *ngSwitchDefault>Strona domowa</p>
 </mat-toolbar>
