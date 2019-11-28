@@ -12,5 +12,9 @@ mat-card {
     align-items: center;
     height: 4px;
   }
+
+  mat-form-field {
+    max-width: 40%;
+  }
 }
 

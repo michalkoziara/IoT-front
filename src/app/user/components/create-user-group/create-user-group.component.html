@@ -33,7 +33,11 @@
       <mat-step>
         <ng-template matStepLabel>Stwórz</ng-template>
         <div fxLayout="column" fxLayoutAlign="center">
-          <p>Tworzona grupa użytkowników: {{groupNameFormGroup.get('groupNameCtrl').value}}</p>
+          <mat-form-field
+            [hideRequiredMarker]="true"
+            [floatLabel]="'auto'">
+            <input matInput placeholder="Nazwa grupy" value="{{groupNameFormGroup.get('groupNameCtrl').value}}" required disabled>
+          </mat-form-field>
           <button mat-stroked-button color="accent" class="btn-block" (click)="createUserGroup()">Stwórz</button>
           <div>
             <button mat-button matStepperPrevious>Cofnij</button>
