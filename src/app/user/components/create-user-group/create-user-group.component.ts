@@ -4,6 +4,7 @@ import {MatSnackBar} from '@angular/material';
 import {finalize} from 'rxjs/operators';
 import {UserGroupsApiService} from '../../services/apiService/user-groups-api.service';
 import {ErrorConstantMessages} from '../../../shared/error-constant-messages';
+import {ViewCommunicationService} from '../../services/viewCommunicationService/view-communication.service';
 
 @Component({
   selector: 'app-create-user-group',
@@ -20,7 +21,8 @@ export class CreateUserGroupComponent implements OnInit {
 
   constructor(private userGroupsApiService: UserGroupsApiService,
               private formBuilder: FormBuilder,
-              private snackBar: MatSnackBar) {
+              private snackBar: MatSnackBar,
+              private viewCommunicationService: ViewCommunicationService) {
   }
 
   ngOnInit() {
@@ -44,16 +46,17 @@ export class CreateUserGroupComponent implements OnInit {
       finalize(() => this.afterComplete())
     ).subscribe(
       data => {
-        this.snackBar.open('Dodano nową grupę użytkowników', null, {duration: 2000});
+        this.snackBar.open('Dodano nową grupę użytkowników', null, {duration: 3000});
+        this.viewCommunicationService.changeCurrentView('joiningUserGroupsInDevice');
       },
       error => {
         switch (error.message) {
           case ErrorConstantMessages.RESPONSE_MESSAGE_USER_GROUP_ALREADY_EXISTS: {
-            this.snackBar.open('Podana grupa użytkowników już istnieje', null, {duration: 2000});
+            this.snackBar.open('Podana grupa użytkowników już istnieje', null, {duration: 3000});
             break;
           }
           default: {
-            this.snackBar.open('Wystąpił błąd poczas tworzenia, spróbuj ponownie', null, {duration: 2000});
+            this.snackBar.open('Wystąpił błąd poczas tworzenia, spróbuj ponownie', null, {duration: 3000});
             break;
           }
         }

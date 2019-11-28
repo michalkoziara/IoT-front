@@ -4,6 +4,7 @@ import {DeviceGroupsApiService} from '../../services/apiService/device-groups-ap
 import {MatSnackBar} from '@angular/material';
 import {finalize} from 'rxjs/operators';
 import {ErrorConstantMessages} from '../../../shared/error-constant-messages';
+import {ViewCommunicationService} from '../../services/viewCommunicationService/view-communication.service';
 
 @Component({
   selector: 'app-add-device-group',
@@ -17,7 +18,8 @@ export class AddDeviceGroupComponent implements OnInit {
 
   constructor(private deviceGroupsApiService: DeviceGroupsApiService,
               private formBuilder: FormBuilder,
-              private snackBar: MatSnackBar) {
+              private snackBar: MatSnackBar,
+              private viewCommunicationService: ViewCommunicationService) {
   }
 
   ngOnInit() {
@@ -40,24 +42,25 @@ export class AddDeviceGroupComponent implements OnInit {
       finalize(() => this.afterComplete())
     ).subscribe(
       data => {
-        this.snackBar.open('Dodano urządzenie główne', null, {duration: 2000});
+        this.snackBar.open('Dodano urządzenie główne', null, {duration: 3000});
+        this.viewCommunicationService.changeCurrentView('deviceGroupList');
       },
       error => {
         switch (error.message) {
           case ErrorConstantMessages.RESPONSE_MESSAGE_PRODUCT_KEY_NOT_FOUND: {
-            this.snackBar.open('Urządzenie o podanym kluczu produktu nie istnieje', null, {duration: 2000});
+            this.snackBar.open('Urządzenie o podanym kluczu produktu nie istnieje', null, {duration: 3000});
             break;
           }
           case ErrorConstantMessages.RESPONSE_MESSAGE_WRONG_PASSWORD: {
-            this.snackBar.open('Podano nieprawidłowe hasło urządzenia głównego', null, {duration: 2000});
+            this.snackBar.open('Podano nieprawidłowe hasło urządzenia głównego', null, {duration: 3000});
             break;
           }
           case ErrorConstantMessages.RESPONSE_MESSAGE_USER_ALREADY_IN_DEVICE_GROUP: {
-            this.snackBar.open('Podana grupa urządzeń jest już na liście dostępnych grup', null, {duration: 2000});
+            this.snackBar.open('Podana grupa urządzeń jest już na liście dostępnych grup', null, {duration: 3000});
             break;
           }
           default: {
-            this.snackBar.open('Wystąpił błąd poczas dodawania, spróbuj ponownie', null, {duration: 2000});
+            this.snackBar.open('Wystąpił błąd poczas dodawania, spróbuj ponownie', null, {duration: 3000});
             break;
           }
         }
