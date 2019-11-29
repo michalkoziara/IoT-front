@@ -1,19 +1,23 @@
-import {Component, Input, OnInit, ViewChild} from '@angular/core';
+import {Component, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
 import {SensorInUserGroup} from '../../models/sensor-in-user-group/sensor-in-user-group';
 import {SensorsApiService} from '../../services/apiService/sensors-api.service';
 import {ViewCommunicationService} from '../../services/viewCommunicationService/view-communication.service';
+import {flatMap, startWith} from 'rxjs/operators';
+import {interval, Subscriber, Subscription} from 'rxjs';
+import {SensorsService} from '../../services/sensorsService/sensors.service';
 
 @Component({
   selector: 'app-sensors',
   templateUrl: './sensors.component.html',
   styleUrls: ['./sensors.component.scss']
 })
-export class SensorsComponent implements OnInit {
+export class SensorsComponent implements OnInit, OnDestroy {
   displayedColumns: string[] = ['name', 'isActive', 'sensorReadingValue', 'view'];
   sensors: any = [];
   dataSource: MatTableDataSource<SensorInUserGroup>;
   height: number;
+  sensors$: Subscription;
 
   @Input()
   productKey: string;
@@ -25,11 +29,21 @@ export class SensorsComponent implements OnInit {
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
 
   constructor(private viewCommunicationService: ViewCommunicationService,
-              private sensorsApiService: SensorsApiService) {
+              private sensorsApiService: SensorsApiService,
+              private sensorsService: SensorsService) {
   }
 
   ngOnInit() {
-    this.loadSensorsInList();
+    this.sensors$ = this.loadSensorsInList();
+    this.sort.sort({
+      id: 'name',
+      start: 'asc',
+      disableClear: false
+    });
+  }
+
+  ngOnDestroy() {
+    this.sensors$.unsubscribe();
   }
 
   getPaginatorData() {
@@ -59,40 +73,42 @@ export class SensorsComponent implements OnInit {
   }
 
   loadSensorsInList() {
-    return this.sensorsApiService.getSensors(this.productKey, this.userGroupName).subscribe((data) => {
-      this.sensors = data.map(
-        x => {
-          if (x.sensorReadingValue === 'true') {
-            x.sensorReadingValue = 'Podstawowy';
-          }
+    return interval(5000)
+      .pipe(
+        startWith(0),
+        flatMap(() => this.sensorsApiService.getSensors(this.productKey, this.userGroupName))
+      )
+      .subscribe((data) => {
+        this.sensors = data.map(
+          x => {
+            if (x.sensorReadingValue === true) {
+              x.sensorReadingValue = 'Podstawowy';
+            }
 
-          if (x.sensorReadingValue === 'false') {
-            x.sensorReadingValue = 'Alternatywny';
-          }
+            if (x.sensorReadingValue === false) {
+              x.sensorReadingValue = 'Alternatywny';
+            }
 
-          if (x.isActive === 'true') {
-            x.isActive = 'Tak';
-          }
+            if (x.isActive === true) {
+              x.isActive = 'Tak';
+            }
 
-          if (x.isActive === 'false') {
-            x.isActive = 'Nie';
+            if (x.isActive === false) {
+              x.isActive = 'Nie';
+            }
+            return x;
           }
-          return x;
-        }
-      );
-      this.dataSource = new MatTableDataSource<SensorInUserGroup>(this.sensors);
-      this.dataSource.paginator = this.paginator;
-      this.sort.sort({
-        id: 'name',
-        start: 'asc',
-        disableClear: false
+        );
+        this.dataSource = new MatTableDataSource<SensorInUserGroup>(this.sensors);
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
       });
-      this.dataSource.sort = this.sort;
-    });
   }
 
-  viewSensor(deviceKey: string) {
-    console.log();
+  viewSensor(deviceKey: string, deviceName: string) {
+    this.sensorsService.changeSelectedSensor(deviceKey);
+    this.sensorsService.changeSelectedSensorName(deviceName);
+    this.viewCommunicationService.changeCurrentView('showSensor');
   }
 
   addSensor() {

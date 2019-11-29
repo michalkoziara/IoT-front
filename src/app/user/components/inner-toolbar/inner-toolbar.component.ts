@@ -3,6 +3,8 @@ import {Subscription} from 'rxjs';
 import {DeviceGroupsService} from '../../services/deviceGroupsService/device-groups.service';
 import {ViewCommunicationService} from '../../services/viewCommunicationService/view-communication.service';
 import {UserGroupsService} from '../../services/userGroupsService/user-groups.service';
+import {SensorsService} from '../../services/sensorsService/sensors.service';
+import {ExecutivesService} from '../../services/executivesService/executives.service';
 
 @Component({
   selector: 'app-inner-toolbar',
@@ -17,10 +19,22 @@ export class InnerToolbarComponent implements OnInit, OnDestroy {
   selectedDeviceGroupSubscription: Subscription;
   selectedUserGroup: string;
   selectedUserGroupSubscription: Subscription;
+  selectedJoiningUserGroup: string;
+  selectedJoiningUserGroupSubscription: Subscription;
+  selectedSensor: string;
+  selectedSensorSubscription: Subscription;
+  selectedSensorName: string;
+  selectedSensorNameSubscription: Subscription;
+  selectedExecutive: string;
+  selectedExecutiveSubscription: Subscription;
+  selectedExecutiveName: string;
+  selectedExecutiveNameSubscription: Subscription;
 
   constructor(private viewCommunicationService: ViewCommunicationService,
               private deviceGroupsService: DeviceGroupsService,
-              private userGroupsService: UserGroupsService) {
+              private userGroupsService: UserGroupsService,
+              private sensorsService: SensorsService,
+              private executivesService: ExecutivesService) {
   }
 
   ngOnInit() {
@@ -36,6 +50,21 @@ export class InnerToolbarComponent implements OnInit, OnDestroy {
     this.selectedUserGroupSubscription = this.userGroupsService.selectedUserGroup$.subscribe(
       x => this.selectedUserGroup = x
     );
+    this.selectedJoiningUserGroupSubscription = this.userGroupsService.selectedJoiningUserGroup$.subscribe(
+      x => this.selectedJoiningUserGroup = x
+    );
+    this.selectedSensorSubscription = this.sensorsService.selectedSensor$.subscribe(
+      x => this.selectedSensor = x
+    );
+    this.selectedSensorNameSubscription = this.sensorsService.selectedSensorName$.subscribe(
+      x => this.selectedSensorName = x
+    );
+    this.selectedExecutiveSubscription = this.executivesService.selectedExecutive$.subscribe(
+      x => this.selectedExecutive = x
+    );
+    this.selectedExecutiveNameSubscription = this.executivesService.selectedExecutiveName$.subscribe(
+      x => this.selectedExecutiveName = x
+    );
   }
 
   ngOnDestroy() {
@@ -43,5 +72,10 @@ export class InnerToolbarComponent implements OnInit, OnDestroy {
 
     this.selectedDeviceGroupSubscription.unsubscribe();
     this.selectedUserGroupSubscription.unsubscribe();
+    this.selectedJoiningUserGroupSubscription.unsubscribe();
+    this.selectedSensorSubscription.unsubscribe();
+    this.selectedSensorNameSubscription.unsubscribe();
+    this.selectedExecutiveSubscription.unsubscribe();
+    this.selectedExecutiveNameSubscription.unsubscribe();
   }
 }

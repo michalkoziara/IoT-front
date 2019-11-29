@@ -16,21 +16,43 @@ export class UserGroupsApiService {
   constructor(private http: HttpClient) {
   }
 
-  getUserGroups(productKey: string): Observable<{'userGroups': [UserGroupInList]}> {
-    return this.http.get<{'userGroups': [UserGroupInList]}>(`${environment.apiUrl}/hubs/${productKey}/user-groups`)
+  getUserGroups(productKey: string): Observable<{ 'userGroups': [UserGroupInList] }> {
+    return this.http.get<{ 'userGroups': [UserGroupInList] }>(`${environment.apiUrl}/hubs/${productKey}/user-groups`)
       .pipe(
         retry(1),
         catchError(this.handleError)
       );
   }
 
-  handleError(error) {
-    let errorMessage = '';
-    if (error.error instanceof ErrorEvent) {
-      errorMessage = error.error.message;
+  createUserGroup(productKey: string,
+                  requestData: {
+                    groupName: string,
+                    password: string
+                  }) {
+    return this.http.post<any>(`${environment.apiUrl}/hubs/${productKey}/user-groups`, requestData, this.httpOptions)
+      .pipe(
+        retry(1),
+        catchError(this.handleError)
+      );
+  }
+
+  joinUserGroup(productKey: string,
+                userGroupName: string,
+                requestData: { password: string }) {
+    return this.http.post<any>(`${environment.apiUrl}/hubs/${productKey}/user-groups/${userGroupName}/users`, requestData, this.httpOptions)
+      .pipe(
+        retry(1),
+        catchError(this.handleError)
+      );
+  }
+
+  handleError(response) {
+    if (response.error instanceof ErrorEvent) {
+      console.log(response.error.message);
+      return throwError(response.error.message);
     } else {
-      errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
+      console.log(`Error Code: ${response.status}\nMessage: ${response.error.errorMessage}`);
+      return throwError({errorCode: response.status, message: response.error.errorMessage});
     }
-    return throwError(errorMessage);
   }
 }

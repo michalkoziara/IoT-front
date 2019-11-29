@@ -1,0 +1,100 @@
+<div fxLayout="row" fxFlexFill fxLayoutAlign="center">
+  <mat-card>
+    <mat-card-content>
+      <table *ngIf="executive">
+        <tr>
+          <td class="header">Nazwa:</td>
+          <td><b>{{executive.name}}</b></td>
+        </tr>
+
+        <tr>
+          <td class="header">Stan:</td>
+          <td><b>{{executive.state}}</b></td>
+        </tr>
+
+        <tr>
+          <td colspan="3">
+            <mat-divider></mat-divider>
+          </td>
+        </tr>
+
+        <tr>
+          <td class="header">Klucz urządzenia:</td>
+          <td><b>{{executive.deviceKey}}</b></td>
+        </tr>
+
+        <tr>
+          <td class="header">Typ:</td>
+          <td><b>{{executive.deviceTypeName}}</b></td>
+        </tr>
+
+        <tr>
+          <td class="header">Grupa użytkowników:</td>
+          <td><b>{{isAssigned ? sensor.sensorUserGroup : 'Brak grupy'}}</b></td>
+          <td>
+            <mat-icon>edit</mat-icon>
+          </td>
+        </tr>
+
+        <tr>
+          <td colspan="3">
+            <mat-divider></mat-divider>
+          </td>
+        </tr>
+
+        <tr>
+          <td class="header">Zsynchronizowane:</td>
+          <td><b>{{executive.isUpdated}}</b></td>
+        </tr>
+
+        <tr>
+          <td class="header">Aktywne:</td>
+          <td><b>{{executive.isActive}}</b></td>
+        </tr>
+
+        <tr>
+          <td class="header">Stan domyślny:</td>
+          <td><b>{{executive.defaultState}}</b></td>
+        </tr>
+
+        <tr>
+          <td colspan="3">
+            <mat-divider></mat-divider>
+          </td>
+        </tr>
+
+        <tr>
+          <td class="header">Automatyczne sterowanie:</td>
+          <td><b>{{executive.isFormulaUsed}}</b></td>
+          <td *ngIf="executive.formulaName">
+            <mat-icon>edit</mat-icon>
+          </td>
+        </tr>
+
+        <tr>
+          <td class="header">Nazwa formuły:</td>
+          <td><b>{{executive.formulaName ? executive.formulaName : 'Brak formuły'}}</b></td>
+          <td>
+            <mat-icon>edit</mat-icon>
+          </td>
+        </tr>
+
+        <tr *ngIf="executive.formulaName">
+          <td class="header">Stan gdy formuła spełniona:</td>
+          <td><b>{{executive.positiveState}}</b></td>
+          <td>
+            <mat-icon>edit</mat-icon>
+          </td>
+        </tr>
+
+        <tr *ngIf="executive.formulaName">
+          <td class="header">Stan gdy formuła niespełniona:</td>
+          <td><b>{{executive.negativeState}}</b></td>
+          <td>
+            <mat-icon>edit</mat-icon>
+          </td>
+        </tr>
+      </table>
+    </mat-card-content>
+  </mat-card>
+</div>

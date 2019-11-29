@@ -1,0 +1,22 @@
+mat-card {
+  margin: 50px;
+  padding: 50px;
+  display: inline-flex;
+
+  tr {
+    td {
+      padding-bottom: 30px;
+    }
+
+    .header {
+      text-align: right;
+      padding-right: 10px;
+    }
+
+    mat-divider {
+      position: static;
+      border-width: 2px;
+    }
+  }
+}
+

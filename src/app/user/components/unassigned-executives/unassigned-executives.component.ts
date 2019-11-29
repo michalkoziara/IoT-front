@@ -2,6 +2,8 @@ import {Component, Input, OnInit, ViewChild} from '@angular/core';
 import {MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
 import {ExecutivesApiService} from '../../services/apiService/executives-api.service';
 import {ExecutiveInList} from '../../models/executive-in-list/executive-in-list';
+import {ExecutivesService} from '../../services/executivesService/executives.service';
+import {ViewCommunicationService} from '../../services/viewCommunicationService/view-communication.service';
 
 @Component({
   selector: 'app-unassigned-executives',
@@ -23,7 +25,9 @@ export class UnassignedExecutivesComponent implements OnInit {
   @ViewChild(MatSort, {static: true}) sort: MatSort;
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
 
-  constructor(private executivesApiService: ExecutivesApiService) {
+  constructor(private executivesApiService: ExecutivesApiService,
+              private executivesService: ExecutivesService,
+              private viewCommunicationService: ViewCommunicationService) {
   }
 
   ngOnInit() {
@@ -81,8 +85,10 @@ export class UnassignedExecutivesComponent implements OnInit {
     });
   }
 
-  viewExecutive(deviceKey: string) {
-    console.log();
+  viewExecutive(deviceKey: string, deviceName: string) {
+    this.executivesService.changeSelectedExecutive(deviceKey);
+    this.executivesService.changeSelectedExecutiveName(deviceName);
+    this.viewCommunicationService.changeCurrentView('showExecutive');
   }
 
   addExecutive(deviceKey: string) {

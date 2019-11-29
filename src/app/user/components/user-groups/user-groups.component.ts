@@ -80,7 +80,7 @@ export class UserGroupsComponent implements OnInit {
   }
 
   addUserGroup() {
-    console.log();
+    this.viewCommunicationService.changeCurrentView('createUserGroup');
   }
 
   joinUserGroup() {
