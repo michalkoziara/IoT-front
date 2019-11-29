@@ -39,7 +39,7 @@ export class SensorsApiService {
     productKey: string,
     deviceKey: string): Observable<object> {
     return this.http
-      .put<object>(`${environment.apiUrl}/hubs/${productKey}/sensors/${deviceKey}`,
+      .post<object>(`${environment.apiUrl}/hubs/${productKey}/sensors/${deviceKey}`,
         changedSensor,
         this.httpOptions)
       .pipe(

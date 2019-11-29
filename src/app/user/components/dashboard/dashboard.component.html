@@ -17,7 +17,8 @@
   <app-unassigned-executives *ngSwitchCase="'listUnassignedExecutives'"
                              [productKey]="selectedDeviceGroup"></app-unassigned-executives>
   <app-unassigned-sensors *ngSwitchCase="'listUnassignedSensors'"
-                          [productKey]="selectedDeviceGroup"></app-unassigned-sensors>
+                          [productKey]="selectedDeviceGroup"
+                          [userGroupName]="selectedUserGroup"></app-unassigned-sensors>
   <app-add-device-group *ngSwitchCase="'addNewDeviceGroup'"></app-add-device-group>
   <app-create-user-group *ngSwitchCase="'createUserGroup'"
                          [productKey]="selectedDeviceGroup"></app-create-user-group>
@@ -28,7 +29,7 @@
               [productKey]="selectedDeviceGroup"
               [deviceKey]="selectedSensor"></app-sensor>
   <app-executive *ngSwitchCase="'showExecutive'"
-              [productKey]="selectedDeviceGroup"
-              [deviceKey]="selectedExecutive"></app-executive>
+                 [productKey]="selectedDeviceGroup"
+                 [deviceKey]="selectedExecutive"></app-executive>
   <app-start-card *ngSwitchDefault></app-start-card>
 </div>
