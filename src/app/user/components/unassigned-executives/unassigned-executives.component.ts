@@ -5,6 +5,7 @@ import {ExecutiveInList} from '../../models/executive-in-list/executive-in-list'
 import {ExecutivesService} from '../../services/executivesService/executives.service';
 import {ViewCommunicationService} from '../../services/viewCommunicationService/view-communication.service';
 import {Subscription} from 'rxjs';
+import {MatSnackBar} from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-unassigned-executives',
@@ -27,7 +28,8 @@ export class UnassignedExecutivesComponent implements OnInit {
 
   constructor(private executivesApiService: ExecutivesApiService,
               private executivesService: ExecutivesService,
-              private viewCommunicationService: ViewCommunicationService) {
+              private viewCommunicationService: ViewCommunicationService,
+              private snackBar: MatSnackBar) {
     this.dataSource = new MatTableDataSource<ExecutiveInList>();
     this.productKey = '';
     this.userGroupName = '';
@@ -75,6 +77,27 @@ export class UnassignedExecutivesComponent implements OnInit {
   }
 
   addExecutive(deviceKey: string): void {
-    console.log();
+    this.executivesApiService.getExecutive(this.productKey, deviceKey).subscribe(
+      (data) => {
+        this.executivesApiService.modifyExecutive(
+          {
+            name: data.name,
+            typeName: data.deviceTypeName,
+            state: data.state,
+            positiveState: data.positiveState,
+            negativeState: data.negativeState,
+            formulaName: data.formulaName,
+            userGroupName: this.userGroupName,
+            isFormulaUsed: data.isFormulaUsed as boolean
+          },
+          this.productKey,
+          deviceKey)
+          .subscribe(() => {
+            this.viewCommunicationService.changeCurrentView('executivesInUserGroup');
+          },
+          () => {
+            this.snackBar.open('Wystąpił błąd poczas dodawania, spróbuj ponownie', undefined, {duration: 3000});
+          });
+      });
   }
 }
