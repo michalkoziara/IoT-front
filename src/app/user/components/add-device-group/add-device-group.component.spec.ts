@@ -10,7 +10,7 @@ describe('AddDeviceGroupComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ AddDeviceGroupComponent ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

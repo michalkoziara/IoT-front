@@ -1,6 +1,6 @@
-import { TestBed } from '@angular/core/testing';
+import {TestBed} from '@angular/core/testing';
 
-import { DeviceApiService } from './device-api.service';
+import {DeviceApiService} from './device-api.service';
 
 describe('DeviceApiService', () => {
   beforeEach(() => TestBed.configureTestingModule({}));

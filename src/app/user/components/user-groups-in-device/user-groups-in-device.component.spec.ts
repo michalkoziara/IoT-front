@@ -10,7 +10,7 @@ describe('UserGroupsInDeviceComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ UserGroupsInDeviceComponent ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

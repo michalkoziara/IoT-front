@@ -26,8 +26,12 @@ export class SensorTypeApiService {
       );
   }
 
-  handleError(error) {
-    let errorMessage = '';
+  handleError(error: {
+    error: ErrorEvent;
+    status: string;
+    message: string;
+  }): Observable<never> {
+    let errorMessage: string;
     if (error.error instanceof ErrorEvent) {
       errorMessage = error.error.message;
     } else {

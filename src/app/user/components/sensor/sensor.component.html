@@ -30,8 +30,10 @@
 
         <tr>
           <td class="header">Grupa użytkowników:</td>
-          <td><b>{{isAssigned ? sensor.sensorUserGroup : 'Brak grupy'}}</b></td>
-          <td><mat-icon>edit</mat-icon></td>
+          <td><b>{{sensor.isAssigned ? sensor.sensorUserGroup : 'Brak grupy'}}</b></td>
+          <td>
+            <mat-icon>edit</mat-icon>
+          </td>
         </tr>
 
         <tr>

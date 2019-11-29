@@ -1,6 +1,6 @@
-import { TestBed } from '@angular/core/testing';
+import {TestBed} from '@angular/core/testing';
 
-import { SensorApiService } from './sensor-api.service';
+import {SensorApiService} from './sensor-api.service';
 
 describe('SensorApiService', () => {
   beforeEach(() => TestBed.configureTestingModule({}));

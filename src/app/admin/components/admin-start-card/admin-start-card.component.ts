@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {AdminWelcomeService} from '../../../admin/services/adminWelcomeService/admin-welcome.service';
+import {AdminWelcomeService} from '../../services/adminWelcomeService/admin-welcome.service';
 import {AuthService} from '../../../services/authService/auth.service';
 import {AdminViewCommunicationService} from '../../services/admin-view-communication.service';
 
@@ -17,38 +17,37 @@ export class AdminStartCardComponent implements OnInit {
   ) {
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.authenticationService.currentAuthInfo.subscribe(x => {
       if (x != null) {
         this.username = x.username;
       }
-    });
-
-
+    }
+    );
   }
 
 
-  getUserGroupList() {
+  getUserGroupList(): void {
     this.viewCommunicationService.changeCurrentView('userGroupList');
   }
 
-  getDeviceList() {
+  getDeviceList(): void {
     this.viewCommunicationService.changeCurrentView('devicesList');
   }
 
-  getSensorList() {
+  getSensorList(): void {
     this.viewCommunicationService.changeCurrentView('sensorsList');
   }
 
-  getUnconfiguredList() {
+  getUnconfiguredList(): void {
     this.viewCommunicationService.changeCurrentView('unconfiguredList');
   }
 
-  getDeviceTypeList() {
+  getDeviceTypeList(): void {
     this.viewCommunicationService.changeCurrentView('executiveTypesList');
   }
 
-  getSensorTypeList() {
+  getSensorTypeList(): void {
     this.viewCommunicationService.changeCurrentView('sensorTypesList');
   }
 

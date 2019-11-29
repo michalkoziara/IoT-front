@@ -1,6 +1,6 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { ExecutiveTypeComponent } from './executive-type.component';
+import {ExecutiveTypeComponent} from './executive-type.component';
 
 describe('ExecutiveTypeComponent', () => {
   let component: ExecutiveTypeComponent;
@@ -10,7 +10,7 @@ describe('ExecutiveTypeComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ ExecutiveTypeComponent ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

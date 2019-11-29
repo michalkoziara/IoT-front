@@ -16,17 +16,29 @@ import {AdminInnerToolbarComponent} from './components/admin-inner-toolbar/admin
 import {FlexModule} from '@angular/flex-layout';
 import {UserGroupComponent} from './components/user-group/user-group.component';
 import {AdminViewCommunicationService} from './services/admin-view-communication.service';
-import { UnconfiguredDevicesComponent } from './components/unconfigured-devices/unconfigured-devices.component';
-import { DevicesComponent } from './components/devices/devices.component';
-import { SensorsComponent } from './components/sensors/sensors.component';
-import { ExecutiveTypeComponent } from './components/executive-type/executive-type.component';
-import { SensorTypeComponent } from './components/sensor-type/sensor-type.component';
+import {UnconfiguredDevicesComponent} from './components/unconfigured-devices/unconfigured-devices.component';
+import {DevicesComponent} from './components/devices/devices.component';
+import {SensorsComponent} from './components/sensors/sensors.component';
+import {ExecutiveTypeComponent} from './components/executive-type/executive-type.component';
+import {SensorTypeComponent} from './components/sensor-type/sensor-type.component';
 import { DeleteDeviceGroupComponent } from './components/delete-device-group/delete-device-group.component';
 import { ChangeDeviceGroupNameComponent } from './components/change-device-group-name/change-device-group-name.component';
 import { SensorDetailsComponent } from './components/sensor-details/sensor-details.component';
 
 @NgModule({
-  declarations: [routingComponents, AdminComponent, SideNavComponent, DashboardComponent, AdminStartCardComponent, AdminInnerToolbarComponent, UserGroupComponent, UnconfiguredDevicesComponent, DevicesComponent, SensorsComponent, ExecutiveTypeComponent, SensorTypeComponent, DeleteDeviceGroupComponent, ChangeDeviceGroupNameComponent, SensorDetailsComponent],
+  declarations: [
+    routingComponents,
+    AdminComponent,
+    SideNavComponent,
+    DashboardComponent,
+    AdminStartCardComponent,
+    AdminInnerToolbarComponent,
+    UserGroupComponent,
+    UnconfiguredDevicesComponent,
+    DevicesComponent,
+    SensorsComponent,
+    ExecutiveTypeComponent,
+    SensorTypeComponent, DeleteDeviceGroupComponent, ChangeDeviceGroupNameComponent, SensorDetailsComponent],
   imports: [
     CommonModule,
     AdminRoutingModule,

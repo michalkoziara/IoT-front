@@ -10,7 +10,7 @@ describe('DeviceGroupsCardComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ DeviceGroupsCardComponent ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

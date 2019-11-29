@@ -12,7 +12,6 @@ import {SensorService} from '../../services/sensorService/sensor.service';
   styleUrls: ['./dashboard.component.scss']
 })
 export class DashboardComponent implements OnInit, OnDestroy {
-
   productKey: string;
   deviceGroupName: string;
   productKeyApiSubscription: Subscription;
@@ -21,17 +20,25 @@ export class DashboardComponent implements OnInit, OnDestroy {
   selectedSensorSubscription: Subscription;
 
 
-  currentView: string;
+  currentView: string | null;
   currentViewSubscription: Subscription;
 
   constructor(private viewCommunicationService: AdminViewCommunicationService,
               private welcomeService: AdminWelcomeService,
               private productKeyApiService: ProductKeyApiService,
               private sensorsService: SensorService) {
+    this.productKey = '';
+    this.deviceGroupName = '';
+    this.deviceGroupName = '';
+
+    this.currentView = '';
   }
 
-  ngOnInit() {
+    this.isGetDevicesTypesListButtonClicked = false;
+    this.isGetDevicesTypesListButtonClickedSubscription = new Subscription();
+  }
 
+  ngOnInit(): void {
     this.currentViewSubscription = this.viewCommunicationService.currentView$.subscribe(
       x => {
         this.currentView = x;
@@ -48,10 +55,9 @@ export class DashboardComponent implements OnInit, OnDestroy {
     this.selectedSensorSubscription = this.sensorsService.selectedSensor$.subscribe(
       x => this.selectedSensor = x
     );
-
   }
 
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     this.productKeyApiSubscription.unsubscribe();
     this.currentViewSubscription.unsubscribe();
   }

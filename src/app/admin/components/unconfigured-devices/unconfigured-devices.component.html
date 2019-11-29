@@ -1,4 +1,4 @@
-<mat-card class="table-card" [ngStyle]="{'height.px': (height)}">
+<mat-card class="table-card">
   <mat-form-field>
     <input matInput
            (keyup)="applyFilter($event.target.value)"
@@ -27,8 +27,7 @@
   </table>
 
   <mat-paginator [pageSize]="10"
-                 [pageSizeOptions]="[5, 10, 25, 100]"
-                 (page)="pageEvent = getPaginatorData($event)">
+                 [pageSizeOptions]="[5, 10, 25, 100]">
   </mat-paginator>
 
 </mat-card>

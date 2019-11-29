@@ -4,6 +4,7 @@ import {UserGroupInList} from '../../models/user-group-in-list/user-group-in-lis
 import {UserGroupsApiService} from '../../services/apiService/user-groups-api.service';
 import {UserGroupsService} from '../../services/userGroupsService/user-groups.service';
 import {ViewCommunicationService} from '../../services/viewCommunicationService/view-communication.service';
+import {Subscription} from 'rxjs';
 
 @Component({
   selector: 'app-user-groups-in-device',
@@ -12,61 +13,43 @@ import {ViewCommunicationService} from '../../services/viewCommunicationService/
 })
 export class UserGroupsInDeviceComponent implements OnInit {
   displayedColumns: string[] = ['name', 'join'];
-  userGroups: any = [];
+  userGroups: UserGroupInList[] = [];
   dataSource: MatTableDataSource<UserGroupInList>;
-  height: number;
 
   @Input()
   productKey: string;
 
   @ViewChild(MatSort, {static: true}) sort: MatSort;
-  @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
+  @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator | null;
 
   constructor(private userGroupsApiService: UserGroupsApiService,
               private userGroupsService: UserGroupsService,
               private viewCommunicationService: ViewCommunicationService) {
+    this.dataSource = new MatTableDataSource<UserGroupInList>();
+    this.productKey = '';
+    this.sort = new MatSort();
+    this.paginator = null;
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.loadUserGroupsInList();
   }
 
-  getPaginatorData() {
-    this.calculateTableHeight();
-  }
-
-  calculateTableHeight() {
-    setTimeout(() => {
-        this.height = 0;
-        if (this.paginator && this.paginator.length > 0 && this.paginator.pageSize > 0) {
-          const pages = Math.floor(this.paginator.length / this.paginator.pageSize);
-          if (pages === this.paginator.pageIndex && this.paginator.length / this.paginator.pageSize > pages) {
-            this.height = this.paginator.length % this.paginator.pageSize;
-          } else {
-            this.height = this.paginator.pageSize;
-          }
-        }
-        this.height *= 48;
-        this.height += 160;
-      },
-      100);
-  }
-
-  applyFilter(filterValue: string) {
+  applyFilter(filterValue: string): void {
     this.dataSource.filter = filterValue.trim().toLowerCase();
-    this.calculateTableHeight();
   }
 
-  loadUserGroupsInList() {
+  loadUserGroupsInList(): Subscription {
     return this.userGroupsApiService.getUserGroups(this.productKey).subscribe((data) => {
       this.userGroups = data.userGroups
         .filter(x => {
           return (!x.isAssignedTo);
         }, {})
         .map(x => {
-          const userGroup = new UserGroupInList();
-          userGroup.name = x.name;
-          return userGroup;
+          return new UserGroupInList(
+            x.name,
+            x.isAssignedTo
+          );
         }, {});
       this.dataSource = new MatTableDataSource<UserGroupInList>(this.userGroups);
       this.dataSource.paginator = this.paginator;
@@ -79,7 +62,7 @@ export class UserGroupsInDeviceComponent implements OnInit {
     });
   }
 
-  joinUserGroup(name: string) {
+  joinUserGroup(name: string): void {
     this.userGroupsService.changeSelectedJoiningUserGroup(name);
     this.viewCommunicationService.changeCurrentView('joiningUserGroup');
   }

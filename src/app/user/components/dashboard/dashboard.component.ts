@@ -12,18 +12,18 @@ import {ExecutivesService} from '../../services/executivesService/executives.ser
   styleUrls: ['./dashboard.component.scss']
 })
 export class DashboardComponent implements OnInit, OnDestroy {
-  currentView: string;
+  currentView: string | null;
   currentViewSubscription: Subscription;
 
-  selectedDeviceGroup: string;
+  selectedDeviceGroup: string | null;
   selectedDeviceGroupSubscription: Subscription;
-  selectedUserGroup: string;
+  selectedUserGroup: string | null;
   selectedUserGroupSubscription: Subscription;
-  selectedJoiningUserGroup: string;
+  selectedJoiningUserGroup: string | null;
   selectedJoiningUserGroupSubscription: Subscription;
-  selectedSensor: string;
+  selectedSensor: string | null;
   selectedSensorSubscription: Subscription;
-  selectedExecutive: string;
+  selectedExecutive: string | null;
   selectedExecutiveSubscription: Subscription;
 
   constructor(private viewCommunicationService: ViewCommunicationService,
@@ -31,9 +31,21 @@ export class DashboardComponent implements OnInit, OnDestroy {
               private userGroupsService: UserGroupsService,
               private sensorsService: SensorsService,
               private executivesService: ExecutivesService) {
+    this.currentView = null;
+    this.currentViewSubscription = new Subscription();
+    this.selectedDeviceGroup = null;
+    this.selectedDeviceGroupSubscription = new Subscription();
+    this.selectedUserGroup = null;
+    this.selectedUserGroupSubscription = new Subscription();
+    this.selectedJoiningUserGroup = null;
+    this.selectedJoiningUserGroupSubscription = new Subscription();
+    this.selectedSensor = null;
+    this.selectedSensorSubscription = new Subscription();
+    this.selectedExecutive = null;
+    this.selectedExecutiveSubscription = new Subscription();
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.currentViewSubscription = this.viewCommunicationService.currentView$.subscribe(
       x => {
         this.currentView = x;
@@ -57,7 +69,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
     );
   }
 
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     this.currentViewSubscription.unsubscribe();
 
     this.selectedDeviceGroupSubscription.unsubscribe();

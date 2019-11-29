@@ -1,6 +1,6 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { JoinUserGroupComponent } from './join-user-group.component';
+import {JoinUserGroupComponent} from './join-user-group.component';
 
 describe('JoinUserGroupComponent', () => {
   let component: JoinUserGroupComponent;
@@ -10,7 +10,7 @@ describe('JoinUserGroupComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ JoinUserGroupComponent ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

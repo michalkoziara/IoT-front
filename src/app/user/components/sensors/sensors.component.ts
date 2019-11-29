@@ -14,10 +14,10 @@ import {SensorsService} from '../../services/sensorsService/sensors.service';
 })
 export class SensorsComponent implements OnInit, OnDestroy {
   displayedColumns: string[] = ['name', 'isActive', 'sensorReadingValue', 'view'];
-  sensors: any = [];
+  sensors: SensorInUserGroup[] = [];
   dataSource: MatTableDataSource<SensorInUserGroup>;
-  height: number;
   sensors$: Subscription;
+  filterValue: string | null;
 
   @Input()
   productKey: string;
@@ -26,14 +26,21 @@ export class SensorsComponent implements OnInit, OnDestroy {
   userGroupName: string;
 
   @ViewChild(MatSort, {static: true}) sort: MatSort;
-  @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
+  @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator | null;
 
   constructor(private viewCommunicationService: ViewCommunicationService,
               private sensorsApiService: SensorsApiService,
               private sensorsService: SensorsService) {
+    this.dataSource = new MatTableDataSource<SensorInUserGroup>();
+    this.sensors$ = new Subscriber();
+    this.productKey = '';
+    this.userGroupName = '';
+    this.filterValue = null;
+    this.sort = new MatSort();
+    this.paginator = null;
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.sensors$ = this.loadSensorsInList();
     this.sort.sort({
       id: 'name',
@@ -42,37 +49,16 @@ export class SensorsComponent implements OnInit, OnDestroy {
     });
   }
 
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     this.sensors$.unsubscribe();
   }
 
-  getPaginatorData() {
-    this.calculateTableHeight();
-  }
-
-  calculateTableHeight() {
-    setTimeout(() => {
-        this.height = 0;
-        if (this.paginator && this.paginator.length > 0 && this.paginator.pageSize > 0) {
-          const pages = Math.floor(this.paginator.length / this.paginator.pageSize);
-          if (pages === this.paginator.pageIndex && this.paginator.length / this.paginator.pageSize > pages) {
-            this.height = this.paginator.length % this.paginator.pageSize;
-          } else {
-            this.height = this.paginator.pageSize;
-          }
-        }
-        this.height *= 48;
-        this.height += 160;
-      },
-      100);
-  }
-
-  applyFilter(filterValue: string) {
+  applyFilter(filterValue: string): void {
+    this.filterValue = filterValue.trim().toLowerCase();
     this.dataSource.filter = filterValue.trim().toLowerCase();
-    this.calculateTableHeight();
   }
 
-  loadSensorsInList() {
+  loadSensorsInList(): Subscription {
     return interval(5000)
       .pipe(
         startWith(0),
@@ -102,16 +88,20 @@ export class SensorsComponent implements OnInit, OnDestroy {
         this.dataSource = new MatTableDataSource<SensorInUserGroup>(this.sensors);
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
+
+        if (this.filterValue !== null) {
+          this.dataSource.filter = this.filterValue;
+        }
       });
   }
 
-  viewSensor(deviceKey: string, deviceName: string) {
+  viewSensor(deviceKey: string, deviceName: string): void {
     this.sensorsService.changeSelectedSensor(deviceKey);
     this.sensorsService.changeSelectedSensorName(deviceName);
     this.viewCommunicationService.changeCurrentView('showSensor');
   }
 
-  addSensor() {
+  addSensor(): void {
     this.viewCommunicationService.changeCurrentView('listUnassignedSensors');
   }
 }

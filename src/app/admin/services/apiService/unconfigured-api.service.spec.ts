@@ -1,6 +1,6 @@
-import { TestBed } from '@angular/core/testing';
+import {TestBed} from '@angular/core/testing';
 
-import { UnconfiguredApiService } from './unconfigured-api.service';
+import {UnconfiguredApiService} from './unconfigured-api.service';
 
 describe('UnconfiguredApiService', () => {
   beforeEach(() => TestBed.configureTestingModule({}));

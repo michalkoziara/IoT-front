@@ -1,6 +1,6 @@
-import { TestBed } from '@angular/core/testing';
+import {TestBed} from '@angular/core/testing';
 
-import { ExecutiveTypeApiService } from './executive-type-api.service';
+import {ExecutiveTypeApiService} from './executive-type-api.service';
 
 describe('ExecutiveTypeApiService', () => {
   beforeEach(() => TestBed.configureTestingModule({}));

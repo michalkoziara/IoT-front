@@ -1,5 +1,4 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {ViewCommunicationService} from '../../services/viewCommunicationService/view-communication.service';
 import {ExecutivesApiService} from '../../services/apiService/executives-api.service';
 import {Executive} from '../../models/executive/executive';
 
@@ -9,7 +8,7 @@ import {Executive} from '../../models/executive/executive';
   styleUrls: ['./executive.component.scss']
 })
 export class ExecutiveComponent implements OnInit {
-  executive: Executive;
+  executive: Executive | null;
 
   @Input()
   productKey: string;
@@ -18,13 +17,16 @@ export class ExecutiveComponent implements OnInit {
   deviceKey: string;
 
   constructor(private executiveApiService: ExecutivesApiService) {
+    this.executive = null;
+    this.productKey = '';
+    this.deviceKey = '';
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.getSensor();
   }
 
-  getSensor() {
+  getSensor(): void {
     this.executiveApiService.getExecutive(
       this.productKey,
       this.deviceKey

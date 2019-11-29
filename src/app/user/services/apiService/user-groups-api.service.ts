@@ -16,8 +16,8 @@ export class UserGroupsApiService {
   constructor(private http: HttpClient) {
   }
 
-  getUserGroups(productKey: string): Observable<{ 'userGroups': [UserGroupInList] }> {
-    return this.http.get<{ 'userGroups': [UserGroupInList] }>(`${environment.apiUrl}/hubs/${productKey}/user-groups`)
+  getUserGroups(productKey: string): Observable<{ 'userGroups': UserGroupInList[] }> {
+    return this.http.get<{ 'userGroups': UserGroupInList[] }>(`${environment.apiUrl}/hubs/${productKey}/user-groups`)
       .pipe(
         retry(1),
         catchError(this.handleError)
@@ -25,11 +25,12 @@ export class UserGroupsApiService {
   }
 
   createUserGroup(productKey: string,
-                  requestData: {
-                    groupName: string,
-                    password: string
-                  }) {
-    return this.http.post<any>(`${environment.apiUrl}/hubs/${productKey}/user-groups`, requestData, this.httpOptions)
+    requestData: {
+                    groupName: string;
+                    password: string;
+                  }): Observable<object> {
+    return this.http
+      .post<object>(`${environment.apiUrl}/hubs/${productKey}/user-groups`, requestData, this.httpOptions)
       .pipe(
         retry(1),
         catchError(this.handleError)
@@ -37,16 +38,21 @@ export class UserGroupsApiService {
   }
 
   joinUserGroup(productKey: string,
-                userGroupName: string,
-                requestData: { password: string }) {
-    return this.http.post<any>(`${environment.apiUrl}/hubs/${productKey}/user-groups/${userGroupName}/users`, requestData, this.httpOptions)
+    userGroupName: string,
+    requestData: { password: string }): Observable<object> {
+    return this.http
+      .post<object>(`${environment.apiUrl}/hubs/${productKey}/user-groups/${userGroupName}/users`, requestData, this.httpOptions)
       .pipe(
         retry(1),
         catchError(this.handleError)
       );
   }
 
-  handleError(response) {
+  handleError(response: {
+    error: ErrorEvent | { errorMessage: string };
+    status: string;
+    message: string;
+  }): Observable<never> {
     if (response.error instanceof ErrorEvent) {
       console.log(response.error.message);
       return throwError(response.error.message);

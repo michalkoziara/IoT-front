@@ -17,27 +17,27 @@ export class AdminWelcomeService {
   isGetSensorTypesListButtonClicked$ = this.isGetSensorsTypesListButtonClickedSource.asObservable();
   isGetDevicesTypesListButtonClicked$ = this.isGetDevicesTypesListButtonClickedSource.asObservable();
 
-  changeIsGetUsersGroupsListButtonClicked(isGetUsersGroupsListButtonClicked: boolean) {
+  changeIsGetUsersGroupsListButtonClicked(isGetUsersGroupsListButtonClicked: boolean): void {
     this.isGetUsersGroupsListButtonClickedSource.next(isGetUsersGroupsListButtonClicked);
   }
 
-  changeIsGetSensorsListButtonClickedSource(isGetSensorsListButtonClicked: boolean) {
+  changeIsGetSensorsListButtonClickedSource(isGetSensorsListButtonClicked: boolean): void {
     this.isGetSensorsListButtonClickedSource.next(isGetSensorsListButtonClicked);
   }
 
-  changeIsGetDeviceListButtonClicked(isGetDeviceListButtonClicked: boolean) {
+  changeIsGetDeviceListButtonClicked(isGetDeviceListButtonClicked: boolean): void {
     this.isGetDeviceListButtonClickedSource.next(isGetDeviceListButtonClicked);
   }
 
-  changeIsGetUnconfigureListButtonClicked(isGetUnconfiguredListButtonClicked: boolean) {
+  changeIsGetUnconfigureListButtonClicked(isGetUnconfiguredListButtonClicked: boolean): void {
     this.isGetUnconfiguredListButtonClickedSource.next(isGetUnconfiguredListButtonClicked);
   }
 
-  changeIsGetSensorTypesListButtonClicked(isGetSensorTypesListButtonClicked: boolean) {
+  changeIsGetSensorTypesListButtonClicked(isGetSensorTypesListButtonClicked: boolean): void {
     this.isGetSensorsTypesListButtonClickedSource.next(isGetSensorTypesListButtonClicked);
   }
 
-  changeIsGetDevicesTypesListButtonClicked(isGetDevicesTypesListButtonClicked: boolean) {
+  changeIsGetDevicesTypesListButtonClicked(isGetDevicesTypesListButtonClicked: boolean): void {
     this.isGetSensorsTypesListButtonClickedSource.next(isGetDevicesTypesListButtonClicked);
   }
 

@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component} from '@angular/core';
 import {FormBuilder, FormControl, Validators} from '@angular/forms';
 import {ActivatedRoute, Router} from '@angular/router';
 import {AdminRegisterRequest} from '../../services/adminRegistration/admin-register-request';
@@ -10,7 +10,7 @@ import {MatSnackBar} from '@angular/material/snack-bar';
   templateUrl: './admin-registration.component.html',
   styleUrls: ['./admin-registration.component.scss']
 })
-export class AdminRegistrationComponent implements OnInit {
+export class AdminRegistrationComponent {
   loading = false;
   submitted = false;
   returnUrl: string;
@@ -41,12 +41,10 @@ export class AdminRegistrationComponent implements OnInit {
               private router: Router,
               private registerService: AdminRegisterService,
               private snackBar: MatSnackBar) {
+    this.returnUrl = '';
   }
 
-  ngOnInit() {
-  }
-
-  onRegister() {
+  onRegister(): void {
     this.submitted = true;
 
     if (this.emailFormControl.invalid || this.passwordFormControl.invalid || this.usernameFormControl.invalid ||
@@ -55,18 +53,19 @@ export class AdminRegistrationComponent implements OnInit {
     }
 
     this.loading = true;
-    this.registerService.register(new AdminRegisterRequest(this.usernameFormControl.value, this.emailFormControl.value,
-      this.passwordFormControl.value, this.deviceKeyFormControl.value, this.devicePasswordFormControl.value)).subscribe(
-      response => {
-        if (response.status === 201) {
-          this.snackBar.open('Rejestracja zakończona pomyślnie', null, {duration: 2000});
-          this.router.navigate(['/login']);
-        }
+    this.registerService.register(
+      new AdminRegisterRequest(
+        this.usernameFormControl.value,
+        this.emailFormControl.value,
+        this.passwordFormControl.value,
+        this.deviceKeyFormControl.value,
+        this.devicePasswordFormControl.value)
+    ).subscribe(
+      () => {
+        this.snackBar.open('Rejestracja zakończona pomyślnie', undefined, {duration: 2000});
+        this.router.navigate(['/login']);
       },
       error => {
-        this.error = error;
-        this.loading = false;
-
         this.error = error;
         this.loading = false;
 
@@ -79,11 +78,8 @@ export class AdminRegistrationComponent implements OnInit {
           snackMessage = 'Błędne hasło urządzenia głównego';
         }
 
-        this.snackBar.open(snackMessage, null, {duration: 2000});
-
-
+        this.snackBar.open(snackMessage, undefined, {duration: 2000});
       }
     );
-
   }
 }

@@ -3,10 +3,10 @@ import {BehaviorSubject} from 'rxjs';
 
 @Injectable()
 export class ViewCommunicationService {
-  private currentViewSource = new BehaviorSubject(null);
+  private currentViewSource = new BehaviorSubject(null as string | null);
   currentView$ = this.currentViewSource.asObservable();
 
-  changeCurrentView(currentViewSource: string) {
+  changeCurrentView(currentViewSource: string | null): void {
     this.currentViewSource.next(currentViewSource);
   }
 }

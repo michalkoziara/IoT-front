@@ -9,55 +9,55 @@ import {AdminViewCommunicationService} from '../../services/admin-view-communica
   styleUrls: ['./side-nav.component.scss']
 })
 export class SideNavComponent implements OnInit, OnDestroy {
-
-  currentView: string;
+  currentView: string | null;
   currentViewSubscription: Subscription;
-
 
   constructor(private welcomeService: AdminWelcomeService,
               private viewCommunicationService: AdminViewCommunicationService) {
+    this.currentView = null;
+    this.currentViewSubscription = new Subscription();
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.currentViewSubscription = this.viewCommunicationService.currentView$.subscribe(
       x => this.currentView = x
     );
   }
 
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     this.currentViewSubscription.unsubscribe();
   }
 
-  closeChildren() {
+  closeChildren(): void {
     this.viewCommunicationService.changeCurrentView(null);
   }
 
-  getUserGroupList() {
+  getUserGroupList(): void {
     this.closeChildren();
     this.viewCommunicationService.changeCurrentView('userGroupList');
   }
 
-  getUnconfiguredList() {
+  getUnconfiguredList(): void {
     this.closeChildren();
     this.viewCommunicationService.changeCurrentView('unconfiguredList');
   }
 
-  getDevices() {
+  getDevices(): void {
     this.closeChildren();
     this.viewCommunicationService.changeCurrentView('devicesList');
   }
 
-  getSensors() {
+  getSensors(): void {
     this.closeChildren();
     this.viewCommunicationService.changeCurrentView('sensorsList');
   }
 
-  getDevicesTypes() {
+  getDevicesTypes(): void {
     this.closeChildren();
     this.viewCommunicationService.changeCurrentView('executiveTypesList');
   }
 
-  getSensorTypes() {
+  getSensorTypes(): void {
     this.closeChildren();
     this.viewCommunicationService.changeCurrentView('sensorTypesList');
   }

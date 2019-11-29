@@ -10,7 +10,7 @@ describe('UserGroupComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ UserGroupComponent ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

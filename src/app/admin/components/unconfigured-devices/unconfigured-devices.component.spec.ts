@@ -1,6 +1,6 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { UnconfiguredDevicesComponent } from './unconfigured-devices.component';
+import {UnconfiguredDevicesComponent} from './unconfigured-devices.component';
 
 describe('UnconfiguredDevicesComponent', () => {
   let component: UnconfiguredDevicesComponent;
@@ -10,7 +10,7 @@ describe('UnconfiguredDevicesComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ UnconfiguredDevicesComponent ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {
