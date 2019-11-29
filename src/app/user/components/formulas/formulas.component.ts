@@ -57,7 +57,7 @@ export class FormulasComponent implements OnInit {
   }
 
   viewFormula(name: string): void {
-    console.log();
+    console.log(name);
   }
 
   createFormula(): void {
