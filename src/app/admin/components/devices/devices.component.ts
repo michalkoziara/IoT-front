@@ -10,7 +10,7 @@ import {Devices} from '../../models/devices';
 })
 export class DevicesComponent implements OnInit {
 
-  displayedColumns: string[] = ['name', 'isActive', 'deviceKey', 'actions'];
+  displayedColumns: string[] = ['name', 'isActive', 'deviceKey', 'modify', 'delete'];
   devices: any = [];
   dataSource: MatTableDataSource<[Devices]>;
   height: number;
@@ -85,4 +85,7 @@ export class DevicesComponent implements OnInit {
   }
 
 
+  deleteDevice(deviceKey: string) {
+    console.log(deviceKey);
+  }
 }

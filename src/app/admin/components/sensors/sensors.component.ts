@@ -9,7 +9,7 @@ import {SensorApiService} from '../../services/apiService/sensor-api.service';
   styleUrls: ['./sensors.component.scss']
 })
 export class SensorsComponent implements OnInit {
-  displayedColumns: string[] = ['name', 'isActive', 'deviceKey', 'actions'];
+  displayedColumns: string[] = ['name', 'isActive', 'deviceKey', 'modify', 'delete'];
   sensors: any = [];
   dataSource: MatTableDataSource<[Sensor]>;
   height: number;
@@ -84,4 +84,7 @@ export class SensorsComponent implements OnInit {
     console.log(deviceKey);
   }
 
+  deleteSensor(deviceKey: string) {
+    console.log(deviceKey);
+  }
 }
