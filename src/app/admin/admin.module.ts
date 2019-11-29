@@ -23,9 +23,10 @@ import { ExecutiveTypeComponent } from './components/executive-type/executive-ty
 import { SensorTypeComponent } from './components/sensor-type/sensor-type.component';
 import { DeleteDeviceGroupComponent } from './components/delete-device-group/delete-device-group.component';
 import { ChangeDeviceGroupNameComponent } from './components/change-device-group-name/change-device-group-name.component';
+import { SensorDetailsComponent } from './components/sensor-details/sensor-details.component';
 
 @NgModule({
-  declarations: [routingComponents, AdminComponent, SideNavComponent, DashboardComponent, AdminStartCardComponent, AdminInnerToolbarComponent, UserGroupComponent, UnconfiguredDevicesComponent, DevicesComponent, SensorsComponent, ExecutiveTypeComponent, SensorTypeComponent, DeleteDeviceGroupComponent, ChangeDeviceGroupNameComponent],
+  declarations: [routingComponents, AdminComponent, SideNavComponent, DashboardComponent, AdminStartCardComponent, AdminInnerToolbarComponent, UserGroupComponent, UnconfiguredDevicesComponent, DevicesComponent, SensorsComponent, ExecutiveTypeComponent, SensorTypeComponent, DeleteDeviceGroupComponent, ChangeDeviceGroupNameComponent, SensorDetailsComponent],
   imports: [
     CommonModule,
     AdminRoutingModule,
