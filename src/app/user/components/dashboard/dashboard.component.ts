@@ -3,6 +3,8 @@ import {Subscription} from 'rxjs';
 import {DeviceGroupsService} from '../../services/deviceGroupsService/device-groups.service';
 import {UserGroupsService} from '../../services/userGroupsService/user-groups.service';
 import {ViewCommunicationService} from '../../services/viewCommunicationService/view-communication.service';
+import {SensorsService} from '../../services/sensorsService/sensors.service';
+import {ExecutivesService} from '../../services/executivesService/executives.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -19,10 +21,16 @@ export class DashboardComponent implements OnInit, OnDestroy {
   selectedUserGroupSubscription: Subscription;
   selectedJoiningUserGroup: string;
   selectedJoiningUserGroupSubscription: Subscription;
+  selectedSensor: string;
+  selectedSensorSubscription: Subscription;
+  selectedExecutive: string;
+  selectedExecutiveSubscription: Subscription;
 
   constructor(private viewCommunicationService: ViewCommunicationService,
               private deviceGroupsService: DeviceGroupsService,
-              private userGroupsService: UserGroupsService) {
+              private userGroupsService: UserGroupsService,
+              private sensorsService: SensorsService,
+              private executivesService: ExecutivesService) {
   }
 
   ngOnInit() {
@@ -41,6 +49,12 @@ export class DashboardComponent implements OnInit, OnDestroy {
     this.selectedJoiningUserGroupSubscription = this.userGroupsService.selectedJoiningUserGroup$.subscribe(
       x => this.selectedJoiningUserGroup = x
     );
+    this.selectedSensorSubscription = this.sensorsService.selectedSensor$.subscribe(
+      x => this.selectedSensor = x
+    );
+    this.selectedExecutiveSubscription = this.executivesService.selectedExecutive$.subscribe(
+      x => this.selectedExecutive = x
+    );
   }
 
   ngOnDestroy() {
@@ -49,5 +63,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
     this.selectedDeviceGroupSubscription.unsubscribe();
     this.selectedUserGroupSubscription.unsubscribe();
     this.selectedJoiningUserGroupSubscription.unsubscribe();
+    this.selectedSensorSubscription.unsubscribe();
+    this.selectedExecutiveSubscription.unsubscribe();
   }
 }

@@ -33,6 +33,10 @@ import {AddDeviceGroupComponent} from './components/add-device-group/add-device-
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { CreateUserGroupComponent } from './components/create-user-group/create-user-group.component';
 import { JoinUserGroupComponent } from './components/join-user-group/join-user-group.component';
+import { SensorComponent } from './components/sensor/sensor.component';
+import {SensorsService} from './services/sensorsService/sensors.service';
+import {ExecutivesService} from './services/executivesService/executives.service';
+import { ExecutiveComponent } from './components/executive/executive.component';
 
 @NgModule({
   declarations: [
@@ -50,7 +54,9 @@ import { JoinUserGroupComponent } from './components/join-user-group/join-user-g
     UnassignedSensorsComponent,
     AddDeviceGroupComponent,
     CreateUserGroupComponent,
-    JoinUserGroupComponent
+    JoinUserGroupComponent,
+    SensorComponent,
+    ExecutiveComponent
   ],
   imports: [
     CommonModule,
@@ -62,13 +68,15 @@ import { JoinUserGroupComponent } from './components/join-user-group/join-user-g
     FormsModule
   ],
   providers: [
-    DeviceGroupsService,
+    ViewCommunicationService,
     DeviceGroupsApiService,
+    DeviceGroupsService,
     UserGroupsApiService,
     UserGroupsService,
     SensorsApiService,
-    ViewCommunicationService,
+    SensorsService,
     ExecutivesApiService,
+    ExecutivesService,
     FormulasApiService,
     {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true},
     {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true},

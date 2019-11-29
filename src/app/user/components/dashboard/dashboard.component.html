@@ -24,5 +24,11 @@
   <app-join-user-group *ngSwitchCase="'joiningUserGroup'"
                        [productKey]="selectedDeviceGroup"
                        [userGroupName]="selectedJoiningUserGroup"></app-join-user-group>
+  <app-sensor *ngSwitchCase="'showSensor'"
+              [productKey]="selectedDeviceGroup"
+              [deviceKey]="selectedSensor"></app-sensor>
+  <app-executive *ngSwitchCase="'showExecutive'"
+              [productKey]="selectedDeviceGroup"
+              [deviceKey]="selectedExecutive"></app-executive>
   <app-start-card *ngSwitchDefault></app-start-card>
 </div>

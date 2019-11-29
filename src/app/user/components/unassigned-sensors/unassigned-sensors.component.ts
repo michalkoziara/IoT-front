@@ -2,6 +2,8 @@ import {Component, Input, OnInit, ViewChild} from '@angular/core';
 import {MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
 import {ExecutiveInList} from '../../models/executive-in-list/executive-in-list';
 import {SensorsApiService} from '../../services/apiService/sensors-api.service';
+import {SensorsService} from '../../services/sensorsService/sensors.service';
+import {ViewCommunicationService} from '../../services/viewCommunicationService/view-communication.service';
 
 @Component({
   selector: 'app-unassigned-sensors',
@@ -23,7 +25,9 @@ export class UnassignedSensorsComponent implements OnInit {
   @ViewChild(MatSort, {static: true}) sort: MatSort;
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
 
-  constructor(private sensorsApiService: SensorsApiService) {
+  constructor(private sensorsApiService: SensorsApiService,
+              private sensorsService: SensorsService,
+              private viewCommunicationService: ViewCommunicationService) {
   }
 
   ngOnInit() {
@@ -81,8 +85,10 @@ export class UnassignedSensorsComponent implements OnInit {
     });
   }
 
-  viewSensor(deviceKey: string) {
-    console.log();
+  viewSensor(deviceKey: string, deviceName: string) {
+    this.sensorsService.changeSelectedSensor(deviceKey);
+    this.sensorsService.changeSelectedSensorName(deviceName);
+    this.viewCommunicationService.changeCurrentView('showSensor');
   }
 
   addSensor(deviceKey: string) {

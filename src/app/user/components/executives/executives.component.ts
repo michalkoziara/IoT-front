@@ -3,6 +3,7 @@ import {MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
 import {ExecutiveInUserGroup} from '../../models/executive-in-user-group/executive-in-user-group';
 import {ExecutivesApiService} from '../../services/apiService/executives-api.service';
 import {ViewCommunicationService} from '../../services/viewCommunicationService/view-communication.service';
+import {ExecutivesService} from '../../services/executivesService/executives.service';
 
 @Component({
   selector: 'app-executives',
@@ -25,7 +26,8 @@ export class ExecutivesComponent implements OnInit {
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
 
   constructor(private viewCommunicationService: ViewCommunicationService,
-              private executivesApiService: ExecutivesApiService) {
+              private executivesApiService: ExecutivesApiService,
+              private executivesService: ExecutivesService) {
   }
 
   ngOnInit() {
@@ -99,8 +101,10 @@ export class ExecutivesComponent implements OnInit {
     });
   }
 
-  viewExecutive(deviceKey: string) {
-    console.log();
+  viewExecutive(deviceKey: string, deviceName: string) {
+    this.executivesService.changeSelectedExecutive(deviceKey);
+    this.executivesService.changeSelectedExecutiveName(deviceName);
+    this.viewCommunicationService.changeCurrentView('showExecutive');
   }
 
   addExecutive() {
