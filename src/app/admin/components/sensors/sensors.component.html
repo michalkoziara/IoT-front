@@ -25,7 +25,7 @@
     <ng-container matColumnDef="actions">
       <th mat-header-cell *matHeaderCellDef mat-sort-header> Usuń</th>
       <td mat-cell *matCellDef="let element" class="td-btn">
-        <button mat-button class="group-btn" (click)="modifyDevice(element.deviceKey)">
+        <button mat-button class="group-btn">
           <mat-icon>group</mat-icon>
         </button>
       </td>
@@ -37,8 +37,7 @@
   </table>
 
   <mat-paginator [pageSize]="10"
-                 [pageSizeOptions]="[5, 10, 25, 100]"
-                 (page)="pageEvent = getPaginatorData($event)">
+                 [pageSizeOptions]="[5, 10, 25, 100]">
   </mat-paginator>
 
 </mat-card>

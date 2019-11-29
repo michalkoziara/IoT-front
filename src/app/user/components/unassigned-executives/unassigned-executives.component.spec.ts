@@ -10,7 +10,7 @@ describe('UnassignedExecutivesComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ UnassignedExecutivesComponent ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

@@ -10,7 +10,7 @@ describe('AdminRegistrationComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ AdminRegistrationComponent ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

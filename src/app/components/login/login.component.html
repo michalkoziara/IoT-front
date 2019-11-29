@@ -18,7 +18,7 @@
         </mat-form-field>
 
         <mat-form-field class="full-width">
-          <input matInput placeholder="Hasło" [formControl]="passwordFormControl">
+          <input matInput placeholder="Hasło" [formControl]="passwordFormControl" type="password">
           <mat-error *ngIf="passwordFormControl.hasError('password') && !passwordFormControl.hasError('required')">
             Proszę podać poprawne hasło
           </mat-error>

@@ -10,7 +10,7 @@ describe('StartCardComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ StartCardComponent ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

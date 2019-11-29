@@ -1,6 +1,6 @@
-import { TestBed } from '@angular/core/testing';
+import {TestBed} from '@angular/core/testing';
 
-import { AdminViewCommunicationService } from './admin-view-communication.service';
+import {AdminViewCommunicationService} from './admin-view-communication.service';
 
 describe('AdminViewCommunicationService', () => {
   beforeEach(() => TestBed.configureTestingModule({}));

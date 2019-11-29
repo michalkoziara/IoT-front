@@ -3,6 +3,8 @@ import {MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
 import {ExecutiveInUserGroup} from '../../models/executive-in-user-group/executive-in-user-group';
 import {ExecutivesApiService} from '../../services/apiService/executives-api.service';
 import {ViewCommunicationService} from '../../services/viewCommunicationService/view-communication.service';
+import {ExecutivesService} from '../../services/executivesService/executives.service';
+import {Subscription} from 'rxjs';
 
 @Component({
   selector: 'app-executives',
@@ -11,9 +13,8 @@ import {ViewCommunicationService} from '../../services/viewCommunicationService/
 })
 export class ExecutivesComponent implements OnInit {
   displayedColumns: string[] = ['name', 'state', 'isActive', 'formulaName', 'isFormulaUsed', 'view'];
-  executives: any = [];
+  executives: ExecutiveInUserGroup[] = [];
   dataSource: MatTableDataSource<ExecutiveInUserGroup>;
-  height: number;
 
   @Input()
   productKey: string;
@@ -22,43 +23,27 @@ export class ExecutivesComponent implements OnInit {
   userGroupName: string;
 
   @ViewChild(MatSort, {static: true}) sort: MatSort;
-  @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
+  @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator | null;
 
   constructor(private viewCommunicationService: ViewCommunicationService,
-              private executivesApiService: ExecutivesApiService) {
+              private executivesApiService: ExecutivesApiService,
+              private executivesService: ExecutivesService) {
+    this.dataSource = new MatTableDataSource<ExecutiveInUserGroup>();
+    this.productKey = '';
+    this.userGroupName = '';
+    this.sort = new MatSort();
+    this.paginator = null;
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.loadExecutivesInList();
   }
 
-  getPaginatorData() {
-    this.calculateTableHeight();
-  }
-
-  calculateTableHeight() {
-    setTimeout(() => {
-        this.height = 0;
-        if (this.paginator && this.paginator.length > 0 && this.paginator.pageSize > 0) {
-          const pages = Math.floor(this.paginator.length / this.paginator.pageSize);
-          if (pages === this.paginator.pageIndex && this.paginator.length / this.paginator.pageSize > pages) {
-            this.height = this.paginator.length % this.paginator.pageSize;
-          } else {
-            this.height = this.paginator.pageSize;
-          }
-        }
-        this.height *= 48;
-        this.height += 160;
-      },
-      100);
-  }
-
-  applyFilter(filterValue: string) {
+  applyFilter(filterValue: string): void {
     this.dataSource.filter = filterValue.trim().toLowerCase();
-    this.calculateTableHeight();
   }
 
-  loadExecutivesInList() {
+  loadExecutivesInList(): Subscription {
     return this.executivesApiService.getExecutives(this.productKey, this.userGroupName).subscribe((data) => {
       this.executives = data.map(
         x => {
@@ -99,11 +84,13 @@ export class ExecutivesComponent implements OnInit {
     });
   }
 
-  viewExecutive(deviceKey: string) {
-    console.log();
+  viewExecutive(deviceKey: string, deviceName: string): void {
+    this.executivesService.changeSelectedExecutive(deviceKey);
+    this.executivesService.changeSelectedExecutiveName(deviceName);
+    this.viewCommunicationService.changeCurrentView('showExecutive');
   }
 
-  addExecutive() {
+  addExecutive(): void {
     this.viewCommunicationService.changeCurrentView('listUnassignedExecutives');
   }
 }

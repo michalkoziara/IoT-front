@@ -14,7 +14,7 @@ export class StartCardComponent implements OnInit {
               private authenticationService: AuthService) {
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.authenticationService.currentAuthInfo.subscribe(x => {
       if (x != null) {
         this.username = x.username;
@@ -22,11 +22,11 @@ export class StartCardComponent implements OnInit {
     });
   }
 
-  getDeviceGroupList() {
+  getDeviceGroupList(): void {
     this.viewCommunicationService.changeCurrentView('deviceGroupList');
   }
 
-  addNewDeviceGroup() {
+  addNewDeviceGroup(): void {
     this.viewCommunicationService.changeCurrentView('addNewDeviceGroup');
   }
 }

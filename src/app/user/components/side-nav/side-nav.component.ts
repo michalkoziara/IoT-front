@@ -8,27 +8,29 @@ import {ViewCommunicationService} from '../../services/viewCommunicationService/
   styleUrls: ['./side-nav.component.scss']
 })
 export class SideNavComponent implements OnInit, OnDestroy {
-  currentView: string;
+  currentView: string | null;
   currentViewSubscription: Subscription;
 
   constructor(private viewCommunicationService: ViewCommunicationService) {
+    this.currentView = null;
+    this.currentViewSubscription = new Subscription();
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.currentViewSubscription = this.viewCommunicationService.currentView$.subscribe(
       x => this.currentView = x
     );
   }
 
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     this.currentViewSubscription.unsubscribe();
   }
 
-  closeChildren() {
+  closeChildren(): void {
     this.viewCommunicationService.changeCurrentView(null);
   }
 
-  getDeviceGroupList() {
+  getDeviceGroupList(): void {
     this.closeChildren();
     this.viewCommunicationService.changeCurrentView('deviceGroupList');
   }

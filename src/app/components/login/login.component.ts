@@ -34,13 +34,14 @@ export class LoginComponent implements OnInit {
     if (this.authenticationService.currentAuthInfo) {
       this.router.navigate(['/']);
     }
+    this.returnUrl = '';
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.returnUrl = this.route.snapshot.queryParams.returnUrl || '/';
   }
 
-  onLogIn() {
+  onLogIn(): void {
     this.submitted = true;
 
     if (this.emailFormControl.invalid || this.passwordFormControl.invalid) {
@@ -52,17 +53,19 @@ export class LoginComponent implements OnInit {
       .pipe(first())
       .subscribe(
         data => {
-          if (data.isAdmin) {
-            this.router.navigate(['/admin/dashboard']);
-          } else {
-            this.router.navigate(['/user/dashboard']);
+          if (data !== null) {
+            if (data.isAdmin) {
+              this.router.navigate(['/admin/dashboard']);
+            } else {
+              this.router.navigate(['/user/dashboard']);
+            }
           }
         },
         error => {
           this.error = error;
           this.loading = false;
 
-          this.snackBar.open('Wystąpił błąd poczas logowania, spróbuj ponownie', null, {duration: 2000});
+          this.snackBar.open('Wystąpił błąd poczas logowania, spróbuj ponownie', undefined, {duration: 2000});
         });
   }
 }

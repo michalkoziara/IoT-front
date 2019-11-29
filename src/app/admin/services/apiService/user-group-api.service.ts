@@ -19,7 +19,7 @@ export class UserGroupApiService {
   constructor(private http: HttpClient) {
   }
 
-  getUserGroups(productKey: string): Observable<{'userGroups': [UserGroupInList]}> {
+  getUserGroups(productKey: string): Observable<{'userGroups': UserGroupInList[]}> {
     return this.http.get<{'userGroups': [UserGroupInList]}>(`${environment.apiUrl}/hubs/${productKey}/user-groups`)
       .pipe(
         retry(1),
@@ -27,8 +27,12 @@ export class UserGroupApiService {
       );
   }
 
-  handleError(error) {
-    let errorMessage = '';
+  handleError(error: {
+    error: ErrorEvent;
+    status: string;
+    message: string;
+  }): Observable<never> {
+    let errorMessage: string;
     if (error.error instanceof ErrorEvent) {
       errorMessage = error.error.message;
     } else {

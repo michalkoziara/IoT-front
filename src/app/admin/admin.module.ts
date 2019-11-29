@@ -16,14 +16,26 @@ import {AdminInnerToolbarComponent} from './components/admin-inner-toolbar/admin
 import {FlexModule} from '@angular/flex-layout';
 import {UserGroupComponent} from './components/user-group/user-group.component';
 import {AdminViewCommunicationService} from './services/admin-view-communication.service';
-import { UnconfiguredDevicesComponent } from './components/unconfigured-devices/unconfigured-devices.component';
-import { DevicesComponent } from './components/devices/devices.component';
-import { SensorsComponent } from './components/sensors/sensors.component';
-import { ExecutiveTypeComponent } from './components/executive-type/executive-type.component';
-import { SensorTypeComponent } from './components/sensor-type/sensor-type.component';
+import {UnconfiguredDevicesComponent} from './components/unconfigured-devices/unconfigured-devices.component';
+import {DevicesComponent} from './components/devices/devices.component';
+import {SensorsComponent} from './components/sensors/sensors.component';
+import {ExecutiveTypeComponent} from './components/executive-type/executive-type.component';
+import {SensorTypeComponent} from './components/sensor-type/sensor-type.component';
 
 @NgModule({
-  declarations: [routingComponents, AdminComponent, SideNavComponent, DashboardComponent, AdminStartCardComponent, AdminInnerToolbarComponent, UserGroupComponent, UnconfiguredDevicesComponent, DevicesComponent, SensorsComponent, ExecutiveTypeComponent, SensorTypeComponent],
+  declarations: [
+    routingComponents,
+    AdminComponent,
+    SideNavComponent,
+    DashboardComponent,
+    AdminStartCardComponent,
+    AdminInnerToolbarComponent,
+    UserGroupComponent,
+    UnconfiguredDevicesComponent,
+    DevicesComponent,
+    SensorsComponent,
+    ExecutiveTypeComponent,
+    SensorTypeComponent],
   imports: [
     CommonModule,
     AdminRoutingModule,

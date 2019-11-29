@@ -9,14 +9,15 @@ import {AdminViewCommunicationService} from '../../services/admin-view-communica
 })
 export class AdminInnerToolbarComponent implements OnInit, OnDestroy {
 
-  currentView: string;
+  currentView: string | null;
   currentViewSubscription: Subscription;
 
-
   constructor(private viewCommunicationService: AdminViewCommunicationService) {
+    this.currentView = null;
+    this.currentViewSubscription = new Subscription();
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.currentViewSubscription = this.viewCommunicationService.currentView$.subscribe(
       x => {
         this.currentView = x;
@@ -24,7 +25,7 @@ export class AdminInnerToolbarComponent implements OnInit, OnDestroy {
     );
   }
 
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     this.currentViewSubscription.unsubscribe();
   }
 

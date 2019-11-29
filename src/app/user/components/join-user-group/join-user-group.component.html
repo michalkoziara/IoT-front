@@ -1,0 +1,28 @@
+<div fxLayout="row" fxFlexFill fxLayoutAlign="center">
+  <mat-card>
+    <section>
+      <mat-progress-bar *ngIf="progressBar"
+                        [color]="'primary'"
+                        [mode]="'indeterminate'">
+      </mat-progress-bar>
+    </section>
+
+    <mat-card-content>
+      <form fxLayout="column" [formGroup]="passwordFormGroup">
+        <mat-card-header>Grupa użytkowników</mat-card-header>
+        <mat-form-field
+          [hideRequiredMarker]="true"
+          [floatLabel]="'auto'">
+          <input matInput placeholder="Nazwa" value="{{userGroupName}}" required disabled>
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput placeholder="Hasło" formControlName="passwordCtrl" type="password" required>
+        </mat-form-field>
+
+        <button mat-stroked-button color="accent" class="btn-block" (click)="joinUserGroup()">
+          Dołącz do grupy użytkowników
+        </button>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>

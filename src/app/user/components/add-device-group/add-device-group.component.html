@@ -33,7 +33,11 @@
       <mat-step>
         <ng-template matStepLabel>Zatwierdź</ng-template>
         <div fxLayout="column" fxLayoutAlign="center">
-          <p>Wybrane urządzenie: {{deviceKeyFormGroup.get('deviceKeyCtrl').value}}</p>
+          <mat-form-field
+            [hideRequiredMarker]="true"
+            [floatLabel]="'auto'">
+            <input matInput placeholder="Klucz produktu" value="{{deviceKeyFormGroup.get('deviceKeyCtrl').value}}" required disabled>
+          </mat-form-field>
           <button mat-stroked-button color="accent" class="btn-block" (click)="addDeviceGroup()">Dodaj</button>
           <div>
             <button mat-button matStepperPrevious>Cofnij</button>

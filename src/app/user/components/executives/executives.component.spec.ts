@@ -10,7 +10,7 @@ describe('ExecutivesComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ ExecutivesComponent ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

@@ -18,7 +18,7 @@ export class DeviceApiService {
   constructor(private http: HttpClient) {
   }
 
-  getDevices(productKey: string): Observable<[Devices]> {
+  getDevices(productKey: string): Observable<Devices[]> {
     return this.http.get<[Devices]>(`${environment.apiUrl}/hubs/${productKey}/executive-devices`)
       .pipe(
         retry(1),
@@ -26,8 +26,12 @@ export class DeviceApiService {
       );
   }
 
-  handleError(error) {
-    let errorMessage = '';
+  handleError(error: {
+    error: ErrorEvent;
+    status: string;
+    message: string;
+  }): Observable<never> {
+    let errorMessage: string;
     if (error.error instanceof ErrorEvent) {
       errorMessage = error.error.message;
     } else {
