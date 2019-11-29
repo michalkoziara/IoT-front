@@ -2,22 +2,20 @@ import {Injectable} from '@angular/core';
 import {BehaviorSubject} from 'rxjs';
 
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class SensorService {
 
-  private selectedSensorSource = new BehaviorSubject(null);
+  private selectedSensorSource = new BehaviorSubject(null as string | null);
   selectedSensor$ = this.selectedSensorSource.asObservable();
 
-  private selectedSensorNameSource = new BehaviorSubject(null);
+  private selectedSensorNameSource = new BehaviorSubject(null as string | null);
   selectedSensorName$ = this.selectedSensorNameSource.asObservable();
 
-  changeSelectedSensor(selectedSensorSource: string) {
+  changeSelectedSensor(selectedSensorSource: string): void {
     this.selectedSensorSource.next(selectedSensorSource);
   }
 
-  changeSelectedSensorName(selectedSensorNameSource: string) {
+  changeSelectedSensorName(selectedSensorNameSource: string): void {
     this.selectedSensorNameSource.next(selectedSensorNameSource);
   }
 }

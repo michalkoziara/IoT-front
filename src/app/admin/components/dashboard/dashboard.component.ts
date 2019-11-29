@@ -16,7 +16,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
   deviceGroupName: string;
   productKeyApiSubscription: Subscription;
 
-  selectedSensor: string;
+  selectedSensor: string | null;
   selectedSensorSubscription: Subscription;
 
 
@@ -27,15 +27,16 @@ export class DashboardComponent implements OnInit, OnDestroy {
               private welcomeService: AdminWelcomeService,
               private productKeyApiService: ProductKeyApiService,
               private sensorsService: SensorService) {
+    this.productKeyApiSubscription = new Subscription();
+
     this.productKey = '';
     this.deviceGroupName = '';
-    this.deviceGroupName = '';
+
+    this.selectedSensor = null;
+    this.selectedSensorSubscription = new Subscription();
 
     this.currentView = '';
-  }
-
-    this.isGetDevicesTypesListButtonClicked = false;
-    this.isGetDevicesTypesListButtonClickedSubscription = new Subscription();
+    this.currentViewSubscription = new Subscription();
   }
 
   ngOnInit(): void {

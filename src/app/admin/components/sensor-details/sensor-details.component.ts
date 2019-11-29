@@ -1,7 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {SensorDetails} from '../../models/SensorDetails';
 import {SensorApiService} from '../../services/apiService/sensor-api.service';
-import {AdminViewCommunicationService} from '../../services/admin-view-communication.service';
 
 @Component({
   selector: 'app-sensor-details',
@@ -10,7 +9,7 @@ import {AdminViewCommunicationService} from '../../services/admin-view-communica
 })
 export class SensorDetailsComponent implements OnInit {
 
-  sensor: SensorDetails;
+  sensor: SensorDetails | null;
 
   @Input()
   productKey: string;
@@ -18,15 +17,17 @@ export class SensorDetailsComponent implements OnInit {
   @Input()
   deviceKey: string;
 
-  constructor(private sensorsApiService: SensorApiService,
-              private viewCommunicationService: AdminViewCommunicationService) {
+  constructor(private sensorsApiService: SensorApiService) {
+    this.sensor = null;
+    this.productKey = '';
+    this.deviceKey = '';
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.getSensor();
   }
 
-  getSensor() {
+  getSensor(): void {
     this.sensorsApiService.getSensor(
       this.productKey,
       this.deviceKey

@@ -24,6 +24,8 @@ import {SensorTypeComponent} from './components/sensor-type/sensor-type.componen
 import { DeleteDeviceGroupComponent } from './components/delete-device-group/delete-device-group.component';
 import { ChangeDeviceGroupNameComponent } from './components/change-device-group-name/change-device-group-name.component';
 import { SensorDetailsComponent } from './components/sensor-details/sensor-details.component';
+import {SensorService} from './services/sensorService/sensor.service';
+import {UserGroupService} from './services/user-group.service';
 
 @NgModule({
   declarations: [
@@ -50,7 +52,10 @@ import { SensorDetailsComponent } from './components/sensor-details/sensor-detai
     {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true},
     {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true},
     AdminWelcomeService,
-    AdminViewCommunicationService
+    AdminViewCommunicationService,
+    SensorService,
+    UserGroupService,
+
   ],
 })
 export class AdminModule {
