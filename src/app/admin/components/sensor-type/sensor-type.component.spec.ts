@@ -1,6 +1,6 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { SensorTypeComponent } from './sensor-type.component';
+import {SensorTypeComponent} from './sensor-type.component';
 
 describe('SensorTypeComponent', () => {
   let component: SensorTypeComponent;

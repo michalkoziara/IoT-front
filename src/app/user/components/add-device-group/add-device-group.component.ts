@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {AbstractControl, FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {DeviceGroupsApiService} from '../../services/apiService/device-groups-api.service';
 import {MatSnackBar} from '@angular/material';
 import {finalize} from 'rxjs/operators';
@@ -12,17 +12,19 @@ import {ViewCommunicationService} from '../../services/viewCommunicationService/
   styleUrls: ['./add-device-group.component.scss']
 })
 export class AddDeviceGroupComponent implements OnInit {
-  deviceKeyFormGroup: FormGroup;
-  passwordFormGroup: FormGroup;
+  deviceKeyFormGroup: FormGroup | null;
+  passwordFormGroup: FormGroup | null;
   progressBar = false;
 
   constructor(private deviceGroupsApiService: DeviceGroupsApiService,
               private formBuilder: FormBuilder,
               private snackBar: MatSnackBar,
               private viewCommunicationService: ViewCommunicationService) {
+    this.deviceKeyFormGroup = null;
+    this.passwordFormGroup = null;
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.deviceKeyFormGroup = this.formBuilder.group({
       deviceKeyCtrl: ['', Validators.required]
     });
@@ -31,36 +33,45 @@ export class AddDeviceGroupComponent implements OnInit {
     });
   }
 
-  addDeviceGroup() {
+  addDeviceGroup(): void {
     this.progressBar = true;
+
+    let productKey = '';
+    let productPassword = '';
+    if (this.deviceKeyFormGroup !== null
+      && this.deviceKeyFormGroup.get('deviceKeyCtrl') !== null
+      && this.passwordFormGroup !== null
+      && this.passwordFormGroup.get('passwordCtrl') !== null) {
+      productKey = (this.deviceKeyFormGroup.get('deviceKeyCtrl') as AbstractControl).value;
+      productPassword = (this.passwordFormGroup.get('passwordCtrl') as AbstractControl).value;
+    }
+
+
     this.deviceGroupsApiService.addDeviceGroup(
-      {
-        productKey: this.deviceKeyFormGroup.get('deviceKeyCtrl').value,
-        productPassword: this.passwordFormGroup.get('passwordCtrl').value
-      }
+      {productKey, productPassword}
     ).pipe(
       finalize(() => this.afterComplete())
     ).subscribe(
-      data => {
-        this.snackBar.open('Dodano urządzenie główne', null, {duration: 3000});
+      () => {
+        this.snackBar.open('Dodano urządzenie główne', undefined, {duration: 3000});
         this.viewCommunicationService.changeCurrentView('deviceGroupList');
       },
       error => {
         switch (error.message) {
           case ErrorConstantMessages.RESPONSE_MESSAGE_PRODUCT_KEY_NOT_FOUND: {
-            this.snackBar.open('Urządzenie o podanym kluczu produktu nie istnieje', null, {duration: 3000});
+            this.snackBar.open('Urządzenie o podanym kluczu produktu nie istnieje', undefined, {duration: 3000});
             break;
           }
           case ErrorConstantMessages.RESPONSE_MESSAGE_WRONG_PASSWORD: {
-            this.snackBar.open('Podano nieprawidłowe hasło urządzenia głównego', null, {duration: 3000});
+            this.snackBar.open('Podano nieprawidłowe hasło urządzenia głównego', undefined, {duration: 3000});
             break;
           }
           case ErrorConstantMessages.RESPONSE_MESSAGE_USER_ALREADY_IN_DEVICE_GROUP: {
-            this.snackBar.open('Podana grupa urządzeń jest już na liście dostępnych grup', null, {duration: 3000});
+            this.snackBar.open('Podana grupa urządzeń jest już na liście dostępnych grup', undefined, {duration: 3000});
             break;
           }
           default: {
-            this.snackBar.open('Wystąpił błąd poczas dodawania, spróbuj ponownie', null, {duration: 3000});
+            this.snackBar.open('Wystąpił błąd poczas dodawania, spróbuj ponownie', undefined, {duration: 3000});
             break;
           }
         }
@@ -68,7 +79,7 @@ export class AddDeviceGroupComponent implements OnInit {
     );
   }
 
-  afterComplete() {
+  afterComplete(): void {
     this.progressBar = false;
   }
 }

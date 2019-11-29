@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {AbstractControl, FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {MatSnackBar} from '@angular/material';
 import {finalize} from 'rxjs/operators';
 import {UserGroupsApiService} from '../../services/apiService/user-groups-api.service';
@@ -12,8 +12,8 @@ import {ViewCommunicationService} from '../../services/viewCommunicationService/
   styleUrls: ['./create-user-group.component.scss']
 })
 export class CreateUserGroupComponent implements OnInit {
-  groupNameFormGroup: FormGroup;
-  passwordFormGroup: FormGroup;
+  groupNameFormGroup: FormGroup | null;
+  passwordFormGroup: FormGroup | null;
   progressBar = false;
 
   @Input()
@@ -23,9 +23,12 @@ export class CreateUserGroupComponent implements OnInit {
               private formBuilder: FormBuilder,
               private snackBar: MatSnackBar,
               private viewCommunicationService: ViewCommunicationService) {
+    this.groupNameFormGroup = null;
+    this.passwordFormGroup = null;
+    this.productKey = '';
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.groupNameFormGroup = this.formBuilder.group({
       groupNameCtrl: ['', [Validators.required, Validators.pattern(/^(?!.*[$\\].*).*$/)]]
     });
@@ -34,29 +37,37 @@ export class CreateUserGroupComponent implements OnInit {
     });
   }
 
-  createUserGroup() {
+  createUserGroup(): void {
     this.progressBar = true;
+
+    let groupName = '';
+    let password = '';
+    if (this.groupNameFormGroup !== null
+      && this.groupNameFormGroup.get('groupNameCtrl') !== null
+      && this.passwordFormGroup !== null
+      && this.passwordFormGroup.get('passwordCtrl') !== null) {
+      groupName = (this.groupNameFormGroup.get('groupNameCtrl') as AbstractControl).value;
+      password = (this.passwordFormGroup.get('passwordCtrl') as AbstractControl).value;
+    }
+
     this.userGroupsApiService.createUserGroup(
       this.productKey,
-      {
-        groupName: this.groupNameFormGroup.get('groupNameCtrl').value,
-        password: this.passwordFormGroup.get('passwordCtrl').value
-      }
+      {groupName, password}
     ).pipe(
       finalize(() => this.afterComplete())
     ).subscribe(
-      data => {
-        this.snackBar.open('Dodano nową grupę użytkowników', null, {duration: 3000});
+      () => {
+        this.snackBar.open('Dodano nową grupę użytkowników', undefined, {duration: 3000});
         this.viewCommunicationService.changeCurrentView('joiningUserGroupsInDevice');
       },
       error => {
         switch (error.message) {
           case ErrorConstantMessages.RESPONSE_MESSAGE_USER_GROUP_ALREADY_EXISTS: {
-            this.snackBar.open('Podana grupa użytkowników już istnieje', null, {duration: 3000});
+            this.snackBar.open('Podana grupa użytkowników już istnieje', undefined, {duration: 3000});
             break;
           }
           default: {
-            this.snackBar.open('Wystąpił błąd poczas tworzenia, spróbuj ponownie', null, {duration: 3000});
+            this.snackBar.open('Wystąpił błąd poczas tworzenia, spróbuj ponownie', undefined, {duration: 3000});
             break;
           }
         }
@@ -64,7 +75,7 @@ export class CreateUserGroupComponent implements OnInit {
     );
   }
 
-  afterComplete() {
+  afterComplete(): void {
     this.progressBar = false;
   }
 }

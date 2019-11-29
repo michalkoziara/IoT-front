@@ -1,6 +1,6 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { ExecutiveComponent } from './executive.component';
+import {ExecutiveComponent} from './executive.component';
 
 describe('ExecutiveComponent', () => {
   let component: ExecutiveComponent;

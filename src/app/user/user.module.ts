@@ -31,12 +31,12 @@ import {UnassignedExecutivesComponent} from './components/unassigned-executives/
 import {UnassignedSensorsComponent} from './components/unassigned-sensors/unassigned-sensors.component';
 import {AddDeviceGroupComponent} from './components/add-device-group/add-device-group.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import { CreateUserGroupComponent } from './components/create-user-group/create-user-group.component';
-import { JoinUserGroupComponent } from './components/join-user-group/join-user-group.component';
-import { SensorComponent } from './components/sensor/sensor.component';
+import {CreateUserGroupComponent} from './components/create-user-group/create-user-group.component';
+import {JoinUserGroupComponent} from './components/join-user-group/join-user-group.component';
+import {SensorComponent} from './components/sensor/sensor.component';
 import {SensorsService} from './services/sensorsService/sensors.service';
 import {ExecutivesService} from './services/executivesService/executives.service';
-import { ExecutiveComponent } from './components/executive/executive.component';
+import {ExecutiveComponent} from './components/executive/executive.component';
 
 @NgModule({
   declarations: [

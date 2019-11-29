@@ -4,6 +4,7 @@ import {DeviceGroupsApiService} from '../../services/apiService/device-groups-ap
 import {DeviceGroupInList} from '../../models/device-group-in-list/device-group-in-list';
 import {DeviceGroupsService} from '../../services/deviceGroupsService/device-groups.service';
 import {ViewCommunicationService} from '../../services/viewCommunicationService/view-communication.service';
+import {Subscription} from 'rxjs';
 
 @Component({
   selector: 'app-device-groups-card',
@@ -12,49 +13,29 @@ import {ViewCommunicationService} from '../../services/viewCommunicationService/
 })
 export class DeviceGroupsCardComponent implements OnInit {
   displayedColumns: string[] = ['name', 'productKey', 'actions'];
-  deviceGroups: any = [];
+  deviceGroups: DeviceGroupInList[] = [];
   dataSource: MatTableDataSource<DeviceGroupInList>;
-  height: number;
 
   @ViewChild(MatSort, {static: true}) sort: MatSort;
-  @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
+  @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator | null;
 
   constructor(private viewCommunicationService: ViewCommunicationService,
               private deviceGroupsApi: DeviceGroupsApiService,
               private deviceGroupService: DeviceGroupsService) {
+    this.dataSource = new MatTableDataSource<DeviceGroupInList>();
+    this.sort = new MatSort();
+    this.paginator = null;
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.loadDeviceGroupsInList();
   }
 
-  getPaginatorData() {
-    this.calculateTableHeight();
-  }
-
-  calculateTableHeight() {
-    setTimeout(() => {
-        this.height = 0;
-        if (this.paginator && this.paginator.length > 0 && this.paginator.pageSize > 0) {
-          const pages = Math.floor(this.paginator.length / this.paginator.pageSize);
-          if (pages === this.paginator.pageIndex && this.paginator.length / this.paginator.pageSize > pages) {
-            this.height = this.paginator.length % this.paginator.pageSize;
-          } else {
-            this.height = this.paginator.pageSize;
-          }
-        }
-        this.height *= 48;
-        this.height += 160;
-      },
-      100);
-  }
-
-  applyFilter(filterValue: string) {
+  applyFilter(filterValue: string): void {
     this.dataSource.filter = filterValue.trim().toLowerCase();
-    this.calculateTableHeight();
   }
 
-  loadDeviceGroupsInList() {
+  loadDeviceGroupsInList(): Subscription {
     return this.deviceGroupsApi.getDeviceGroups().subscribe((data) => {
       this.deviceGroups = data;
       this.dataSource = new MatTableDataSource<DeviceGroupInList>(this.deviceGroups);
@@ -68,12 +49,12 @@ export class DeviceGroupsCardComponent implements OnInit {
     });
   }
 
-  userGroupClicked(productKey: string) {
+  userGroupClicked(productKey: string): void {
     this.deviceGroupService.changeSelectedDeviceGroup(productKey);
     this.viewCommunicationService.changeCurrentView('userGroupAssignedToList');
   }
 
-  addNewDeviceGroup() {
+  addNewDeviceGroup(): void {
     this.viewCommunicationService.changeCurrentView('addNewDeviceGroup');
   }
 }

@@ -4,6 +4,8 @@ import {ExecutiveInList} from '../../models/executive-in-list/executive-in-list'
 import {SensorsApiService} from '../../services/apiService/sensors-api.service';
 import {SensorsService} from '../../services/sensorsService/sensors.service';
 import {ViewCommunicationService} from '../../services/viewCommunicationService/view-communication.service';
+import {Subscription} from 'rxjs';
+import {SensorInList} from '../../models/sensor-in-list/sensor-in-list';
 
 @Component({
   selector: 'app-unassigned-sensors',
@@ -12,9 +14,8 @@ import {ViewCommunicationService} from '../../services/viewCommunicationService/
 })
 export class UnassignedSensorsComponent implements OnInit {
   displayedColumns: string[] = ['name', 'isActive', 'view', 'add'];
-  sensors: any = [];
+  sensors: SensorInList[] = [];
   dataSource: MatTableDataSource<ExecutiveInList>;
-  height: number;
 
   @Input()
   productKey: string;
@@ -23,44 +24,27 @@ export class UnassignedSensorsComponent implements OnInit {
   userGroupName: string;
 
   @ViewChild(MatSort, {static: true}) sort: MatSort;
-  @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
+  @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator | null;
 
   constructor(private sensorsApiService: SensorsApiService,
               private sensorsService: SensorsService,
               private viewCommunicationService: ViewCommunicationService) {
+    this.dataSource = new MatTableDataSource<ExecutiveInList>();
+    this.sort = new MatSort();
+    this.paginator = null;
+    this.productKey = '';
+    this.userGroupName = '';
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.loadSensorsInList();
   }
 
-  getPaginatorData() {
-    this.calculateTableHeight();
-  }
-
-  calculateTableHeight() {
-    setTimeout(() => {
-        this.height = 0;
-        if (this.paginator && this.paginator.length > 0 && this.paginator.pageSize > 0) {
-          const pages = Math.floor(this.paginator.length / this.paginator.pageSize);
-          if (pages === this.paginator.pageIndex && this.paginator.length / this.paginator.pageSize > pages) {
-            this.height = this.paginator.length % this.paginator.pageSize;
-          } else {
-            this.height = this.paginator.pageSize;
-          }
-        }
-        this.height *= 48;
-        this.height += 160;
-      },
-      100);
-  }
-
-  applyFilter(filterValue: string) {
+  applyFilter(filterValue: string): void {
     this.dataSource.filter = filterValue.trim().toLowerCase();
-    this.calculateTableHeight();
   }
 
-  loadSensorsInList() {
+  loadSensorsInList(): Subscription {
     return this.sensorsApiService.getUnassignedSensors(this.productKey).subscribe((data) => {
       this.sensors = data.map(
         x => {
@@ -85,13 +69,16 @@ export class UnassignedSensorsComponent implements OnInit {
     });
   }
 
-  viewSensor(deviceKey: string, deviceName: string) {
+  viewSensor(deviceKey: string, deviceName: string): void {
     this.sensorsService.changeSelectedSensor(deviceKey);
     this.sensorsService.changeSelectedSensorName(deviceName);
     this.viewCommunicationService.changeCurrentView('showSensor');
   }
 
-  addSensor(deviceKey: string) {
-    console.log();
+  addSensor(deviceKey: string): void {
+    this.sensorsApiService.getSensor(this.productKey, deviceKey).subscribe(() => {
+
+      }
+    );
   }
 }

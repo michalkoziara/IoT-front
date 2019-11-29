@@ -1,5 +1,4 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {ViewCommunicationService} from '../../services/viewCommunicationService/view-communication.service';
 import {SensorsApiService} from '../../services/apiService/sensors-api.service';
 import {Sensor} from '../../models/sensor/sensor';
 
@@ -9,7 +8,7 @@ import {Sensor} from '../../models/sensor/sensor';
   styleUrls: ['./sensor.component.scss']
 })
 export class SensorComponent implements OnInit {
-  sensor: Sensor;
+  sensor: Sensor | null;
 
   @Input()
   productKey: string;
@@ -17,15 +16,17 @@ export class SensorComponent implements OnInit {
   @Input()
   deviceKey: string;
 
-  constructor(private sensorsApiService: SensorsApiService,
-              private viewCommunicationService: ViewCommunicationService) {
+  constructor(private sensorsApiService: SensorsApiService) {
+    this.sensor = null;
+    this.productKey = '';
+    this.deviceKey = '';
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.getSensor();
   }
 
-  getSensor() {
+  getSensor(): void {
     this.sensorsApiService.getSensor(
       this.productKey,
       this.deviceKey

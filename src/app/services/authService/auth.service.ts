@@ -15,21 +15,32 @@ const httpOptions = {
   providedIn: 'root'
 })
 export class AuthService {
-  public currentAuthInfo: Observable<AuthInfo>;
+  public currentAuthInfo: Observable<AuthInfo | null>;
 
-  private currentAuthInfoSubject: BehaviorSubject<AuthInfo>;
+  private readonly currentAuthInfoSubject: BehaviorSubject<AuthInfo | null>;
 
   constructor(private http: HttpClient) {
-    this.currentAuthInfoSubject = new BehaviorSubject<AuthInfo>(JSON.parse(localStorage.getItem('authInfo')));
+    this.currentAuthInfoSubject = new BehaviorSubject<AuthInfo | null>(
+      JSON.parse(
+        localStorage.getItem('authInfo') != null
+          ? (localStorage.getItem('authInfo') as string)
+          : '') === ''
+        ? JSON.parse(
+        localStorage.getItem('authInfo') != null
+          ? (localStorage.getItem('authInfo') as string)
+          : '')
+        : null);
     this.currentAuthInfo = this.currentAuthInfoSubject.asObservable();
   }
 
-  public get currentAuthInfoValue(): AuthInfo {
-    return this.currentAuthInfoSubject.value;
+  public get currentAuthInfoValue(): AuthInfo | null {
+    return this.currentAuthInfoSubject != null
+      ? this.currentAuthInfoSubject.value
+      : null;
   }
 
-  login(credentials: AuthRequest) {
-    return this.http.post<any>(`${environment.apiUrl}/users/login`, credentials, httpOptions)
+  login(credentials: AuthRequest): Observable<AuthInfo | null> {
+    return this.http.post<AuthInfo | null>(`${environment.apiUrl}/users/login`, credentials, httpOptions)
       .pipe(
         map(authInfo => {
             localStorage.setItem('authInfo', JSON.stringify(authInfo));
@@ -40,7 +51,7 @@ export class AuthService {
       );
   }
 
-  logout() {
+  logout(): void {
     localStorage.removeItem('authInfo');
     this.currentAuthInfoSubject.next(null);
   }

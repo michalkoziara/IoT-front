@@ -12,32 +12,49 @@ import {ExecutivesService} from '../../services/executivesService/executives.ser
   styleUrls: ['./inner-toolbar.component.scss']
 })
 export class InnerToolbarComponent implements OnInit, OnDestroy {
-  currentView: string;
+  currentView: string | null;
   currentViewSubscription: Subscription;
 
-  selectedDeviceGroup: string;
+  selectedDeviceGroup: string | null;
   selectedDeviceGroupSubscription: Subscription;
-  selectedUserGroup: string;
+  selectedUserGroup: string | null;
   selectedUserGroupSubscription: Subscription;
-  selectedJoiningUserGroup: string;
+  selectedJoiningUserGroup: string | null;
   selectedJoiningUserGroupSubscription: Subscription;
-  selectedSensor: string;
+  selectedSensor: string | null;
   selectedSensorSubscription: Subscription;
-  selectedSensorName: string;
+  selectedSensorName: string | null;
   selectedSensorNameSubscription: Subscription;
-  selectedExecutive: string;
+  selectedExecutive: string | null;
   selectedExecutiveSubscription: Subscription;
-  selectedExecutiveName: string;
+  selectedExecutiveName: string | null;
   selectedExecutiveNameSubscription: Subscription;
+
 
   constructor(private viewCommunicationService: ViewCommunicationService,
               private deviceGroupsService: DeviceGroupsService,
               private userGroupsService: UserGroupsService,
               private sensorsService: SensorsService,
               private executivesService: ExecutivesService) {
+    this.currentView = null;
+    this.currentViewSubscription = new Subscription();
+    this.selectedDeviceGroup = null;
+    this.selectedDeviceGroupSubscription = new Subscription();
+    this.selectedUserGroup = null;
+    this.selectedUserGroupSubscription = new Subscription();
+    this.selectedJoiningUserGroup = null;
+    this.selectedJoiningUserGroupSubscription = new Subscription();
+    this.selectedSensor = null;
+    this.selectedSensorSubscription = new Subscription();
+    this.selectedSensorName = null;
+    this.selectedSensorNameSubscription = new Subscription();
+    this.selectedExecutive = null;
+    this.selectedExecutiveSubscription = new Subscription();
+    this.selectedExecutiveName = null;
+    this.selectedExecutiveNameSubscription = new Subscription();
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.currentViewSubscription = this.viewCommunicationService.currentView$.subscribe(
       x => {
         this.currentView = x;
@@ -67,7 +84,7 @@ export class InnerToolbarComponent implements OnInit, OnDestroy {
     );
   }
 
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     this.currentViewSubscription.unsubscribe();
 
     this.selectedDeviceGroupSubscription.unsubscribe();

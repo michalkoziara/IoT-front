@@ -11,7 +11,7 @@ export class AuthGuard implements CanActivate {
   ) {
   }
 
-  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
+  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
     const currentAuthInfo = this.authenticationService.currentAuthInfoValue;
     if (currentAuthInfo) {
       return true;

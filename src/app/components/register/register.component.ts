@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component} from '@angular/core';
 import {FormBuilder, FormControl, Validators} from '@angular/forms';
 import {ActivatedRoute, Router} from '@angular/router';
 import {UserRegistrationRequest} from '../../services/userRegistration/user-registration-request';
@@ -10,7 +10,7 @@ import {MatSnackBar} from '@angular/material/snack-bar';
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.scss']
 })
-export class RegisterComponent implements OnInit {
+export class RegisterComponent {
   loading = false;
   submitted = false;
   returnUrl: string;
@@ -35,12 +35,10 @@ export class RegisterComponent implements OnInit {
               private router: Router,
               private registerService: UserRegistrationService,
               private snackBar: MatSnackBar) {
+    this.returnUrl = '';
   }
 
-  ngOnInit() {
-  }
-
-  onRegister() {
+  onRegister(): void {
     this.submitted = true;
 
     if (this.emailFormControl.invalid || this.passwordFormControl.invalid || this.usernameFormControl.invalid) {
@@ -48,16 +46,15 @@ export class RegisterComponent implements OnInit {
     }
 
     this.loading = true;
-    this.registerService.register(new UserRegistrationRequest(this.usernameFormControl.value, this.emailFormControl.value,
-      this.passwordFormControl.value)).subscribe(
-      response => {
-        if (response.status === 201) {
-          this.snackBar.open('Rejestracja zakończona pomyślnie', null, {duration: 2000});
-          this.router.navigate(['/login']);
-        } else {
-
-          console.log('response error ' + response.errorMessage);
-        }
+    this.registerService.register(
+      new UserRegistrationRequest(
+        this.usernameFormControl.value,
+        this.emailFormControl.value,
+        this.passwordFormControl.value)
+    ).subscribe(
+      () => {
+        this.snackBar.open('Rejestracja zakończona pomyślnie', undefined, {duration: 2000});
+        this.router.navigate(['/login']);
       },
       error => {
         this.error = error;
@@ -72,12 +69,9 @@ export class RegisterComponent implements OnInit {
           snackMessage = 'Błędne hasło urządzenia głównego';
         }
 
-        this.snackBar.open(snackMessage, null, {duration: 2000});
-
+        this.snackBar.open(snackMessage, undefined, {duration: 2000});
       }
     );
-
   }
-
 }
 

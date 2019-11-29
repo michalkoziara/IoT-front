@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {CanLoad, Route, Router, UrlSegment} from '@angular/router';
+import {CanLoad, Router} from '@angular/router';
 import {Observable} from 'rxjs';
 import {AuthService} from '../services/authService/auth.service';
 
@@ -12,10 +12,7 @@ export class AdminGuard implements CanLoad {
               private router: Router) {
   }
 
-  canLoad(
-    route: Route,
-    segments: UrlSegment[]): Observable<boolean> | Promise<boolean> | boolean {
-
+  canLoad(): Observable<boolean> | Promise<boolean> | boolean {
     const currentAuthInfo = this.authenticationService.currentAuthInfoValue;
     if (currentAuthInfo && currentAuthInfo.isAdmin) {
       return true;

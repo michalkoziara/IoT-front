@@ -2,6 +2,7 @@ import {Component, Input, OnInit, ViewChild} from '@angular/core';
 import {MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
 import {Sensor} from '../../models/sensor';
 import {SensorApiService} from '../../services/apiService/sensor-api.service';
+import {Subscription} from 'rxjs';
 
 @Component({
   selector: 'app-sensors',
@@ -10,52 +11,31 @@ import {SensorApiService} from '../../services/apiService/sensor-api.service';
 })
 export class SensorsComponent implements OnInit {
   displayedColumns: string[] = ['name', 'isActive', 'deviceKey', 'actions'];
-  sensors: any = [];
-  dataSource: MatTableDataSource<[Sensor]>;
-  height: number;
+  sensors: Sensor[] = [];
+  dataSource: MatTableDataSource<Sensor>;
 
   @Input()
   productKey: string;
 
   @ViewChild(MatSort, {static: true}) sort: MatSort;
-  @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
+  @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator | null;
 
-  constructor( private sensorApiService: SensorApiService) {
-    console.log(this.sensorApiService);
+  constructor(private sensorApiService: SensorApiService) {
+    this.dataSource = new MatTableDataSource<Sensor>();
+    this.productKey = '';
+    this.sort = new MatSort();
+    this.paginator = null;
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.loadSenorsInList();
   }
 
-  getPaginatorData() {
-    this.calculateTableHeight();
-  }
-
-
-  calculateTableHeight() {
-    setTimeout(() => {
-        this.height = 0;
-        if (this.paginator && this.paginator.length > 0 && this.paginator.pageSize > 0) {
-          const pages = Math.floor(this.paginator.length / this.paginator.pageSize);
-          if (pages === this.paginator.pageIndex && this.paginator.length / this.paginator.pageSize > pages) {
-            this.height = this.paginator.length % this.paginator.pageSize;
-          } else {
-            this.height = this.paginator.pageSize;
-          }
-        }
-        this.height *= 48;
-        this.height += 160;
-      },
-      100);
-  }
-
-  applyFilter(filterValue: string) {
+  applyFilter(filterValue: string): void {
     this.dataSource.filter = filterValue.trim().toLowerCase();
-    this.calculateTableHeight();
   }
 
-  loadSenorsInList() {
+  loadSenorsInList(): Subscription {
     return this.sensorApiService.getSensors(this.productKey).subscribe((data) => {
       this.sensors = data.map(
         x => {
@@ -70,7 +50,7 @@ export class SensorsComponent implements OnInit {
           return x;
         }
       );
-      this.dataSource = new MatTableDataSource<[Sensor]>(this.sensors);
+      this.dataSource = new MatTableDataSource<Sensor>(this.sensors);
       this.sort.sort({
         id: 'name',
         start: 'asc',
@@ -79,9 +59,4 @@ export class SensorsComponent implements OnInit {
       this.dataSource.sort = this.sort;
     });
   }
-
-  modifySensor(deviceKey: string) {
-    console.log(deviceKey);
-  }
-
 }

@@ -11,13 +11,11 @@ import {AdminViewCommunicationService} from '../../services/admin-view-communica
   styleUrls: ['./dashboard.component.scss']
 })
 export class DashboardComponent implements OnInit, OnDestroy {
-
   productKey: string;
   deviceGroupName: string;
   productKeyApiSubscription: Subscription;
 
-
-  currentView: string;
+  currentView: string | null;
   currentViewSubscription: Subscription;
 
   isGetUsersGroupsListButtonClicked: boolean;
@@ -41,10 +39,35 @@ export class DashboardComponent implements OnInit, OnDestroy {
   constructor(private viewCommunicationService: AdminViewCommunicationService,
               private welcomeService: AdminWelcomeService,
               private productKeyApiService: ProductKeyApiService) {
+    this.productKey = '';
+    this.deviceGroupName = '';
+    this.deviceGroupName = '';
+
+    this.currentView = '';
+    this.currentViewSubscription = new Subscription();
+
+    this.productKeyApiSubscription = new Subscription();
+
+    this.isGetUsersGroupsListButtonClicked = false;
+    this.isGetUsersGroupsListButtonClickedSubscription = new Subscription();
+
+    this.isGetSensorsListButtonClicked = false;
+    this.isGetSensorsListButtonClickedSubscription = new Subscription();
+
+    this.isGetDeviceListButtonClicked = false;
+    this.isGetDeviceListButtonClickedSubscription = new Subscription();
+
+    this.isGetUnconfiguredListButtonClicked = false;
+    this.isGetUnconfiguredListButtonClickedSubscription = new Subscription();
+
+    this.isGetSensorTypesListButtonClicked = false;
+    this.isGetSensorTypesListButtonClickedSubscription = new Subscription();
+
+    this.isGetDevicesTypesListButtonClicked = false;
+    this.isGetDevicesTypesListButtonClickedSubscription = new Subscription();
   }
 
-  ngOnInit() {
-
+  ngOnInit(): void {
     this.currentViewSubscription = this.viewCommunicationService.currentView$.subscribe(
       x => {
         this.currentView = x;
@@ -76,13 +99,11 @@ export class DashboardComponent implements OnInit, OnDestroy {
     this.isGetDevicesTypesListButtonClickedSubscription = this.welcomeService.isGetDevicesTypesListButtonClicked$.subscribe(
       x => this.isGetDevicesTypesListButtonClicked = x
     );
-
   }
 
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     this.productKeyApiSubscription.unsubscribe();
     this.currentViewSubscription.unsubscribe();
-
 
     this.isGetUsersGroupsListButtonClickedSubscription.unsubscribe();
     this.isGetSensorsListButtonClickedSubscription.unsubscribe();
