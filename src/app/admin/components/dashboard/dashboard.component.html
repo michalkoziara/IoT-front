@@ -20,6 +20,11 @@
   <app-sensor-type *ngSwitchCase="'sensorTypesList'"
                       [productKey]="productKey"></app-sensor-type>
 
+  <app-delete-device-group *ngSwitchCase="'deleteDeviceGroup'"
+                   [productKey]="productKey"></app-delete-device-group>
+
+  <app-change-device-group-name *ngSwitchCase="'changeDeviceGroupName'"
+                           [productKey]="productKey"></app-change-device-group-name>
 
   <app-admin-start-card *ngSwitchDefault></app-admin-start-card>
 </div>
