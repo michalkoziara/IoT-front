@@ -34,6 +34,20 @@ export class SensorsApiService {
       );
   }
 
+  modifySensor(
+    changedSensor: { name: string; typeName: string; userGroupName: string },
+    productKey: string,
+    deviceKey: string): Observable<object> {
+    return this.http
+      .put<object>(`${environment.apiUrl}/hubs/${productKey}/sensors/${deviceKey}`,
+        changedSensor,
+        this.httpOptions)
+      .pipe(
+        retry(1),
+        catchError(this.handleError)
+      );
+  }
+
   getUnassignedSensors(productKey: string): Observable<SensorInList[]> {
     return this.http.get<SensorInList[]>(
       `${environment.apiUrl}/hubs/${productKey}/sensors/unassigned`)

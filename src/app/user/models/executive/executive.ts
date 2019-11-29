@@ -13,7 +13,8 @@ export class Executive {
   formulaName: string;
   defaultState: boolean | string;
 
-  constructor(name: string,
+  constructor(
+    name: string,
     state: boolean | string,
     isUpdated: boolean | string,
     isActive: boolean | string,

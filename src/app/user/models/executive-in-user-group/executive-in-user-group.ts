@@ -6,7 +6,8 @@ export class ExecutiveInUserGroup {
   isFormulaUsed: string;
   deviceKey: string;
 
-  constructor(name: string,
+  constructor(
+    name: string,
     state: string,
     isActive: string,
     formulaName: string,

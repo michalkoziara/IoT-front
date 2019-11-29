@@ -8,7 +8,8 @@ export class Sensor {
   sensorUserGroup: string;
   readingValue: boolean | string;
 
-  constructor(name: string,
+  constructor(
+    name: string,
     isUpdated: boolean | string,
     isActive: boolean | string,
     isAssigned: boolean,
