@@ -78,7 +78,7 @@ export class UnassignedSensorsComponent implements OnInit {
   addSensor(deviceKey: string): void {
     this.sensorsApiService.getSensor(this.productKey, deviceKey).subscribe(() => {
 
-      }
+    }
     );
   }
 }

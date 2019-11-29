@@ -7,11 +7,11 @@ export class ExecutiveInUserGroup {
   deviceKey: string;
 
   constructor(name: string,
-              state: string,
-              isActive: string,
-              formulaName: string,
-              isFormulaUsed: string,
-              deviceKey: string) {
+    state: string,
+    isActive: string,
+    formulaName: string,
+    isFormulaUsed: string,
+    deviceKey: string) {
     this.name = name;
     this.state = state;
     this.isActive = isActive;

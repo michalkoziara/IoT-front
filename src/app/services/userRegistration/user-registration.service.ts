@@ -24,8 +24,8 @@ export class UserRegistrationService {
       .post<object>(`${environment.apiUrl}/users`, userData, httpOptions)
       .pipe(
         map(Response => {
-            return Response;
-          }
+          return Response;
+        }
         )
       );
   }

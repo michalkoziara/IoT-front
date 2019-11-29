@@ -25,7 +25,7 @@ export class UserGroupsApiService {
   }
 
   createUserGroup(productKey: string,
-                  requestData: {
+    requestData: {
                     groupName: string;
                     password: string;
                   }): Observable<object> {
@@ -38,8 +38,8 @@ export class UserGroupsApiService {
   }
 
   joinUserGroup(productKey: string,
-                userGroupName: string,
-                requestData: { password: string }): Observable<object> {
+    userGroupName: string,
+    requestData: { password: string }): Observable<object> {
     return this.http
       .post<object>(`${environment.apiUrl}/hubs/${productKey}/user-groups/${userGroupName}/users`, requestData, this.httpOptions)
       .pipe(

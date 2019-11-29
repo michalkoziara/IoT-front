@@ -23,8 +23,8 @@ export class AdminRegisterService {
       .post<object>(`${environment.apiUrl}/admins`, adminData, this.httpOptions)
       .pipe(
         map(response => {
-            return response;
-          }
+          return response;
+        }
         )
       );
   }

@@ -10,7 +10,7 @@ describe('UnconfiguredDevicesComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ UnconfiguredDevicesComponent ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

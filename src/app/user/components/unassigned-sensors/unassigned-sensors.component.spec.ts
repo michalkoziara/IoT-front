@@ -10,7 +10,7 @@ describe('UnassignedSensorsComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ UnassignedSensorsComponent ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

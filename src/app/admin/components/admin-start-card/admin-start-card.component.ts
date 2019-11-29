@@ -19,10 +19,10 @@ export class AdminStartCardComponent implements OnInit {
 
   ngOnInit(): void {
     this.authenticationService.currentAuthInfo.subscribe(x => {
-        if (x != null) {
-          this.username = x.username;
-        }
+      if (x != null) {
+        this.username = x.username;
       }
+    }
     );
   }
 

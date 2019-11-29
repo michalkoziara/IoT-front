@@ -9,13 +9,13 @@ export class Sensor {
   readingValue: boolean | string;
 
   constructor(name: string,
-              isUpdated: boolean | string,
-              isActive: boolean | string,
-              isAssigned: boolean,
-              deviceKey: string,
-              sensorTypeName: string,
-              sensorUserGroup: string,
-              readingValue: boolean | string) {
+    isUpdated: boolean | string,
+    isActive: boolean | string,
+    isAssigned: boolean,
+    deviceKey: string,
+    sensorTypeName: string,
+    sensorUserGroup: string,
+    readingValue: boolean | string) {
     this.name = name;
     this.isUpdated = isUpdated;
     this.isActive = isActive;

@@ -10,7 +10,7 @@ describe('AdminStartCardComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ AdminStartCardComponent ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

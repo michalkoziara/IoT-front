@@ -18,18 +18,18 @@ export class ErrorInterceptor implements HttpInterceptor {
   intercept(request: HttpRequest<object>, next: HttpHandler): Observable<HttpEvent<object>> {
     return next.handle(request).pipe(
       catchError(response => {
-          if (response.status === 400 &&
+        if (response.status === 400 &&
             (response.error.errorMessage === ErrorConstantMessages.RESPONSE_MESSAGE_SIGNATURE_EXPIRED
               || response.error.errorMessage === ErrorConstantMessages.RESPONSE_MESSAGE_INVALID_TOKEN
               || response.error.errorMessage === ErrorConstantMessages.RESPONSE_MESSAGE_USER_NOT_DEFINED)) {
-            this.authenticationService.logout();
-            this.router.navigate(['/login']);
-            this.snackBar.open('Wybrana akcja wymaga ponownego zalogowania', undefined, {duration: 3000});
-            return EMPTY;
-          }
-
-          return throwError(response);
+          this.authenticationService.logout();
+          this.router.navigate(['/login']);
+          this.snackBar.open('Wybrana akcja wymaga ponownego zalogowania', undefined, {duration: 3000});
+          return EMPTY;
         }
+
+        return throwError(response);
+      }
       )
     );
   }

@@ -38,10 +38,10 @@ export class AuthService {
     return this.http.post<AuthInfo | null>(`${environment.apiUrl}/users/login`, credentials, httpOptions)
       .pipe(
         map(authInfo => {
-            localStorage.setItem('authInfo', JSON.stringify(authInfo));
-            this.currentAuthInfoSubject.next(authInfo);
-            return authInfo;
-          }
+          localStorage.setItem('authInfo', JSON.stringify(authInfo));
+          this.currentAuthInfoSubject.next(authInfo);
+          return authInfo;
+        }
         )
       );
   }

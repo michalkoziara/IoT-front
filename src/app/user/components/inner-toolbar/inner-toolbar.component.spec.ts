@@ -10,7 +10,7 @@ describe('InnerToolbarComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ InnerToolbarComponent ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {
