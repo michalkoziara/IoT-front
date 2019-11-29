@@ -20,15 +20,10 @@ export class AuthService {
   private readonly currentAuthInfoSubject: BehaviorSubject<AuthInfo | null>;
 
   constructor(private http: HttpClient) {
+    const authInfo = localStorage.getItem('authInfo');
     this.currentAuthInfoSubject = new BehaviorSubject<AuthInfo | null>(
-      JSON.parse(
-        localStorage.getItem('authInfo') != null
-          ? (localStorage.getItem('authInfo') as string)
-          : '') === ''
-        ? JSON.parse(
-        localStorage.getItem('authInfo') != null
-          ? (localStorage.getItem('authInfo') as string)
-          : '')
+      authInfo !== null
+        ? JSON.parse(authInfo)
         : null);
     this.currentAuthInfo = this.currentAuthInfoSubject.asObservable();
   }
