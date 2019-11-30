@@ -26,6 +26,7 @@ import { ChangeDeviceGroupNameComponent } from './components/change-device-group
 import { SensorDetailsComponent } from './components/sensor-details/sensor-details.component';
 import {SensorService} from './services/sensorService/sensor.service';
 import {UserGroupService} from './services/user-group.service';
+import { DeviceDetailsComponent } from './components/device-details/device-details.component';
 
 @NgModule({
   declarations: [
@@ -40,7 +41,7 @@ import {UserGroupService} from './services/user-group.service';
     DevicesComponent,
     SensorsComponent,
     ExecutiveTypeComponent,
-    SensorTypeComponent, DeleteDeviceGroupComponent, ChangeDeviceGroupNameComponent, SensorDetailsComponent],
+    SensorTypeComponent, DeleteDeviceGroupComponent, ChangeDeviceGroupNameComponent, SensorDetailsComponent, DeviceDetailsComponent],
   imports: [
     CommonModule,
     AdminRoutingModule,
