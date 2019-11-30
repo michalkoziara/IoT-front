@@ -78,17 +78,26 @@ export class UnassignedSensorsComponent implements OnInit {
   }
 
   addSensor(deviceKey: string): void {
-    this.sensorsApiService.getSensor(this.productKey, deviceKey).subscribe((data) => {
-      this.sensorsApiService.modifySensor(
-        {name: data.name, typeName: data.sensorTypeName, userGroupName: this.userGroupName},
-        this.productKey,
-        deviceKey)
-        .subscribe(() => {
-          this.viewCommunicationService.changeCurrentView('sensorsInUserGroup');
-        },
-        () => {
-          this.snackBar.open('Wystąpił błąd poczas dodawania, spróbuj ponownie', undefined, {duration: 3000});
-        });
-    });
+    this.sensorsApiService.getSensor(this.productKey, deviceKey).subscribe(
+      data => {
+        this.sensorsApiService.modifySensor(
+          {name: data.name, typeName: data.sensorTypeName, userGroupName: this.userGroupName},
+          this.productKey,
+          deviceKey)
+          .subscribe(() => {
+            this.viewCommunicationService.changeCurrentView('sensorsInUserGroup');
+            this.snackBar.open(
+              `Czujnik ${data.name} został dodany do grupy użytkowników ${this.userGroupName}`,
+              undefined,
+              {duration: 3000}
+            );
+          },
+          () => {
+            this.snackBar.open('Wystąpił błąd poczas dodawania, spróbuj ponownie', undefined, {duration: 3000});
+          });
+      },
+      () => {
+        this.snackBar.open('Wystąpił błąd poczas dodawania, spróbuj ponownie', undefined, {duration: 3000});
+      });
   }
 }

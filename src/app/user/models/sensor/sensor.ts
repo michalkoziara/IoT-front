@@ -5,7 +5,7 @@ export class Sensor {
   isAssigned: boolean;
   deviceKey: string;
   sensorTypeName: string;
-  sensorUserGroup: string;
+  sensorUserGroup: string | null;
   readingValue: boolean | string;
 
   constructor(
@@ -15,7 +15,7 @@ export class Sensor {
     isAssigned: boolean,
     deviceKey: string,
     sensorTypeName: string,
-    sensorUserGroup: string,
+    sensorUserGroup: string | null,
     readingValue: boolean | string) {
     this.name = name;
     this.isUpdated = isUpdated;

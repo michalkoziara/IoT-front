@@ -35,7 +35,7 @@ export class SensorsApiService {
   }
 
   modifySensor(
-    changedSensor: { name: string; typeName: string; userGroupName: string },
+    changedSensor: { name: string; typeName: string; userGroupName: string | null },
     productKey: string,
     deviceKey: string): Observable<object> {
     return this.http

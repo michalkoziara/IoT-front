@@ -26,7 +26,7 @@ export class Executive {
     deviceUserGroup: string,
     isFormulaUsed: boolean | string,
     formulaName: string,
-    defaultState: boolean | string | number) {
+    defaultState: boolean | string | number ) {
     this.name = name;
     this.state = state;
     this.isUpdated = isUpdated;

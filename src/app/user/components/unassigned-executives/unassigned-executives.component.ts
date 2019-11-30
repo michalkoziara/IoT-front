@@ -94,10 +94,18 @@ export class UnassignedExecutivesComponent implements OnInit {
           deviceKey)
           .subscribe(() => {
             this.viewCommunicationService.changeCurrentView('executivesInUserGroup');
+            this.snackBar.open(
+              `Urządzenie ${data.name} zostało dodane do grupy użytkowników ${this.userGroupName}`,
+              undefined,
+              {duration: 3000}
+            );
           },
           () => {
             this.snackBar.open('Wystąpił błąd poczas dodawania, spróbuj ponownie', undefined, {duration: 3000});
           });
+      },
+      () => {
+        this.snackBar.open('Wystąpił błąd poczas dodawania, spróbuj ponownie', undefined, {duration: 3000});
       });
   }
 }
