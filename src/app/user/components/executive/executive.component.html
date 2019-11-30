@@ -11,7 +11,9 @@
           <td class="header">Stan:</td>
           <td><b>{{executive.state}}</b></td>
           <td>
-            <mat-icon>edit</mat-icon>
+            <button mat-button class="view-btn" (click)="showStateChangeCard()">
+              <mat-icon>edit</mat-icon>
+            </button>
           </td>
         </tr>
 
@@ -28,7 +30,41 @@
 
         <tr>
           <td class="header">Typ:</td>
-          <td><b>{{executive.deviceTypeName}}</b></td>
+          <mat-expansion-panel>
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                <td><b>{{executive.deviceTypeName}}</b></td>
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+            <table *ngIf="executiveType">
+              <tr>
+                <td>Typ bazowy:</td>
+                <b>
+                  <td>{{executiveType.stateType}}</td>
+                </b>
+              </tr>
+              <tr *ngIf="executiveType.stateType === 'Liczbowy'">
+                <td>Minimalna wartość:</td>
+                <b>
+                  <td>{{executiveType.stateRangeMin}}</td>
+                </b>
+              </tr>
+              <tr *ngIf="executiveType.stateType === 'Liczbowy'">
+                <td>Maksymalna wartość:</td>
+                <b>
+                  <td>{{executiveType.stateRangeMax}}</td>
+                </b>
+              </tr>
+              <tr *ngIf="executiveType.stateType === 'Wyliczeniowy'">
+                <td>Dostępne wartości:</td>
+                <b>
+                  <td>
+                    <div *ngFor="let enumType of executiveType.enumerator">{{enumType.text}}</div>
+                  </td>
+                </b>
+              </tr>
+            </table>
+          </mat-expansion-panel>
         </tr>
 
         <tr>
@@ -103,20 +139,53 @@
     </mat-card-content>
   </mat-card>
 
-  <mat-card class='user-group-card' *ngIf="isUserGroupChangeCardVisible">
-    <mat-card-content fxLayout="column">
-      <mat-form-field>
-        <mat-label>Nazwa grupy</mat-label>
-        <mat-select [(value)]="selectedUserGroup">
-          <mat-option *ngFor="let userGroup of userGroups" [value]="userGroup.name">{{userGroup.name}}</mat-option>
-        </mat-select>
-      </mat-form-field>
-      <button mat-stroked-button color="accent" class="btn-block" (click)="changeUserGroup()">
-        Zmień grupę użytkowników
-      </button>
-      <button mat-stroked-button color="primary" class="btn-block" (click)="deleteUserGroup()">
-        Usuń z grupy użytkowników
-      </button>
-    </mat-card-content>
-  </mat-card>
+  <div fxLayout="column">
+    <mat-card class='user-group-card' *ngIf="isUserGroupChangeCardVisible">
+      <mat-card-content fxLayout="column">
+        <mat-form-field>
+          <mat-label>Nazwa grupy</mat-label>
+          <mat-select [(value)]="selectedUserGroup">
+            <mat-option *ngFor="let userGroup of userGroups" [value]="userGroup.name">{{userGroup.name}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <button mat-stroked-button color="accent" class="btn-block" (click)="changeUserGroup()">
+          Zmień grupę użytkowników
+        </button>
+        <button mat-stroked-button color="primary" class="btn-block" (click)="deleteUserGroup()">
+          Usuń z grupy użytkowników
+        </button>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card class='state-card' fxLayout="column" *ngIf="isStateChangeCardVisible && executiveType">
+      <mat-card-header>Wybierz nowy stan urządzenia</mat-card-header>
+      <mat-card-content fxLayout="column" fxLayoutAlign="center">
+        <mat-form-field *ngIf="executiveType.stateType === 'Wyliczeniowy'">
+          <mat-label>Stan</mat-label>
+          <mat-select [(value)]="selectedState">
+            <mat-option *ngFor="let enumType of executiveType.enumerator"
+                        [value]="enumType.text">{{enumType.text}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <form fxLayout="column" *ngIf="executiveType.stateType === 'Liczbowy'" [formGroup]="stateFormGroup">
+          <mat-form-field [floatLabel]="'always'"
+                          hintLabel="Wartość od {{executiveType.stateRangeMin}} do {{executiveType.stateRangeMax}}">
+            <input matInput placeholder="Stan" formControlName="stateCtrl" type="number" required>
+            <mat-error *ngIf="!stateFormGroup.valid">
+              Podaj poprawną wartość
+            </mat-error>
+          </mat-form-field>
+        </form>
+        <section fxFlexFill fxLayoutAlign="center" *ngIf="executiveType.stateType === 'Logiczny'">
+          <mat-slide-toggle [(ngModel)]="selectedState">
+            Stan
+          </mat-slide-toggle>
+        </section>
+        <button mat-stroked-button color="accent" class="btn-block" (click)="changeState()"
+                [disabled]="!stateFormGroup.valid">
+          Zmień stan
+        </button>
+      </mat-card-content>
+    </mat-card>
+  </div>
 </div>

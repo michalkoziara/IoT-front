@@ -23,7 +23,9 @@ import {
   MatStepperModule,
   MatTableModule,
   MatToolbarModule,
-  MatTooltipModule
+  MatTooltipModule,
+  MatExpansionModule,
+  MatSlideToggleModule
 } from '@angular/material';
 
 @NgModule({
@@ -50,8 +52,9 @@ import {
     MatTableModule,
     MatPaginatorModule,
     MatSnackBarModule,
-    MatProgressBarModule
-
+    MatProgressBarModule,
+    MatExpansionModule,
+    MatSlideToggleModule
   ],
   exports: [
     MatButtonModule,
@@ -74,7 +77,9 @@ import {
     MatTableModule,
     MatPaginatorModule,
     MatSnackBarModule,
-    MatProgressBarModule
+    MatProgressBarModule,
+    MatExpansionModule,
+    MatSlideToggleModule
   ],
   providers: [
     MatDatepickerModule,

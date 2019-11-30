@@ -48,11 +48,11 @@ export class ExecutivesComponent implements OnInit {
       this.executives = data.map(
         x => {
           if (x.state === true) {
-            x.state = 'Podstawowy';
+            x.state = 'Alternatywny';
           }
 
           if (x.state === false) {
-            x.state = 'Alternatywny';
+            x.state = 'Podstawowy';
           }
 
           if (x.isFormulaUsed === true) {

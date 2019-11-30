@@ -5,6 +5,9 @@ import {UserGroupsApiService} from '../../services/apiService/user-groups-api.se
 import {UserGroupsService} from '../../services/userGroupsService/user-groups.service';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {UserGroupInList} from '../../models/user-group-in-list/user-group-in-list';
+import {ExecutiveTypesApiService} from '../../services/apiService/executive-types-api.service';
+import {ExecutiveType} from '../../models/executive-type/executive-type';
+import {AbstractControl, FormBuilder, FormGroup, Validators} from '@angular/forms';
 
 @Component({
   selector: 'app-executive',
@@ -14,8 +17,14 @@ import {UserGroupInList} from '../../models/user-group-in-list/user-group-in-lis
 export class ExecutiveComponent implements OnInit {
   executive: Executive | null;
   userGroups: UserGroupInList[];
+  executiveType: ExecutiveType | null;
   isUserGroupChangeCardVisible = false;
+  isStateChangeCardVisible = false;
+  isFormulaChangeCardVisible = false;
   selectedUserGroup: string | null;
+  selectedState: string | boolean | number | null;
+
+  stateFormGroup: FormGroup;
 
   @Input()
   productKey: string;
@@ -25,13 +34,18 @@ export class ExecutiveComponent implements OnInit {
 
   constructor(private executiveApiService: ExecutivesApiService,
               private userGroupsApiService: UserGroupsApiService,
+              private executiveTypesApiService: ExecutiveTypesApiService,
               private userGroupsService: UserGroupsService,
+              private formBuilder: FormBuilder,
               private snackBar: MatSnackBar) {
     this.executive = null;
     this.productKey = '';
     this.deviceKey = '';
     this.userGroups = [];
     this.selectedUserGroup = '';
+    this.executiveType = null;
+    this.selectedState = null;
+    this.stateFormGroup = this.formBuilder.group({stateCtrl: ['']});
   }
 
   ngOnInit(): void {
@@ -45,11 +59,11 @@ export class ExecutiveComponent implements OnInit {
     ).subscribe(
       data => {
         if (data.state === true) {
-          data.state = 'Podstawowy';
+          data.state = 'Alternatywny';
         }
 
         if (data.state === false) {
-          data.state = 'Alternatywny';
+          data.state = 'Podstawowy';
         }
 
         if (data.isUpdated === true) {
@@ -102,41 +116,64 @@ export class ExecutiveComponent implements OnInit {
 
         this.selectedUserGroup = data.deviceUserGroup;
         this.executive = data;
+
+        this.executiveTypesApiService.getExecutiveType(this.productKey, data.deviceTypeName).subscribe(
+          typeData => {
+            if (typeData.stateType) {
+              if (typeData.stateType === 'Decimal') {
+                typeData.stateType = 'Liczbowy';
+              } else if (typeData.stateType === 'Enum') {
+                typeData.stateType = 'Wyliczeniowy';
+                this.selectedState = data.state;
+              } else {
+                typeData.stateType = 'Logiczny';
+                this.selectedState = data.state === 'Alternatywny';
+              }
+            }
+            this.executiveType = typeData;
+          },
+          () => {
+            this.snackBar.open('Wystąpił błąd poczas dodawania, spróbuj ponownie', undefined, {duration: 3000});
+          }
+        );
+      },
+      () => {
+        this.snackBar.open('Wystąpił błąd poczas dodawania, spróbuj ponownie', undefined, {duration: 3000});
       }
     );
   }
 
   showUserGroupChangeCard(): void {
-    this.isUserGroupChangeCardVisible = true;
     this.userGroupsApiService.getUserGroups(this.productKey).subscribe(
       data => {
         this.userGroups = data.userGroups
           .filter(x => {
             return x.isAssignedTo;
           }, {});
+        this.isUserGroupChangeCardVisible = true;
+        this.isStateChangeCardVisible = false;
       },
       () => {
         this.snackBar.open('Wystąpił błąd poczas dodawania, spróbuj ponownie', undefined, {duration: 3000});
-        this.isUserGroupChangeCardVisible = false;
       });
   }
 
   deleteUserGroup(): void {
-    this.modifyUserGroup(null);
+    this.modifyUserGroup(null, null);
   }
 
   changeUserGroup(): void {
-    this.modifyUserGroup(this.selectedUserGroup);
+    this.modifyUserGroup(this.selectedUserGroup, null);
   }
 
-  modifyUserGroup(newUserGroup: string | null): void {
+  modifyUserGroup(newUserGroup: string | null, newState: string | boolean | number | null): void {
     this.executiveApiService.getExecutive(this.productKey, this.deviceKey).subscribe(
       data => {
         this.executiveApiService.modifyExecutive(
           {
             name: data.name,
             typeName: data.deviceTypeName,
-            state: data.state,
+            state: newState !== null ? newState : data.state,
             positiveState: newUserGroup !== '' ? null : data.positiveState,
             negativeState: newUserGroup !== '' ? null : data.negativeState,
             formulaName: newUserGroup !== '' ? null : data.formulaName,
@@ -147,27 +184,45 @@ export class ExecutiveComponent implements OnInit {
           this.deviceKey)
           .subscribe(() => {
             this.isUserGroupChangeCardVisible = false;
+            this.isStateChangeCardVisible = false;
 
             if (this.executive !== null) {
-              if (newUserGroup !== null) {
-                this.executive.isAssigned = true;
-                this.executive.deviceUserGroup = newUserGroup;
+              if (newUserGroup !== '') {
+                if (newUserGroup !== null) {
+                  this.executive.isAssigned = true;
+                  this.executive.deviceUserGroup = newUserGroup;
+                  this.snackBar.open(
+                    `Urządzenie ${data.name} zostało dodane do grupy użytkowników ${newUserGroup}`,
+                    undefined,
+                    {duration: 3000}
+                  );
+                } else {
+                  this.executive.isAssigned = false;
+                  this.executive.deviceUserGroup = null;
+                  this.snackBar.open(
+                    `Urządzenie ${data.name} zostało usunięte z grupy użytkowników`,
+                    undefined,
+                    {duration: 3000}
+                  );
+                }
+                this.userGroupsService.changeSelectedUserGroup(newUserGroup);
+                this.selectedUserGroup = newUserGroup;
+              }
+              if (newState !== null) {
+                if (newState === true) {
+                  this.executive.state = 'Alternatywny';
+                } else if (newState === false) {
+                  this.executive.state = 'Podstawowy';
+                } else {
+                  this.executive.state = newState;
+                }
+
                 this.snackBar.open(
-                  `Urządzenie ${data.name} zostało dodane do grupy użytkowników ${newUserGroup}`,
-                  undefined,
-                  {duration: 3000}
-                );
-              } else {
-                this.executive.isAssigned = false;
-                this.executive.deviceUserGroup = null;
-                this.snackBar.open(
-                  `Urządzenie ${data.name} zostało usunięte z grupy użytkowników`,
+                  `Stan urządzenia ${data.name} został zmieniony`,
                   undefined,
                   {duration: 3000}
                 );
               }
-              this.userGroupsService.changeSelectedUserGroup(newUserGroup);
-              this.selectedUserGroup = this.executive.deviceUserGroup;
             }
           },
           () => {
@@ -177,5 +232,32 @@ export class ExecutiveComponent implements OnInit {
       () => {
         this.snackBar.open('Wystąpił błąd poczas dodawania, spróbuj ponownie', undefined, {duration: 3000});
       });
+  }
+
+  showStateChangeCard(): void {
+    if (this.executive !== null && this.executiveType !== null) {
+      if (this.executiveType.stateType === 'Liczbowy') {
+        this.stateFormGroup.patchValue({stateCtrl: this.executive.state});
+        this.stateFormGroup.controls.stateCtrl.setValidators(
+          [
+            Validators.max(this.executiveType.stateRangeMax),
+            Validators.min(this.executiveType.stateRangeMin)
+          ]
+        );
+        this.stateFormGroup.controls.stateCtrl.updateValueAndValidity({onlySelf: true, emitEvent: false});
+      }
+
+      this.isStateChangeCardVisible = true;
+      this.isUserGroupChangeCardVisible = false;
+    }
+  }
+
+  changeState(): void {
+    if (this.executiveType !== null) {
+      if (this.executiveType.stateType === 'Liczbowy') {
+        this.selectedState = (this.stateFormGroup.get('stateCtrl') as AbstractControl).value as number;
+      }
+      this.modifyUserGroup('', this.selectedState);
+    }
   }
 }
