@@ -35,7 +35,9 @@
           <td class="header">Grupa użytkowników:</td>
           <td><b>{{executive.isAssigned ? executive.deviceUserGroup : 'Brak grupy'}}</b></td>
           <td>
-            <mat-icon>edit</mat-icon>
+            <button mat-button class="view-btn" (click)="showUserGroupChangeCard()">
+              <mat-icon>edit</mat-icon>
+            </button>
           </td>
         </tr>
 
@@ -98,6 +100,23 @@
           </td>
         </tr>
       </table>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card class='user-group-card' *ngIf="isUserGroupChangeCardVisible">
+    <mat-card-content fxLayout="column">
+      <mat-form-field>
+        <mat-label>Nazwa grupy</mat-label>
+        <mat-select [(value)]="selectedUserGroup">
+          <mat-option *ngFor="let userGroup of userGroups" [value]="userGroup.name">{{userGroup.name}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <button mat-stroked-button color="accent" class="btn-block" (click)="changeUserGroup()">
+        Zmień grupę użytkowników
+      </button>
+      <button mat-stroked-button color="primary" class="btn-block" (click)="deleteUserGroup()">
+        Usuń z grupy użytkowników
+      </button>
     </mat-card-content>
   </mat-card>
 </div>

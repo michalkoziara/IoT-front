@@ -4,13 +4,13 @@ export class Executive {
   isUpdated: boolean | string;
   isActive: boolean | string;
   isAssigned: boolean;
-  positiveState: boolean | string | number;
-  negativeState: boolean | string | number;
+  positiveState: boolean | string | number | null;
+  negativeState: boolean | string | number | null;
   deviceKey: string;
   deviceTypeName: string;
-  deviceUserGroup: string;
+  deviceUserGroup: string | null;
   isFormulaUsed: boolean | string;
-  formulaName: string;
+  formulaName: string | null;
   defaultState: boolean | string | number;
 
   constructor(
@@ -19,13 +19,13 @@ export class Executive {
     isUpdated: boolean | string,
     isActive: boolean | string,
     isAssigned: boolean,
-    positiveState: boolean | string | number,
-    negativeState: boolean | string | number,
+    positiveState: boolean | string | number | null,
+    negativeState: boolean | string | number | null,
     deviceKey: string,
     deviceTypeName: string,
-    deviceUserGroup: string,
+    deviceUserGroup: string | null,
     isFormulaUsed: boolean | string,
-    formulaName: string,
+    formulaName: string | null,
     defaultState: boolean | string | number ) {
     this.name = name;
     this.state = state;

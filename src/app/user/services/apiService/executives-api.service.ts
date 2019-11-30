@@ -39,10 +39,10 @@ export class ExecutivesApiService {
       name: string;
       typeName: string;
       state: string | boolean | number;
-      positiveState: string | boolean | number;
-      negativeState: string | boolean | number;
-      formulaName: string;
-      userGroupName: string;
+      positiveState: string | boolean | number | null;
+      negativeState: string | boolean | number | null;
+      formulaName: string | null;
+      userGroupName: string | null;
       isFormulaUsed: boolean;
     },
     productKey: string,
