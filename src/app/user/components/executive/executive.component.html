@@ -1,4 +1,4 @@
-<div fxLayout="row" fxFlexFill fxLayoutAlign="center">
+<div fxLayout="row" fxFlexFill>
   <mat-card>
     <mat-card-content>
       <table *ngIf="executive">
@@ -10,6 +10,9 @@
         <tr>
           <td class="header">Stan:</td>
           <td><b>{{executive.state}}</b></td>
+          <td>
+            <mat-icon>edit</mat-icon>
+          </td>
         </tr>
 
         <tr>
@@ -30,7 +33,7 @@
 
         <tr>
           <td class="header">Grupa użytkowników:</td>
-          <td><b>{{isAssigned ? sensor.sensorUserGroup : 'Brak grupy'}}</b></td>
+          <td><b>{{executive.isAssigned ? executive.deviceUserGroup : 'Brak grupy'}}</b></td>
           <td>
             <mat-icon>edit</mat-icon>
           </td>
