@@ -27,6 +27,7 @@ import { SensorDetailsComponent } from './components/sensor-details/sensor-detai
 import {SensorService} from './services/sensorService/sensor.service';
 import {UserGroupService} from './services/user-group.service';
 import { DeviceDetailsComponent } from './components/device-details/device-details.component';
+import {DeviceService} from './services/deviceService/device.service';
 
 @NgModule({
   declarations: [
@@ -56,6 +57,7 @@ import { DeviceDetailsComponent } from './components/device-details/device-detai
     AdminViewCommunicationService,
     SensorService,
     UserGroupService,
+    DeviceService
 
   ],
 })

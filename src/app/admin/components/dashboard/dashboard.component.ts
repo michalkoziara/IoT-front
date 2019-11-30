@@ -4,6 +4,7 @@ import {AdminWelcomeService} from '../../services/adminWelcomeService/admin-welc
 import {ProductKeyApiService} from '../../services/apiService/product-key-api.service';
 import {AdminViewCommunicationService} from '../../services/admin-view-communication.service';
 import {SensorService} from '../../services/sensorService/sensor.service';
+import {DeviceService} from '../../services/deviceService/device.service';
 
 
 @Component({
@@ -19,6 +20,9 @@ export class DashboardComponent implements OnInit, OnDestroy {
   selectedSensor: string | null;
   selectedSensorSubscription: Subscription;
 
+  selectedDevice: string | null;
+  selectedDeviceSubscription: Subscription;
+
 
   currentView: string | null;
   currentViewSubscription: Subscription;
@@ -26,7 +30,8 @@ export class DashboardComponent implements OnInit, OnDestroy {
   constructor(private viewCommunicationService: AdminViewCommunicationService,
               private welcomeService: AdminWelcomeService,
               private productKeyApiService: ProductKeyApiService,
-              private sensorsService: SensorService) {
+              private sensorsService: SensorService,
+              private deviceService: DeviceService) {
     this.productKeyApiSubscription = new Subscription();
 
     this.productKey = '';
@@ -34,6 +39,9 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
     this.selectedSensor = null;
     this.selectedSensorSubscription = new Subscription();
+
+    this.selectedDevice = null;
+    this.selectedDeviceSubscription = new Subscription();
 
     this.currentView = '';
     this.currentViewSubscription = new Subscription();
@@ -56,10 +64,16 @@ export class DashboardComponent implements OnInit, OnDestroy {
     this.selectedSensorSubscription = this.sensorsService.selectedSensor$.subscribe(
       x => this.selectedSensor = x
     );
+
+    this.selectedDeviceSubscription = this.deviceService.selectedExecutive$.subscribe(
+      x => this.selectedDevice = x
+    );
   }
 
   ngOnDestroy(): void {
     this.productKeyApiSubscription.unsubscribe();
     this.currentViewSubscription.unsubscribe();
+    this.selectedSensorSubscription.unsubscribe();
+    this.selectedDeviceSubscription.unsubscribe();
   }
 }

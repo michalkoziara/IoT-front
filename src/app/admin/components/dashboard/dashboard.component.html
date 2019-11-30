@@ -30,6 +30,10 @@
                       [productKey]="productKey"
                       [deviceKey]="selectedSensor"></app-sensor-details>
 
+  <app-device-details *ngSwitchCase="'deviceDetails'"
+                      [productKey]="productKey"
+                      [deviceKey]="selectedDevice"></app-device-details>
+
 
   <app-admin-start-card *ngSwitchDefault></app-admin-start-card>
 </div>
