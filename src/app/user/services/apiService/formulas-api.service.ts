@@ -15,8 +15,8 @@ export class FormulasApiService {
   constructor(private http: HttpClient) {
   }
 
-  getFormulas(productKey: string, name: string): Observable<{'names': [string]}> {
-    return this.http.get<{'names': [string]}>(`${environment.apiUrl}/hubs/${productKey}/user-groups/${name}/formulas`)
+  getFormulas(productKey: string, userGroupName: string): Observable<{'names': string[]}> {
+    return this.http.get<{'names': string[]}>(`${environment.apiUrl}/hubs/${productKey}/user-groups/${userGroupName}/formulas`)
       .pipe(
         retry(1),
         catchError(this.handleError)

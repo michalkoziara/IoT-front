@@ -16,7 +16,7 @@
       <th mat-header-cell *matHeaderCellDef mat-sort-header> Szczegóły</th>
       <td mat-cell *matCellDef="let element" class="td-btn">
         <button mat-button class="view-btn" (click)="viewFormula(element.name)">
-          <mat-icon>zoom_in</mat-icon>
+          <mat-icon matTooltip='Wyświetl szczegóły formuły'>zoom_in</mat-icon>
         </button>
       </td>
     </ng-container>

@@ -8,6 +8,7 @@ import {UserGroupInList} from '../../models/user-group-in-list/user-group-in-lis
 import {ExecutiveTypesApiService} from '../../services/apiService/executive-types-api.service';
 import {ExecutiveType} from '../../models/executive-type/executive-type';
 import {AbstractControl, FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {FormulasApiService} from '../../services/apiService/formulas-api.service';
 
 @Component({
   selector: 'app-executive',
@@ -16,15 +17,27 @@ import {AbstractControl, FormBuilder, FormGroup, Validators} from '@angular/form
 })
 export class ExecutiveComponent implements OnInit {
   executive: Executive | null;
-  userGroups: UserGroupInList[];
   executiveType: ExecutiveType | null;
+  formulas: string[];
+  userGroups: UserGroupInList[];
+
   isUserGroupChangeCardVisible = false;
   isStateChangeCardVisible = false;
   isFormulaChangeCardVisible = false;
-  selectedUserGroup: string | null;
-  selectedState: string | boolean | number | null;
+  isPositiveStateChangeCardVisible = false;
+  isNegativeStateChangeCardVisible = false;
+  isFormulaUsedChangeCardVisible = false;
 
   stateFormGroup: FormGroup;
+  statePositiveFormGroup: FormGroup;
+  stateNegativeFormGroup: FormGroup;
+  selectedUserGroup: string | null;
+  selectedState: string | boolean | number | null;
+  selectedPositiveState: string | boolean | number | null;
+  selectedNegativeState: string | boolean | number | null;
+  selectedIsFormulaUsed: boolean | null;
+
+  selectedFormula: string | null;
 
   @Input()
   productKey: string;
@@ -35,6 +48,7 @@ export class ExecutiveComponent implements OnInit {
   constructor(private executiveApiService: ExecutivesApiService,
               private userGroupsApiService: UserGroupsApiService,
               private executiveTypesApiService: ExecutiveTypesApiService,
+              private formulasApiService: FormulasApiService,
               private userGroupsService: UserGroupsService,
               private formBuilder: FormBuilder,
               private snackBar: MatSnackBar) {
@@ -42,10 +56,17 @@ export class ExecutiveComponent implements OnInit {
     this.productKey = '';
     this.deviceKey = '';
     this.userGroups = [];
+    this.formulas = [];
     this.selectedUserGroup = '';
     this.executiveType = null;
     this.selectedState = null;
+    this.selectedPositiveState = '';
+    this.selectedNegativeState = '';
+    this.selectedFormula = null;
+    this.selectedIsFormulaUsed = null;
     this.stateFormGroup = this.formBuilder.group({stateCtrl: ['']});
+    this.statePositiveFormGroup = this.formBuilder.group({statePositiveCtrl: ['']});
+    this.stateNegativeFormGroup = this.formBuilder.group({stateNegativeCtrl: ['']});
   }
 
   ngOnInit(): void {
@@ -58,6 +79,8 @@ export class ExecutiveComponent implements OnInit {
       this.deviceKey
     ).subscribe(
       data => {
+        this.selectedIsFormulaUsed = data.isFormulaUsed as boolean;
+
         if (data.state === true) {
           data.state = 'Alternatywny';
         }
@@ -83,19 +106,19 @@ export class ExecutiveComponent implements OnInit {
         }
 
         if (data.positiveState === true) {
-          data.positiveState = 'Tak';
+          data.positiveState = 'Alternatywny';
         }
 
         if (data.positiveState === false) {
-          data.positiveState = 'Nie';
+          data.positiveState = 'Podstawowy';
         }
 
         if (data.negativeState === true) {
-          data.negativeState = 'Tak';
+          data.negativeState = 'Alternatywny';
         }
 
         if (data.negativeState === false) {
-          data.negativeState = 'Nie';
+          data.negativeState = 'Podstawowy';
         }
 
         if (data.isFormulaUsed === true) {
@@ -115,6 +138,7 @@ export class ExecutiveComponent implements OnInit {
         }
 
         this.selectedUserGroup = data.deviceUserGroup;
+        this.selectedFormula = data.formulaName;
         this.executive = data;
 
         this.executiveTypesApiService.getExecutiveType(this.productKey, data.deviceTypeName).subscribe(
@@ -125,20 +149,24 @@ export class ExecutiveComponent implements OnInit {
               } else if (typeData.stateType === 'Enum') {
                 typeData.stateType = 'Wyliczeniowy';
                 this.selectedState = data.state;
+                this.selectedNegativeState = data.negativeState;
+                this.selectedPositiveState = data.positiveState;
               } else {
                 typeData.stateType = 'Logiczny';
                 this.selectedState = data.state === 'Alternatywny';
+                this.selectedNegativeState = data.negativeState === 'Alternatywny';
+                this.selectedPositiveState = data.positiveState === 'Alternatywny';
               }
             }
             this.executiveType = typeData;
           },
           () => {
-            this.snackBar.open('Wystąpił błąd poczas dodawania, spróbuj ponownie', undefined, {duration: 3000});
+            this.snackBar.open('Wystąpił błąd, spróbuj ponownie', undefined, {duration: 3000});
           }
         );
       },
       () => {
-        this.snackBar.open('Wystąpił błąd poczas dodawania, spróbuj ponownie', undefined, {duration: 3000});
+        this.snackBar.open('Wystąpił błąd, spróbuj ponownie', undefined, {duration: 3000});
       }
     );
   }
@@ -150,23 +178,48 @@ export class ExecutiveComponent implements OnInit {
           .filter(x => {
             return x.isAssignedTo;
           }, {});
+
         this.isUserGroupChangeCardVisible = true;
         this.isStateChangeCardVisible = false;
+        this.isFormulaChangeCardVisible = false;
+        this.isNegativeStateChangeCardVisible = false;
+        this.isPositiveStateChangeCardVisible = false;
+        this.isFormulaUsedChangeCardVisible = false;
       },
       () => {
-        this.snackBar.open('Wystąpił błąd poczas dodawania, spróbuj ponownie', undefined, {duration: 3000});
+        this.snackBar.open('Wystąpił błąd, spróbuj ponownie', undefined, {duration: 3000});
       });
   }
 
   deleteUserGroup(): void {
-    this.modifyUserGroup(null, null);
+    this.modifyExecutive(
+      null,
+      null,
+      '',
+      '',
+      '',
+      null
+    );
   }
 
   changeUserGroup(): void {
-    this.modifyUserGroup(this.selectedUserGroup, null);
+    this.modifyExecutive(
+      this.selectedUserGroup,
+      null,
+      '',
+      '',
+      '',
+      null
+    );
   }
 
-  modifyUserGroup(newUserGroup: string | null, newState: string | boolean | number | null): void {
+  modifyExecutive(
+    newUserGroup: string | null,
+    newState: string | boolean | number | null,
+    newFormula: string | null,
+    newPositiveState: string | boolean | number | null,
+    newNegativeState: string | boolean | number | null,
+    newIsFormulaUsed: boolean | null): void {
     this.executiveApiService.getExecutive(this.productKey, this.deviceKey).subscribe(
       data => {
         this.executiveApiService.modifyExecutive(
@@ -174,17 +227,29 @@ export class ExecutiveComponent implements OnInit {
             name: data.name,
             typeName: data.deviceTypeName,
             state: newState !== null ? newState : data.state,
-            positiveState: newUserGroup !== '' ? null : data.positiveState,
-            negativeState: newUserGroup !== '' ? null : data.negativeState,
-            formulaName: newUserGroup !== '' ? null : data.formulaName,
+            positiveState: newUserGroup !== ''
+              ? null
+              : newPositiveState !== '' ? newPositiveState : data.positiveState,
+            negativeState: newUserGroup !== ''
+              ? null
+              : newNegativeState !== '' ? newNegativeState : data.negativeState,
+            formulaName: newUserGroup !== ''
+              ? null
+              : newFormula !== '' ? newFormula : data.formulaName,
             userGroupName: newUserGroup !== '' ? newUserGroup : data.deviceUserGroup,
-            isFormulaUsed: newUserGroup !== '' ? false : data.isFormulaUsed as boolean
+            isFormulaUsed: newUserGroup !== ''
+              ? false
+              : newIsFormulaUsed !== null ? newIsFormulaUsed : data.isFormulaUsed as boolean
           },
           this.productKey,
           this.deviceKey)
           .subscribe(() => {
             this.isUserGroupChangeCardVisible = false;
             this.isStateChangeCardVisible = false;
+            this.isFormulaChangeCardVisible = false;
+            this.isPositiveStateChangeCardVisible = false;
+            this.isNegativeStateChangeCardVisible = false;
+            this.isFormulaUsedChangeCardVisible = false;
 
             if (this.executive !== null) {
               if (newUserGroup !== '') {
@@ -223,14 +288,60 @@ export class ExecutiveComponent implements OnInit {
                   {duration: 3000}
                 );
               }
+              if (newPositiveState !== '') {
+                if (newPositiveState === true) {
+                  this.executive.positiveState = 'Alternatywny';
+                } else if (newPositiveState === false) {
+                  this.executive.positiveState = 'Podstawowy';
+                } else {
+                  this.executive.positiveState = newPositiveState;
+                }
+
+                this.snackBar.open(
+                  `Stan urządzenia ${data.name} gdy formuła spełniona został zmieniony`,
+                  undefined,
+                  {duration: 3000}
+                );
+              }
+              if (newNegativeState !== '') {
+                if (newNegativeState === true) {
+                  this.executive.negativeState = 'Alternatywny';
+                } else if (newNegativeState === false) {
+                  this.executive.negativeState = 'Podstawowy';
+                } else {
+                  this.executive.negativeState = newNegativeState;
+                }
+
+                this.snackBar.open(
+                  `Stan urządzenia ${data.name} gdy formuła niespełniona został zmieniony`,
+                  undefined,
+                  {duration: 3000}
+                );
+              }
+              if (newFormula !== '') {
+                this.executive.formulaName = newFormula;
+                this.snackBar.open(
+                  `Formuła sterującą urządzeniem została zmieniona`,
+                  undefined,
+                  {duration: 3000}
+                );
+              }
+              if (newIsFormulaUsed !== null) {
+                this.executive.isFormulaUsed = newIsFormulaUsed ? 'Tak' : 'Nie';
+                this.snackBar.open(
+                  `Automatyczne sterowanie urządzeniem zostało zmienione`,
+                  undefined,
+                  {duration: 3000}
+                );
+              }
             }
           },
           () => {
-            this.snackBar.open('Wystąpił błąd poczas dodawania, spróbuj ponownie', undefined, {duration: 3000});
+            this.snackBar.open('Wystąpił błąd, spróbuj ponownie', undefined, {duration: 3000});
           });
       },
       () => {
-        this.snackBar.open('Wystąpił błąd poczas dodawania, spróbuj ponownie', undefined, {duration: 3000});
+        this.snackBar.open('Wystąpił błąd, spróbuj ponownie', undefined, {duration: 3000});
       });
   }
 
@@ -248,7 +359,11 @@ export class ExecutiveComponent implements OnInit {
       }
 
       this.isStateChangeCardVisible = true;
+      this.isFormulaChangeCardVisible = false;
       this.isUserGroupChangeCardVisible = false;
+      this.isNegativeStateChangeCardVisible = false;
+      this.isPositiveStateChangeCardVisible = false;
+      this.isFormulaUsedChangeCardVisible = false;
     }
   }
 
@@ -257,7 +372,140 @@ export class ExecutiveComponent implements OnInit {
       if (this.executiveType.stateType === 'Liczbowy') {
         this.selectedState = (this.stateFormGroup.get('stateCtrl') as AbstractControl).value as number;
       }
-      this.modifyUserGroup('', this.selectedState);
+      this.modifyExecutive(
+        '',
+        this.selectedState,
+        '',
+        '',
+        '',
+        null
+      );
     }
+  }
+
+  showFormulaChangeCard(): void {
+    if (this.executive !== null && this.executive.deviceUserGroup !== null) {
+      this.formulasApiService.getFormulas(this.productKey, this.executive.deviceUserGroup).subscribe(
+        data => {
+          this.formulas = data.names;
+
+          this.isFormulaChangeCardVisible = true;
+          this.isStateChangeCardVisible = false;
+          this.isUserGroupChangeCardVisible = false;
+          this.isNegativeStateChangeCardVisible = false;
+          this.isPositiveStateChangeCardVisible = false;
+          this.isFormulaUsedChangeCardVisible = false;
+        },
+        () => {
+          this.snackBar.open('Wystąpił błąd, spróbuj ponownie', undefined, {duration: 3000});
+        });
+    }
+  }
+
+  changeFormula(): void {
+    this.modifyExecutive(
+      '',
+      null,
+      this.selectedFormula,
+      '',
+      '',
+      null
+    );
+  }
+
+  showPositiveStateChangeCard(): void {
+    if (this.executive !== null && this.executiveType !== null) {
+      if (this.executiveType.stateType === 'Liczbowy') {
+        this.statePositiveFormGroup.patchValue({statePositiveCtrl: this.executive.positiveState});
+        this.statePositiveFormGroup.controls.statePositiveCtrl.setValidators(
+          [
+            Validators.max(this.executiveType.stateRangeMax),
+            Validators.min(this.executiveType.stateRangeMin)
+          ]
+        );
+        this.statePositiveFormGroup.controls.statePositiveCtrl.updateValueAndValidity({onlySelf: true, emitEvent: false});
+      }
+
+      this.isPositiveStateChangeCardVisible = true;
+      this.isNegativeStateChangeCardVisible = false;
+      this.isStateChangeCardVisible = false;
+      this.isUserGroupChangeCardVisible = false;
+      this.isFormulaChangeCardVisible = false;
+      this.isFormulaUsedChangeCardVisible = false;
+    }
+  }
+
+  changePositiveState(): void {
+    if (this.executiveType !== null) {
+      if (this.executiveType.stateType === 'Liczbowy') {
+        this.selectedPositiveState = (this.statePositiveFormGroup.get('statePositiveCtrl') as AbstractControl).value as number;
+      }
+      this.modifyExecutive(
+        '',
+        null,
+        '',
+        this.selectedPositiveState,
+        '',
+        null
+      );
+    }
+  }
+
+  showNegativeStateChangeCard(): void {
+    if (this.executive !== null && this.executiveType !== null) {
+      if (this.executiveType.stateType === 'Liczbowy') {
+        this.stateNegativeFormGroup.patchValue({stateNegativeCtrl: this.executive.negativeState});
+        this.stateNegativeFormGroup.controls.stateNegativeCtrl.setValidators(
+          [
+            Validators.max(this.executiveType.stateRangeMax),
+            Validators.min(this.executiveType.stateRangeMin)
+          ]
+        );
+        this.stateNegativeFormGroup.controls.stateNegativeCtrl.updateValueAndValidity({onlySelf: true, emitEvent: false});
+      }
+
+      this.isNegativeStateChangeCardVisible = true;
+      this.isPositiveStateChangeCardVisible = false;
+      this.isStateChangeCardVisible = false;
+      this.isUserGroupChangeCardVisible = false;
+      this.isFormulaChangeCardVisible = false;
+      this.isFormulaUsedChangeCardVisible = false;
+    }
+  }
+
+  changeNegativeState(): void {
+    if (this.executiveType !== null) {
+      if (this.executiveType.stateType === 'Liczbowy') {
+        this.selectedNegativeState = (this.stateNegativeFormGroup.get('stateNegativeCtrl') as AbstractControl).value as number;
+      }
+      this.modifyExecutive(
+        '',
+        null,
+        '',
+        '',
+        this.selectedNegativeState,
+        null
+      );
+    }
+  }
+
+  showIsFormulaUsedChangeCard(): void {
+    this.isFormulaUsedChangeCardVisible = true;
+    this.isNegativeStateChangeCardVisible = false;
+    this.isPositiveStateChangeCardVisible = false;
+    this.isStateChangeCardVisible = false;
+    this.isUserGroupChangeCardVisible = false;
+    this.isFormulaChangeCardVisible = false;
+  }
+
+  changeIsFormulaUsed(): void {
+    this.modifyExecutive(
+      '',
+      null,
+      '',
+      '',
+      '',
+      this.selectedIsFormulaUsed
+    );
   }
 }

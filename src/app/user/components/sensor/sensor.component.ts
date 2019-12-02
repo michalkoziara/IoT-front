@@ -1,27 +1,99 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {SensorsApiService} from '../../services/apiService/sensors-api.service';
 import {Sensor} from '../../models/sensor/sensor';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {UserGroupsApiService} from '../../services/apiService/user-groups-api.service';
 import {UserGroupInList} from '../../models/user-group-in-list/user-group-in-list';
 import {UserGroupsService} from '../../services/userGroupsService/user-groups.service';
+import {interval, Subscriber, Subscription} from 'rxjs';
+import {flatMap, startWith} from 'rxjs/operators';
+import {MatTableDataSource} from '@angular/material/table';
+import {SensorReading} from '../../models/sensor-reading/sensor-reading';
+import {MatPaginator} from '@angular/material/paginator';
+import {MatSort} from '@angular/material/sort';
+import {ChartDataSets} from 'chart.js';
+import {Color, Label} from 'ng2-charts';
 
 @Component({
   selector: 'app-sensor',
   templateUrl: './sensor.component.html',
   styleUrls: ['./sensor.component.scss']
 })
-export class SensorComponent implements OnInit {
+export class SensorComponent implements OnInit, OnDestroy {
   sensor: Sensor | null;
   userGroups: UserGroupInList[];
   isUserGroupChangeCardVisible = false;
   selectedUserGroup: string | null;
+
+  displayedColumns: string[] = ['date', 'sensorReadingValue'];
+  sensorReadings: SensorReading[] = [];
+  dataSource: MatTableDataSource<SensorReading>;
+  sensorReadings$: Subscription;
+  filterValue: string | null;
+
+  lineChartData: ChartDataSets[];
+  yLabel: string[] = [];
+  lineChartLabels: Label[];
+
+  lineChartOptions = {
+    responsive: true,
+    scales: {
+      xAxes: [
+        {
+          display: true,
+          type: 'time',
+          gridLines: {
+            display: true
+          },
+          time: {
+            displayFormats: {
+              millisecond: 'HH:mm:ss.SSS',
+              second: 'HH:mm:ss',
+              minute: 'HH:mm',
+              hour: 'HH:mm'
+            },
+          },
+          ticks: {
+            autoSkip: true,
+            maxTicksLimit: 15
+          }
+        }
+      ],
+      yAxes: [{
+        scaleLabel: {
+          display: true,
+        },
+        ticks: {
+          callback: (value: number): string | number => {
+            if (this.yLabel.length > 0) {
+              return this.yLabel[value];
+            } else {
+              return value;
+            }
+          },
+        },
+      }]
+    }
+  };
+
+  lineChartLegend = false;
+  lineChartPlugins = [];
+  lineChartType = 'line';
+  lineChartColors: Color[] = [
+    {
+      borderColor: 'rgb(63, 81, 181)',
+      backgroundColor: 'rgba(255, 64, 129, 0.28)',
+    },
+  ];
 
   @Input()
   productKey: string;
 
   @Input()
   deviceKey: string;
+
+  @ViewChild(MatSort, {static: true}) sort: MatSort;
+  @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator | null;
 
   constructor(private sensorsApiService: SensorsApiService,
               private userGroupsApiService: UserGroupsApiService,
@@ -32,10 +104,29 @@ export class SensorComponent implements OnInit {
     this.deviceKey = '';
     this.userGroups = [];
     this.selectedUserGroup = '';
+
+    this.dataSource = new MatTableDataSource<SensorReading>();
+    this.sensorReadings$ = new Subscriber();
+    this.filterValue = null;
+    this.sort = new MatSort();
+    this.paginator = null;
+
+    this.lineChartData = [];
+    this.lineChartLabels = [];
   }
 
   ngOnInit(): void {
     this.getSensor();
+    this.sensorReadings$ = this.loadSensorReadingsInList();
+    this.sort.sort({
+      id: 'date',
+      start: 'asc',
+      disableClear: false
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.sensorReadings$.unsubscribe();
   }
 
   getSensor(): void {
@@ -134,6 +225,72 @@ export class SensorComponent implements OnInit {
       },
       () => {
         this.snackBar.open('Wystąpił błąd poczas dodawania, spróbuj ponownie', undefined, {duration: 3000});
+      });
+  }
+
+  applyFilter(filterValue: string): void {
+    this.filterValue = filterValue.trim().toLowerCase();
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
+
+  loadSensorReadingsInList(): Subscription {
+    return interval(9500)
+      .pipe(
+        startWith(0),
+        flatMap(() => this.sensorsApiService.getSensorReadings(this.productKey, this.deviceKey))
+      )
+      .subscribe((data) => {
+        this.sensorReadings = data.values;
+
+        this.lineChartLabels = data.values.map(
+          x => x.date
+        );
+
+        this.yLabel = Array.from(
+          new Set(
+            data.values
+              .filter(x => (typeof(x.value) === 'string' || typeof(x.value) === 'boolean'))
+              .map(x => {
+                if (x.value === true) {
+                  return 'Alternatywny';
+                } else if (x.value === false) {
+                  return 'Podstawowy';
+                } else {
+                  return x.value as string;
+                }
+              })
+          )
+        );
+
+        this.lineChartData = [
+          {
+            data: data.values.map(
+              x => {
+                if (this.yLabel.length > 0) {
+                  if (x.value === true) {
+                    return ({t:  x.date, y: this.yLabel.indexOf('Alternatywny')});
+                  } else if (x.value === false) {
+                    return ({t:  x.date, y: this.yLabel.indexOf('Podstawowy')});
+                  } else {
+                    return ({t:  x.date, y: this.yLabel.indexOf(x.value as string)});
+                  }
+                } else {
+                  return ({t:  x.date, y: x.value as number});
+                }
+              }
+            ),
+            steppedLine: this.yLabel.length > 0 ? 'after' : false,
+            label: data.sensorName
+          }
+        ];
+
+        this.dataSource = new MatTableDataSource<SensorReading>(this.sensorReadings);
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
+
+        if (this.filterValue !== null) {
+          this.dataSource.filter = this.filterValue;
+        }
       });
   }
 }

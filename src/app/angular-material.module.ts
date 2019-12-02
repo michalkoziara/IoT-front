@@ -7,6 +7,7 @@ import {
   MatCardModule,
   MatChipsModule,
   MatDatepickerModule,
+  MatExpansionModule,
   MatFormFieldModule,
   MatGridListModule,
   MatIconModule,
@@ -18,14 +19,13 @@ import {
   MatRadioModule,
   MatSelectModule,
   MatSidenavModule,
+  MatSlideToggleModule,
   MatSnackBarModule,
   MatSortModule,
   MatStepperModule,
   MatTableModule,
   MatToolbarModule,
-  MatTooltipModule,
-  MatExpansionModule,
-  MatSlideToggleModule
+  MatTooltipModule
 } from '@angular/material';
 
 @NgModule({
