@@ -6,6 +6,7 @@ import {SensorsService} from '../../services/sensorsService/sensors.service';
 import {ViewCommunicationService} from '../../services/viewCommunicationService/view-communication.service';
 import {Subscription} from 'rxjs';
 import {SensorInList} from '../../models/sensor-in-list/sensor-in-list';
+import {MatSnackBar} from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-unassigned-sensors',
@@ -28,7 +29,8 @@ export class UnassignedSensorsComponent implements OnInit {
 
   constructor(private sensorsApiService: SensorsApiService,
               private sensorsService: SensorsService,
-              private viewCommunicationService: ViewCommunicationService) {
+              private viewCommunicationService: ViewCommunicationService,
+              private snackBar: MatSnackBar) {
     this.dataSource = new MatTableDataSource<ExecutiveInList>();
     this.sort = new MatSort();
     this.paginator = null;
@@ -76,9 +78,26 @@ export class UnassignedSensorsComponent implements OnInit {
   }
 
   addSensor(deviceKey: string): void {
-    this.sensorsApiService.getSensor(this.productKey, deviceKey).subscribe(() => {
-
-    }
-    );
+    this.sensorsApiService.getSensor(this.productKey, deviceKey).subscribe(
+      data => {
+        this.sensorsApiService.modifySensor(
+          {name: data.name, typeName: data.sensorTypeName, userGroupName: this.userGroupName},
+          this.productKey,
+          deviceKey)
+          .subscribe(() => {
+            this.viewCommunicationService.changeCurrentView('sensorsInUserGroup');
+            this.snackBar.open(
+              `Czujnik ${data.name} został dodany do grupy użytkowników ${this.userGroupName}`,
+              undefined,
+              {duration: 3000}
+            );
+          },
+          () => {
+            this.snackBar.open('Wystąpił błąd poczas dodawania, spróbuj ponownie', undefined, {duration: 3000});
+          });
+      },
+      () => {
+        this.snackBar.open('Wystąpił błąd poczas dodawania, spróbuj ponownie', undefined, {duration: 3000});
+      });
   }
 }

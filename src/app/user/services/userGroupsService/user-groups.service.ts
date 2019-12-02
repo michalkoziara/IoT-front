@@ -9,7 +9,7 @@ export class UserGroupsService {
   private selectedJoiningUserGroupSource = new BehaviorSubject(null as string | null);
   selectedJoiningUserGroup$ = this.selectedJoiningUserGroupSource.asObservable();
 
-  changeSelectedUserGroup(selectedUserGroupSource: string): void {
+  changeSelectedUserGroup(selectedUserGroupSource: string | null): void {
     this.selectedUserGroupSource.next(selectedUserGroupSource);
   }
 

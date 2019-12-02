@@ -1,4 +1,4 @@
-<div fxLayout="row" fxFlexFill fxLayoutAlign="center">
+<div fxLayout="row" fxFlexFill>
   <mat-card>
     <mat-card-content>
       <table *ngIf="executive">
@@ -10,6 +10,12 @@
         <tr>
           <td class="header">Stan:</td>
           <td><b>{{executive.state}}</b></td>
+          <td>
+            <button mat-button class="view-btn" (click)="showStateChangeCard()"
+                    *ngIf="executive && !executive.isFormulaUsed">
+              <mat-icon matTooltip='Zmień stan'>edit</mat-icon>
+            </button>
+          </td>
         </tr>
 
         <tr>
@@ -25,14 +31,50 @@
 
         <tr>
           <td class="header">Typ:</td>
-          <td><b>{{executive.deviceTypeName}}</b></td>
+          <mat-expansion-panel>
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                <td><b>{{executive.deviceTypeName}}</b></td>
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+            <table *ngIf="executiveType">
+              <tr>
+                <td>Typ bazowy:</td>
+                <b>
+                  <td>{{executiveType.stateType}}</td>
+                </b>
+              </tr>
+              <tr *ngIf="executiveType.stateType === 'Liczbowy'">
+                <td>Minimalna wartość:</td>
+                <b>
+                  <td>{{executiveType.stateRangeMin}}</td>
+                </b>
+              </tr>
+              <tr *ngIf="executiveType.stateType === 'Liczbowy'">
+                <td>Maksymalna wartość:</td>
+                <b>
+                  <td>{{executiveType.stateRangeMax}}</td>
+                </b>
+              </tr>
+              <tr *ngIf="executiveType.stateType === 'Wyliczeniowy'">
+                <td>Dostępne wartości:</td>
+                <b>
+                  <td>
+                    <div *ngFor="let enumType of executiveType.enumerator">{{enumType.text}}</div>
+                  </td>
+                </b>
+              </tr>
+            </table>
+          </mat-expansion-panel>
         </tr>
 
         <tr>
           <td class="header">Grupa użytkowników:</td>
-          <td><b>{{isAssigned ? sensor.sensorUserGroup : 'Brak grupy'}}</b></td>
+          <td><b>{{executive.isAssigned ? executive.deviceUserGroup : 'Brak grupy'}}</b></td>
           <td>
-            <mat-icon>edit</mat-icon>
+            <button mat-button class="view-btn" (click)="showUserGroupChangeCard()">
+              <mat-icon matTooltip='Zmień grupę użytkowników urządzenia'>edit</mat-icon>
+            </button>
           </td>
         </tr>
 
@@ -65,9 +107,22 @@
 
         <tr>
           <td class="header">Automatyczne sterowanie:</td>
-          <td><b>{{executive.isFormulaUsed}}</b></td>
-          <td *ngIf="executive.formulaName">
-            <mat-icon>edit</mat-icon>
+          <td *ngIf="!executive.formulaName || executive.positiveState === null || executive.negativeState === null">
+            <b class="non-configured-text">Nieskonfigurowane</b>
+            <mat-icon
+              color="primary"
+              matTooltip="Aby skonfigurować automatyczne sterowanie należy wybrać formułę sterującą oraz stan przyjęty gdy formuła spełniona i niespełniona">
+              info
+            </mat-icon>
+          </td>
+          <td *ngIf="executive.formulaName && executive.positiveState !== null && executive.negativeState !== null">
+            <b>{{executive.isFormulaUsed}}</b>
+          </td>
+
+          <td *ngIf="executive.formulaName && executive.positiveState !== null && executive.negativeState !== null">
+            <button mat-button class="view-btn" (click)="showIsFormulaUsedChangeCard()">
+              <mat-icon matTooltip='Zmień automatyczne sterowanie'>edit</mat-icon>
+            </button>
           </td>
         </tr>
 
@@ -75,7 +130,9 @@
           <td class="header">Nazwa formuły:</td>
           <td><b>{{executive.formulaName ? executive.formulaName : 'Brak formuły'}}</b></td>
           <td>
-            <mat-icon>edit</mat-icon>
+            <button mat-button class="view-btn" (click)="showFormulaChangeCard()">
+              <mat-icon matTooltip='Zmień formułę sterującą'>edit</mat-icon>
+            </button>
           </td>
         </tr>
 
@@ -83,7 +140,9 @@
           <td class="header">Stan gdy formuła spełniona:</td>
           <td><b>{{executive.positiveState}}</b></td>
           <td>
-            <mat-icon>edit</mat-icon>
+            <button mat-button class="view-btn" (click)="showPositiveStateChangeCard()">
+              <mat-icon matTooltip='Zmień stan gdy formuła spełniona'>edit</mat-icon>
+            </button>
           </td>
         </tr>
 
@@ -91,10 +150,154 @@
           <td class="header">Stan gdy formuła niespełniona:</td>
           <td><b>{{executive.negativeState}}</b></td>
           <td>
-            <mat-icon>edit</mat-icon>
+            <button mat-button class="view-btn" (click)="showNegativeStateChangeCard()">
+              <mat-icon matTooltip='Zmień stan gdy formuła niespełniona'>edit</mat-icon>
+            </button>
           </td>
         </tr>
       </table>
     </mat-card-content>
   </mat-card>
+
+  <div fxLayout="column">
+    <mat-card class='user-group-card' fxLayout="column" *ngIf="isUserGroupChangeCardVisible">
+      <mat-card-header>Zmień grupę użytkowników urządzenia</mat-card-header>
+      <mat-card-content fxLayout="column">
+        <mat-form-field>
+          <mat-label>Nazwa grupy</mat-label>
+          <mat-select [(value)]="selectedUserGroup">
+            <mat-option *ngFor="let userGroup of userGroups" [value]="userGroup.name">{{userGroup.name}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <button mat-stroked-button color="accent" class="btn-block" (click)="changeUserGroup()">
+          Zmień grupę użytkowników
+        </button>
+        <button mat-stroked-button color="primary" class="btn-block" (click)="deleteUserGroup()">
+          Usuń z grupy użytkowników
+        </button>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card class='state-card' fxLayout="column" *ngIf="isStateChangeCardVisible && executiveType">
+      <mat-card-header>Wybierz nowy stan urządzenia</mat-card-header>
+      <mat-card-content fxLayout="column" fxLayoutAlign="center">
+        <mat-form-field *ngIf="executiveType.stateType === 'Wyliczeniowy'">
+          <mat-label>Stan</mat-label>
+          <mat-select [(value)]="selectedState">
+            <mat-option *ngFor="let enumType of executiveType.enumerator"
+                        [value]="enumType.text">{{enumType.text}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <form fxLayout="column" *ngIf="executiveType.stateType === 'Liczbowy'" [formGroup]="stateFormGroup">
+          <mat-form-field [floatLabel]="'always'"
+                          hintLabel="Wartość od {{executiveType.stateRangeMin}} do {{executiveType.stateRangeMax}}">
+            <input matInput placeholder="Stan" formControlName="stateCtrl" type="number" required>
+            <mat-error *ngIf="!stateFormGroup.valid">
+              Podaj poprawną wartość
+            </mat-error>
+          </mat-form-field>
+        </form>
+        <section fxFlexFill fxLayoutAlign="center" *ngIf="executiveType.stateType === 'Logiczny'">
+          <mat-slide-toggle [(ngModel)]="selectedState">
+            Stan
+          </mat-slide-toggle>
+        </section>
+        <button mat-stroked-button color="accent" class="btn-block" (click)="changeState()"
+                [disabled]="!stateFormGroup.valid">
+          Zmień stan
+        </button>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card class='formula-card' fxLayout="column" *ngIf="isFormulaChangeCardVisible">
+      <mat-card-header>Zmień formułę sterującą urządzeniem</mat-card-header>
+      <mat-card-content fxLayout="column">
+        <mat-form-field>
+          <mat-label>Formuła</mat-label>
+          <mat-select [(value)]="selectedFormula">
+            <mat-option *ngFor="let formula of formulas" [value]="formula">{{formula}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <button mat-stroked-button color="accent" class="btn-block" (click)="changeFormula()">
+          Zmień formułę
+        </button>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card class='state-card' fxLayout="column" *ngIf="isPositiveStateChangeCardVisible && executiveType">
+      <mat-card-header>Wybierz stan urządzenia gdy formuła spełniona</mat-card-header>
+      <mat-card-content fxLayout="column" fxLayoutAlign="center">
+        <mat-form-field *ngIf="executiveType.stateType === 'Wyliczeniowy'">
+          <mat-label>Stan</mat-label>
+          <mat-select [(value)]="selectedPositiveState">
+            <mat-option *ngFor="let enumType of executiveType.enumerator"
+                        [value]="enumType.text">{{enumType.text}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <form fxLayout="column" *ngIf="executiveType.stateType === 'Liczbowy'" [formGroup]="statePositiveFormGroup">
+          <mat-form-field [floatLabel]="'always'"
+                          hintLabel="Wartość od {{executiveType.stateRangeMin}} do {{executiveType.stateRangeMax}}">
+            <input matInput placeholder="Stan" formControlName="statePositiveCtrl" type="number" required>
+            <mat-error *ngIf="!statePositiveFormGroup.valid">
+              Podaj poprawną wartość
+            </mat-error>
+          </mat-form-field>
+        </form>
+        <section fxFlexFill fxLayoutAlign="center" *ngIf="executiveType.stateType === 'Logiczny'">
+          <mat-slide-toggle [(ngModel)]="selectedPositiveState">
+            Stan
+          </mat-slide-toggle>
+        </section>
+        <button mat-stroked-button color="accent" class="btn-block" (click)="changePositiveState()"
+                [disabled]="!statePositiveFormGroup.valid">
+          Zmień stan
+        </button>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card class='state-card' fxLayout="column" *ngIf="isNegativeStateChangeCardVisible && executiveType">
+      <mat-card-header>Wybierz stan urządzenia gdy formuła niespełniona</mat-card-header>
+      <mat-card-content fxLayout="column" fxLayoutAlign="center">
+        <mat-form-field *ngIf="executiveType.stateType === 'Wyliczeniowy'">
+          <mat-label>Stan</mat-label>
+          <mat-select [(value)]="selectedNegativeState">
+            <mat-option *ngFor="let enumType of executiveType.enumerator"
+                        [value]="enumType.text">{{enumType.text}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <form fxLayout="column" *ngIf="executiveType.stateType === 'Liczbowy'" [formGroup]="stateNegativeFormGroup">
+          <mat-form-field [floatLabel]="'always'"
+                          hintLabel="Wartość od {{executiveType.stateRangeMin}} do {{executiveType.stateRangeMax}}">
+            <input matInput placeholder="Stan" formControlName="stateNegativeCtrl" type="number" required>
+            <mat-error *ngIf="!stateNegativeFormGroup.valid">
+              Podaj poprawną wartość
+            </mat-error>
+          </mat-form-field>
+        </form>
+        <section fxFlexFill fxLayoutAlign="center" *ngIf="executiveType.stateType === 'Logiczny'">
+          <mat-slide-toggle [(ngModel)]="selectedNegativeState">
+            Stan
+          </mat-slide-toggle>
+        </section>
+        <button mat-stroked-button color="accent" class="btn-block" (click)="changeNegativeState()"
+                [disabled]="!stateNegativeFormGroup.valid">
+          Zmień stan
+        </button>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card class='state-card' fxLayout="column" *ngIf="isFormulaUsedChangeCardVisible">
+      <mat-card-header>Zmień automatyczne sterowanie</mat-card-header>
+      <mat-card-content fxLayout="column" fxLayoutAlign="center">
+        <section fxFlexFill fxLayoutAlign="center">
+          <mat-slide-toggle [(ngModel)]="selectedIsFormulaUsed">
+            Stan automatycznego sterowania
+          </mat-slide-toggle>
+        </section>
+        <button mat-stroked-button color="accent" class="btn-block" (click)="changeIsFormulaUsed()">
+          Zmień stan automatycznego sterowania
+        </button>
+      </mat-card-content>
+    </mat-card>
+  </div>
 </div>

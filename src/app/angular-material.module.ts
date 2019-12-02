@@ -7,6 +7,7 @@ import {
   MatCardModule,
   MatChipsModule,
   MatDatepickerModule,
+  MatExpansionModule,
   MatFormFieldModule,
   MatGridListModule,
   MatIconModule,
@@ -18,6 +19,7 @@ import {
   MatRadioModule,
   MatSelectModule,
   MatSidenavModule,
+  MatSlideToggleModule,
   MatSnackBarModule,
   MatSortModule,
   MatStepperModule,
@@ -50,8 +52,9 @@ import {
     MatTableModule,
     MatPaginatorModule,
     MatSnackBarModule,
-    MatProgressBarModule
-
+    MatProgressBarModule,
+    MatExpansionModule,
+    MatSlideToggleModule
   ],
   exports: [
     MatButtonModule,
@@ -74,7 +77,9 @@ import {
     MatTableModule,
     MatPaginatorModule,
     MatSnackBarModule,
-    MatProgressBarModule
+    MatProgressBarModule,
+    MatExpansionModule,
+    MatSlideToggleModule
   ],
   providers: [
     MatDatepickerModule,

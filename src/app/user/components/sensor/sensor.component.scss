@@ -1,20 +1,73 @@
 mat-card {
   margin: 50px;
   padding: 50px;
-  display: inline-flex;
+  height: fit-content;
 
-  td {
-    padding-bottom: 30px;
-  }
+  tr {
 
-  .header {
-    text-align: right;
-    padding-right: 10px;
-  }
+    td {
+      padding-bottom: 30px;
 
-  mat-divider {
-    position: static;
-    border-width: 2px;
+      .view-btn {
+        height: 24px;
+        width: 24px;
+        padding: 0;
+        margin: 0;
+        line-height: 0;
+      }
+    }
+
+    .header {
+      text-align: right;
+      padding-right: 10px;
+    }
+
+    mat-divider {
+      position: static;
+      border-width: 2px;
+    }
   }
 }
 
+.user-group-card {
+  height: fit-content;
+
+  .btn-block {
+    margin: 5px;
+    width: 100%;
+  }
+}
+
+.table-card {
+  mat-form-field {
+    font-size: 14px;
+    width: 100%;
+  }
+
+  table {
+    width: 100%;
+    box-shadow: none;
+
+    tr {
+      vertical-align: top;
+
+      td {
+        padding-top: 12px;
+        padding-bottom: 12px;
+      }
+
+      .td-btn {
+        padding-left: 0;
+        padding-top: 8px;
+
+        .view-btn {
+          height: 24px;
+          width: 24px;
+          padding: 0;
+          margin: 0;
+          line-height: 0;
+        }
+      }
+    }
+  }
+}
