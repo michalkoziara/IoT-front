@@ -5,16 +5,17 @@ export class Sensor {
   isAssigned: boolean;
   deviceKey: string;
   sensorTypeName: string;
-  sensorUserGroup: string;
+  sensorUserGroup: string | null;
   readingValue: boolean | string;
 
-  constructor(name: string,
+  constructor(
+    name: string,
     isUpdated: boolean | string,
     isActive: boolean | string,
     isAssigned: boolean,
     deviceKey: string,
     sensorTypeName: string,
-    sensorUserGroup: string,
+    sensorUserGroup: string | null,
     readingValue: boolean | string) {
     this.name = name;
     this.isUpdated = isUpdated;

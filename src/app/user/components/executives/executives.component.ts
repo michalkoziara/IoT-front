@@ -47,27 +47,27 @@ export class ExecutivesComponent implements OnInit {
     return this.executivesApiService.getExecutives(this.productKey, this.userGroupName).subscribe((data) => {
       this.executives = data.map(
         x => {
-          if (x.state === 'true') {
-            x.state = 'Podstawowy';
-          }
-
-          if (x.state === 'false') {
+          if (x.state === true) {
             x.state = 'Alternatywny';
           }
 
-          if (x.isFormulaUsed === 'true') {
+          if (x.state === false) {
+            x.state = 'Podstawowy';
+          }
+
+          if (x.isFormulaUsed === true) {
             x.isFormulaUsed = 'Tak';
           }
 
-          if (x.isFormulaUsed === 'false') {
+          if (x.isFormulaUsed === false) {
             x.isFormulaUsed = 'Nie';
           }
 
-          if (x.isActive === 'true') {
+          if (x.isActive === true) {
             x.isActive = 'Tak';
           }
 
-          if (x.isActive === 'false') {
+          if (x.isActive === false) {
             x.isActive = 'Nie';
           }
           return x;

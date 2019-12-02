@@ -37,6 +37,9 @@ import {SensorComponent} from './components/sensor/sensor.component';
 import {SensorsService} from './services/sensorsService/sensors.service';
 import {ExecutivesService} from './services/executivesService/executives.service';
 import {ExecutiveComponent} from './components/executive/executive.component';
+import {ExecutiveTypesApiService} from './services/apiService/executive-types-api.service';
+import {ChartsModule} from 'ng2-charts';
+import 'moment/locale/pl';
 
 @NgModule({
   declarations: [
@@ -65,7 +68,8 @@ import {ExecutiveComponent} from './components/executive/executive.component';
     FlexLayoutModule,
     UserRoutingModule,
     ReactiveFormsModule,
-    FormsModule
+    FormsModule,
+    ChartsModule
   ],
   providers: [
     ViewCommunicationService,
@@ -76,6 +80,7 @@ import {ExecutiveComponent} from './components/executive/executive.component';
     SensorsApiService,
     SensorsService,
     ExecutivesApiService,
+    ExecutiveTypesApiService,
     ExecutivesService,
     FormulasApiService,
     {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true},

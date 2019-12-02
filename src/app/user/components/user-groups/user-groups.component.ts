@@ -44,9 +44,6 @@ export class UserGroupsComponent implements OnInit {
       this.userGroups = data.userGroups
         .filter(x => {
           return x.isAssignedTo;
-        }, {})
-        .map(x => {
-          return new UserGroupInList(x.name, x.isAssignedTo);
         }, {});
       this.dataSource = new MatTableDataSource<UserGroupInList>(this.userGroups);
       this.dataSource.paginator = this.paginator;

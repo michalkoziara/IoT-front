@@ -21,7 +21,7 @@
       <th mat-header-cell *matHeaderCellDef mat-sort-header> Szczegóły</th>
       <td mat-cell *matCellDef="let element" class="td-btn">
         <button mat-button class="btn" (click)="viewExecutive(element.deviceKey, element.name)">
-          <mat-icon>zoom_in</mat-icon>
+          <mat-icon matTooltip='Wyświetl szczegóły urządzenia'>zoom_in</mat-icon>
         </button>
       </td>
     </ng-container>
@@ -30,7 +30,7 @@
       <th mat-header-cell *matHeaderCellDef mat-sort-header> Dodaj</th>
       <td mat-cell *matCellDef="let element" class="td-btn">
         <button mat-button class="btn" (click)="addExecutive(element.deviceKey)">
-          <mat-icon>add</mat-icon>
+          <mat-icon matTooltip='Dodaj urządzenie do grupy użytkowników'>add</mat-icon>
         </button>
       </td>
     </ng-container>

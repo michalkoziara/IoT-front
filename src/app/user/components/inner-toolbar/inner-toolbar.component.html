@@ -1,70 +1,70 @@
 <mat-toolbar [ngSwitch]="currentView" color="primary">
-  <p *ngSwitchCase="'deviceGroupList'">Urządzenia główne</p>
-  <p *ngSwitchCase="'addNewDeviceGroup'">Dodaj urządzenie główne</p>
-  <p *ngSwitchCase="'userGroupAssignedToList'" fxLayoutAlign="center center">
+  <div *ngSwitchCase="'deviceGroupList'">Urządzenia główne</div>
+  <div *ngSwitchCase="'addNewDeviceGroup'">Dodaj urządzenie główne</div>
+  <div *ngSwitchCase="'userGroupAssignedToList'" fxLayoutAlign="center center">
     {{selectedDeviceGroup}}
     <mat-icon>arrow_forward_ios</mat-icon>
     Grupy użytkowników
-  </p>
-  <p *ngSwitchCase="'sensorsInUserGroup'" fxLayoutAlign="center center">
+  </div>
+  <div *ngSwitchCase="'sensorsInUserGroup'" fxLayoutAlign="center center">
     {{selectedDeviceGroup}}
     <mat-icon>arrow_forward_ios</mat-icon>
     {{selectedUserGroup}}
     <mat-icon>arrow_forward_ios</mat-icon>
     Sensory
-  </p>
-  <p *ngSwitchCase="'executivesInUserGroup'" fxLayoutAlign="center center">
+  </div>
+  <div *ngSwitchCase="'executivesInUserGroup'" fxLayoutAlign="center center">
     {{selectedDeviceGroup}}
     <mat-icon>arrow_forward_ios</mat-icon>
     {{selectedUserGroup}}
     <mat-icon>arrow_forward_ios</mat-icon>
     Urządzenia
-  </p>
-  <p *ngSwitchCase="'formulasInUserGroup'" fxLayoutAlign="center center">
+  </div>
+  <div *ngSwitchCase="'formulasInUserGroup'" fxLayoutAlign="center center">
     {{selectedDeviceGroup}}
     <mat-icon>arrow_forward_ios</mat-icon>
     {{selectedUserGroup}}
     <mat-icon>arrow_forward_ios</mat-icon>
     Formuły
-  </p>
-  <p *ngSwitchCase="'joiningUserGroupsInDevice'" fxLayoutAlign="center center">
+  </div>
+  <div *ngSwitchCase="'joiningUserGroupsInDevice'" fxLayoutAlign="center center">
     {{selectedDeviceGroup}}
     <mat-icon>arrow_forward_ios</mat-icon>
     Dostępne grupy użytkowników
-  </p>
-  <p *ngSwitchCase="'listUnassignedExecutives'" fxLayoutAlign="center center">
+  </div>
+  <div *ngSwitchCase="'listUnassignedExecutives'" fxLayoutAlign="center center">
     {{selectedDeviceGroup}}
     <mat-icon>arrow_forward_ios</mat-icon>
     Dostępne nieprzypisane urządzenia
-  </p>
-  <p *ngSwitchCase="'listUnassignedSensors'" fxLayoutAlign="center center">
+  </div>
+  <div *ngSwitchCase="'listUnassignedSensors'" fxLayoutAlign="center center">
     {{selectedDeviceGroup}}
     <mat-icon>arrow_forward_ios</mat-icon>
     Dostępne nieprzypisane czujniki
-  </p>
-  <p *ngSwitchCase="'createUserGroup'" fxLayoutAlign="center center">
+  </div>
+  <div *ngSwitchCase="'createUserGroup'" fxLayoutAlign="center center">
     {{selectedDeviceGroup}}
     <mat-icon>arrow_forward_ios</mat-icon>
     Stwórz grupę użytkowników
-  </p>
-  <p *ngSwitchCase="'joiningUserGroup'" fxLayoutAlign="center center">
+  </div>
+  <div *ngSwitchCase="'joiningUserGroup'" fxLayoutAlign="center center">
     {{selectedDeviceGroup}}
     <mat-icon>arrow_forward_ios</mat-icon>
     Dołącz do grupy użytkowników
-  </p>
-  <p *ngSwitchCase="'showSensor'" fxLayoutAlign="center center">
+  </div>
+  <div *ngSwitchCase="'showSensor'" fxLayoutAlign="center center">
     {{selectedDeviceGroup}}
-    <mat-icon>arrow_forward_ios</mat-icon>
-    {{selectedUserGroup}}
+    <mat-icon *ngIf="selectedUserGroup !== null">arrow_forward_ios</mat-icon>
+    <div *ngIf="selectedUserGroup !== null">{{selectedUserGroup}}</div>
     <mat-icon>arrow_forward_ios</mat-icon>
     {{selectedSensorName}}
-  </p>
-  <p *ngSwitchCase="'showExecutive'" fxLayoutAlign="center center">
+  </div>
+  <div *ngSwitchCase="'showExecutive'" fxLayoutAlign="center center">
     {{selectedDeviceGroup}}
-    <mat-icon>arrow_forward_ios</mat-icon>
-    {{selectedUserGroup}}
+    <mat-icon *ngIf="selectedUserGroup !== null">arrow_forward_ios</mat-icon>
+    <div *ngIf="selectedUserGroup !== null">{{selectedUserGroup}}</div>
     <mat-icon>arrow_forward_ios</mat-icon>
     {{selectedExecutiveName}}
-  </p>
-  <p *ngSwitchDefault>Strona domowa</p>
+  </div>
+  <div *ngSwitchDefault>Strona domowa</div>
 </mat-toolbar>

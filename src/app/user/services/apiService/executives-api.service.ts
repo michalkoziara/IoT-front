@@ -34,6 +34,29 @@ export class ExecutivesApiService {
       );
   }
 
+  modifyExecutive(
+    changedExecutive: {
+      name: string;
+      typeName: string;
+      state: string | boolean | number;
+      positiveState: string | boolean | number | null;
+      negativeState: string | boolean | number | null;
+      formulaName: string | null;
+      userGroupName: string | null;
+      isFormulaUsed: boolean;
+    },
+    productKey: string,
+    deviceKey: string): Observable<object> {
+    return this.http
+      .post<object>(`${environment.apiUrl}/hubs/${productKey}/executive-devices/${deviceKey}`,
+        changedExecutive,
+        this.httpOptions)
+      .pipe(
+        retry(1),
+        catchError(this.handleError)
+      );
+  }
+
   getUnassignedExecutives(productKey: string): Observable<ExecutiveInList[]> {
     return this.http.get<ExecutiveInList[]>(
       `${environment.apiUrl}/hubs/${productKey}/executive-devices/unassigned`)

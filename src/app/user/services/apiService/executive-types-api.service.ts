@@ -3,9 +3,10 @@ import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Observable, throwError} from 'rxjs';
 import {environment} from '../../../../environments/environment';
 import {catchError, retry} from 'rxjs/operators';
+import {ExecutiveType} from '../../models/executive-type/executive-type';
 
 @Injectable()
-export class FormulasApiService {
+export class ExecutiveTypesApiService {
   httpOptions = {
     headers: new HttpHeaders({
       'Content-Type': 'application/json'
@@ -15,8 +16,8 @@ export class FormulasApiService {
   constructor(private http: HttpClient) {
   }
 
-  getFormulas(productKey: string, userGroupName: string): Observable<{'names': string[]}> {
-    return this.http.get<{'names': string[]}>(`${environment.apiUrl}/hubs/${productKey}/user-groups/${userGroupName}/formulas`)
+  getExecutiveType(productKey: string, name: string): Observable<ExecutiveType> {
+    return this.http.get<ExecutiveType>(`${environment.apiUrl}/hubs/${productKey}/executive-types/${name}`)
       .pipe(
         retry(1),
         catchError(this.handleError)
