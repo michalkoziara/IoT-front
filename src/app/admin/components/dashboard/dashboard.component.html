@@ -23,9 +23,6 @@
   <app-delete-device-group *ngSwitchCase="'deleteDeviceGroup'"
                            [productKey]="productKey"></app-delete-device-group>
 
-  <app-change-device-group-name *ngSwitchCase="'changeDeviceGroupName'"
-                                [productKey]="productKey"></app-change-device-group-name>
-
   <app-sensor-details *ngSwitchCase="'sensorDetails'"
                       [productKey]="productKey"
                       [deviceKey]="selectedSensor"></app-sensor-details>
@@ -33,6 +30,10 @@
   <app-device-details *ngSwitchCase="'deviceDetails'"
                       [productKey]="productKey"
                       [deviceKey]="selectedDevice"></app-device-details>
+
+  <app-change-device-group-name *ngSwitchCase="'changeDeviceGroupName'"
+                                [productKey]="productKey"
+                                [deviceGroupName]="deviceGroupName"></app-change-device-group-name>
 
 
   <app-admin-start-card *ngSwitchDefault></app-admin-start-card>
