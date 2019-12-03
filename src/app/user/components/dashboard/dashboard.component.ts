@@ -5,6 +5,7 @@ import {UserGroupsService} from '../../services/userGroupsService/user-groups.se
 import {ViewCommunicationService} from '../../services/viewCommunicationService/view-communication.service';
 import {SensorsService} from '../../services/sensorsService/sensors.service';
 import {ExecutivesService} from '../../services/executivesService/executives.service';
+import {FormulasService} from '../../services/formulasService/formulas.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -25,12 +26,15 @@ export class DashboardComponent implements OnInit, OnDestroy {
   selectedSensorSubscription: Subscription;
   selectedExecutive: string | null;
   selectedExecutiveSubscription: Subscription;
+  selectedFormula: string | null;
+  selectedFormulaSubscription: Subscription;
 
   constructor(private viewCommunicationService: ViewCommunicationService,
               private deviceGroupsService: DeviceGroupsService,
               private userGroupsService: UserGroupsService,
               private sensorsService: SensorsService,
-              private executivesService: ExecutivesService) {
+              private executivesService: ExecutivesService,
+              private formulasService: FormulasService) {
     this.currentView = null;
     this.currentViewSubscription = new Subscription();
     this.selectedDeviceGroup = null;
@@ -43,6 +47,8 @@ export class DashboardComponent implements OnInit, OnDestroy {
     this.selectedSensorSubscription = new Subscription();
     this.selectedExecutive = null;
     this.selectedExecutiveSubscription = new Subscription();
+    this.selectedFormula = null;
+    this.selectedFormulaSubscription = new Subscription();
   }
 
   ngOnInit(): void {
@@ -67,6 +73,9 @@ export class DashboardComponent implements OnInit, OnDestroy {
     this.selectedExecutiveSubscription = this.executivesService.selectedExecutive$.subscribe(
       x => this.selectedExecutive = x
     );
+    this.selectedFormulaSubscription = this.formulasService.selectedFormula$.subscribe(
+      x => this.selectedFormula = x
+    );
   }
 
   ngOnDestroy(): void {
@@ -77,5 +86,6 @@ export class DashboardComponent implements OnInit, OnDestroy {
     this.selectedJoiningUserGroupSubscription.unsubscribe();
     this.selectedSensorSubscription.unsubscribe();
     this.selectedExecutiveSubscription.unsubscribe();
+    this.selectedFormulaSubscription.unsubscribe();
   }
 }

@@ -19,8 +19,8 @@ export class SensorsApiService {
   constructor(private http: HttpClient) {
   }
 
-  getSensors(productKey: string, name: string): Observable<SensorInUserGroup[]> {
-    return this.http.get<SensorInUserGroup[]>(`${environment.apiUrl}/hubs/${productKey}/user-groups/${name}/sensors`)
+  getSensors(productKey: string, userGroupName: string): Observable<SensorInUserGroup[]> {
+    return this.http.get<SensorInUserGroup[]>(`${environment.apiUrl}/hubs/${productKey}/user-groups/${userGroupName}/sensors`)
       .pipe(
         retry(1),
         catchError(this.handleError)

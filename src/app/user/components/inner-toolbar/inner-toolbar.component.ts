@@ -5,6 +5,7 @@ import {ViewCommunicationService} from '../../services/viewCommunicationService/
 import {UserGroupsService} from '../../services/userGroupsService/user-groups.service';
 import {SensorsService} from '../../services/sensorsService/sensors.service';
 import {ExecutivesService} from '../../services/executivesService/executives.service';
+import {FormulasService} from '../../services/formulasService/formulas.service';
 
 @Component({
   selector: 'app-inner-toolbar',
@@ -29,13 +30,15 @@ export class InnerToolbarComponent implements OnInit, OnDestroy {
   selectedExecutiveSubscription: Subscription;
   selectedExecutiveName: string | null;
   selectedExecutiveNameSubscription: Subscription;
-
+  selectedFormula: string | null;
+  selectedFormulaSubscription: Subscription;
 
   constructor(private viewCommunicationService: ViewCommunicationService,
               private deviceGroupsService: DeviceGroupsService,
               private userGroupsService: UserGroupsService,
               private sensorsService: SensorsService,
-              private executivesService: ExecutivesService) {
+              private executivesService: ExecutivesService,
+              private formulasService: FormulasService) {
     this.currentView = null;
     this.currentViewSubscription = new Subscription();
     this.selectedDeviceGroup = null;
@@ -52,6 +55,8 @@ export class InnerToolbarComponent implements OnInit, OnDestroy {
     this.selectedExecutiveSubscription = new Subscription();
     this.selectedExecutiveName = null;
     this.selectedExecutiveNameSubscription = new Subscription();
+    this.selectedFormula = null;
+    this.selectedFormulaSubscription = new Subscription();
   }
 
   ngOnInit(): void {
@@ -82,6 +87,9 @@ export class InnerToolbarComponent implements OnInit, OnDestroy {
     this.selectedExecutiveNameSubscription = this.executivesService.selectedExecutiveName$.subscribe(
       x => this.selectedExecutiveName = x
     );
+    this.selectedFormulaSubscription = this.formulasService.selectedFormula$.subscribe(
+      x => this.selectedFormula = x
+    );
   }
 
   ngOnDestroy(): void {
@@ -94,5 +102,6 @@ export class InnerToolbarComponent implements OnInit, OnDestroy {
     this.selectedSensorNameSubscription.unsubscribe();
     this.selectedExecutiveSubscription.unsubscribe();
     this.selectedExecutiveNameSubscription.unsubscribe();
+    this.selectedFormulaSubscription.unsubscribe();
   }
 }

@@ -32,5 +32,9 @@
   <app-executive *ngSwitchCase="'showExecutive'"
                  [productKey]="selectedDeviceGroup"
                  [deviceKey]="selectedExecutive"></app-executive>
+  <app-formula *ngSwitchCase="'showFormula'"
+               [productKey]="selectedDeviceGroup"
+               [userGroupName]="selectedUserGroup"
+               [formulaName]="selectedFormula"></app-formula>
   <app-start-card *ngSwitchDefault></app-start-card>
 </div>

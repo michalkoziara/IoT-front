@@ -10,9 +10,8 @@
         <tr>
           <td class="header">Stan:</td>
           <td><b>{{executive.state}}</b></td>
-          <td>
-            <button mat-button class="view-btn" (click)="showStateChangeCard()"
-                    *ngIf="executive && !executive.isFormulaUsed">
+          <td *ngIf="executive && executive.isFormulaUsed !== 'Tak'">
+            <button mat-button class="view-btn" (click)="showStateChangeCard()">
               <mat-icon matTooltip='Zmień stan'>edit</mat-icon>
             </button>
           </td>
@@ -230,8 +229,10 @@
         <mat-form-field *ngIf="executiveType.stateType === 'Wyliczeniowy'">
           <mat-label>Stan</mat-label>
           <mat-select [(value)]="selectedPositiveState">
-            <mat-option *ngFor="let enumType of executiveType.enumerator"
-                        [value]="enumType.text">{{enumType.text}}</mat-option>
+            <ng-container *ngFor="let enumType of executiveType.enumerator">
+              <mat-option *ngIf="enumType.text !== executive.negativeState"
+                          [value]="enumType.text">{{enumType.text}}</mat-option>
+            </ng-container>
           </mat-select>
         </mat-form-field>
         <form fxLayout="column" *ngIf="executiveType.stateType === 'Liczbowy'" [formGroup]="statePositiveFormGroup">
@@ -261,8 +262,10 @@
         <mat-form-field *ngIf="executiveType.stateType === 'Wyliczeniowy'">
           <mat-label>Stan</mat-label>
           <mat-select [(value)]="selectedNegativeState">
-            <mat-option *ngFor="let enumType of executiveType.enumerator"
-                        [value]="enumType.text">{{enumType.text}}</mat-option>
+            <ng-container *ngFor="let enumType of executiveType.enumerator">
+              <mat-option *ngIf="enumType.text !== executive.positiveState"
+                          [value]="enumType.text">{{enumType.text}}</mat-option>
+            </ng-container>
           </mat-select>
         </mat-form-field>
         <form fxLayout="column" *ngIf="executiveType.stateType === 'Liczbowy'" [formGroup]="stateNegativeFormGroup">
