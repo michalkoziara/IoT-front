@@ -28,7 +28,7 @@ import {SensorService} from './services/sensorService/sensor.service';
 import {UserGroupService} from './services/user-group.service';
 import { DeviceDetailsComponent } from './components/device-details/device-details.component';
 import {DeviceService} from './services/deviceService/device.service';
-import {ReactiveFormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -51,6 +51,7 @@ import {ReactiveFormsModule} from '@angular/forms';
     SharedModule,
     FlexModule,
     ReactiveFormsModule,
+    FormsModule
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true},
