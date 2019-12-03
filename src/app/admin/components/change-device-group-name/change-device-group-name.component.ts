@@ -25,7 +25,6 @@ export class ChangeDeviceGroupNameComponent implements OnInit {
 
   constructor(private formBuilder: FormBuilder,
               private snackBar: MatSnackBar,
-              private viewCommunicationService: AdminViewCommunicationService,
               private productKeyApiService: ProductKeyApiService) {
     this.productKey = '';
     this.deviceGroupName = '';
