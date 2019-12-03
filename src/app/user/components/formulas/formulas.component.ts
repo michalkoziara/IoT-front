@@ -2,6 +2,8 @@ import {Component, Input, OnInit, ViewChild} from '@angular/core';
 import {MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
 import {FormulasApiService} from '../../services/apiService/formulas-api.service';
 import {Subscription} from 'rxjs';
+import {ViewCommunicationService} from '../../services/viewCommunicationService/view-communication.service';
+import {FormulasService} from '../../services/formulasService/formulas.service';
 
 @Component({
   selector: 'app-formulas',
@@ -22,7 +24,9 @@ export class FormulasComponent implements OnInit {
   @ViewChild(MatSort, {static: true}) sort: MatSort;
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator | null;
 
-  constructor(private formulasApiService: FormulasApiService) {
+  constructor(private formulasApiService: FormulasApiService,
+              private viewCommunicationService: ViewCommunicationService,
+              private formulasService: FormulasService) {
     this.dataSource = new MatTableDataSource<{ name: string }>();
     this.productKey = '';
     this.userGroupName = '';
@@ -57,7 +61,8 @@ export class FormulasComponent implements OnInit {
   }
 
   viewFormula(name: string): void {
-    console.log(name);
+    this.formulasService.changeSelectedFormula(name);
+    this.viewCommunicationService.changeCurrentView('showFormula');
   }
 
   createFormula(): void {
