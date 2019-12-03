@@ -27,6 +27,16 @@ export class ProductKeyApiService {
       );
   }
 
+  changeDeviceGroupName(productKey: string, changedName: string): Observable<any> {
+    return this.http.put<object>(`${environment.apiUrl}/hubs/${productKey}`,
+      {name: changedName},
+      this.httpOptions)
+      .pipe(
+        retry(1),
+        catchError(this.handleError)
+      );
+  }
+
   handleError(error: {
     error: ErrorEvent;
     status: string;
