@@ -3,6 +3,8 @@ import {MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
 import {DeviceApiService} from '../../services/apiService/device-api.service';
 import {Devices} from '../../models/devices';
 import {Subscription} from 'rxjs';
+import {DeviceService} from '../../services/deviceService/device.service';
+import {AdminViewCommunicationService} from '../../services/admin-view-communication.service';
 
 @Component({
   selector: 'app-devices',
@@ -10,7 +12,7 @@ import {Subscription} from 'rxjs';
   styleUrls: ['./devices.component.scss']
 })
 export class DevicesComponent implements OnInit {
-  displayedColumns: string[] = ['name', 'isActive', 'deviceKey', 'actions'];
+  displayedColumns: string[] = ['name', 'isActive', 'deviceKey', 'modify', 'delete'];
   devices: Devices[] = [];
   dataSource: MatTableDataSource<Devices>;
 
@@ -20,7 +22,9 @@ export class DevicesComponent implements OnInit {
   @ViewChild(MatSort, {static: true}) sort: MatSort;
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator | null;
 
-  constructor(private deviceApiService: DeviceApiService) {
+  constructor(private viewCommunicationService: AdminViewCommunicationService,
+              private deviceApiService: DeviceApiService,
+              private deviceService: DeviceService) {
     this.productKey = '';
     this.dataSource = new MatTableDataSource<Devices>();
     this.sort = new MatSort();
@@ -61,6 +65,12 @@ export class DevicesComponent implements OnInit {
   }
 
   modifyDevice(deviceKey: string): void {
+    this.deviceService.changeSelectedExecutive(deviceKey);
+    this.viewCommunicationService.changeCurrentView('deviceDetails');
+  }
+
+
+  deleteDevice(deviceKey: string) {
     console.log(deviceKey);
   }
 }

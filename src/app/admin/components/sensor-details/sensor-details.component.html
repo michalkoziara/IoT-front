@@ -1,0 +1,57 @@
+<div fxLayout="row" fxFlexFill fxLayoutAlign="center">
+  <mat-card>
+    <mat-card-content>
+      <table *ngIf="sensor">
+        <tr>
+          <td class="header">Nazwa:</td>
+          <td><b>{{sensor.name}}</b></td>
+        </tr>
+
+        <tr>
+          <td class="header">Ostatni odczyt:</td>
+          <td><b>{{sensor.readingValue}}</b></td>
+        </tr>
+
+        <tr>
+          <td colspan="3">
+            <mat-divider></mat-divider>
+          </td>
+        </tr>
+
+        <tr>
+          <td class="header">Klucz urządzenia:</td>
+          <td><b>{{sensor.deviceKey}}</b></td>
+        </tr>
+
+        <tr>
+          <td class="header">Typ:</td>
+          <td><b>{{sensor.sensorTypeName}}</b></td>
+        </tr>
+
+        <tr>
+          <td class="header">Grupa użytkowników:</td>
+          <td><b>{{isAssigned ? sensor.sensorUserGroup : 'Brak grupy'}}</b></td>
+          <td>
+            <mat-icon>edit</mat-icon>
+          </td>
+        </tr>
+
+        <tr>
+          <td colspan="3">
+            <mat-divider></mat-divider>
+          </td>
+        </tr>
+
+        <tr>
+          <td class="header">Zsynchronizowany:</td>
+          <td><b>{{sensor.isUpdated}}</b></td>
+        </tr>
+
+        <tr>
+          <td class="header">Aktywny:</td>
+          <td><b>{{sensor.isActive}}</b></td>
+        </tr>
+      </table>
+    </mat-card-content>
+  </mat-card>
+</div>

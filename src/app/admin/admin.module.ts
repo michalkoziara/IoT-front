@@ -21,6 +21,13 @@ import {DevicesComponent} from './components/devices/devices.component';
 import {SensorsComponent} from './components/sensors/sensors.component';
 import {ExecutiveTypeComponent} from './components/executive-type/executive-type.component';
 import {SensorTypeComponent} from './components/sensor-type/sensor-type.component';
+import { DeleteDeviceGroupComponent } from './components/delete-device-group/delete-device-group.component';
+import { ChangeDeviceGroupNameComponent } from './components/change-device-group-name/change-device-group-name.component';
+import { SensorDetailsComponent } from './components/sensor-details/sensor-details.component';
+import {SensorService} from './services/sensorService/sensor.service';
+import {UserGroupService} from './services/user-group.service';
+import { DeviceDetailsComponent } from './components/device-details/device-details.component';
+import {DeviceService} from './services/deviceService/device.service';
 
 @NgModule({
   declarations: [
@@ -35,7 +42,7 @@ import {SensorTypeComponent} from './components/sensor-type/sensor-type.componen
     DevicesComponent,
     SensorsComponent,
     ExecutiveTypeComponent,
-    SensorTypeComponent],
+    SensorTypeComponent, DeleteDeviceGroupComponent, ChangeDeviceGroupNameComponent, SensorDetailsComponent, DeviceDetailsComponent],
   imports: [
     CommonModule,
     AdminRoutingModule,
@@ -47,7 +54,11 @@ import {SensorTypeComponent} from './components/sensor-type/sensor-type.componen
     {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true},
     {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true},
     AdminWelcomeService,
-    AdminViewCommunicationService
+    AdminViewCommunicationService,
+    SensorService,
+    UserGroupService,
+    DeviceService
+
   ],
 })
 export class AdminModule {
