@@ -5,6 +5,8 @@ import {UserGroupInList} from '../../models/user-group-in-list/user-group-in-lis
 import {UserGroupsService} from '../../services/userGroupsService/user-groups.service';
 import {ViewCommunicationService} from '../../services/viewCommunicationService/view-communication.service';
 import {Subscription} from 'rxjs';
+import {ExecutivesService} from '../../services/executivesService/executives.service';
+import {SensorsService} from '../../services/sensorsService/sensors.service';
 
 @Component({
   selector: 'app-user-groups',
@@ -24,7 +26,9 @@ export class UserGroupsComponent implements OnInit {
 
   constructor(private userGroupsApiService: UserGroupsApiService,
               private userGroupsService: UserGroupsService,
-              private viewCommunicationService: ViewCommunicationService) {
+              private viewCommunicationService: ViewCommunicationService,
+              private executivesService: ExecutivesService,
+              private sensorsService: SensorsService) {
     this.dataSource = new MatTableDataSource<UserGroupInList>();
     this.productKey = '';
     this.sort = new MatSort();
@@ -67,15 +71,30 @@ export class UserGroupsComponent implements OnInit {
   sensorsClicked(name: string): void {
     this.userGroupsService.changeSelectedUserGroup(name);
     this.viewCommunicationService.changeCurrentView('sensorsInUserGroup');
+
+    this.executivesService.changeSelectedExecutive(null);
+    this.executivesService.changeSelectedExecutiveName(null);
+    this.sensorsService.changeSelectedSensor(null);
+    this.sensorsService.changeSelectedSensorName(null);
   }
 
   executivesClicked(name: string): void {
     this.userGroupsService.changeSelectedUserGroup(name);
     this.viewCommunicationService.changeCurrentView('executivesInUserGroup');
+
+    this.executivesService.changeSelectedExecutive(null);
+    this.executivesService.changeSelectedExecutiveName(null);
+    this.sensorsService.changeSelectedSensor(null);
+    this.sensorsService.changeSelectedSensorName(null);
   }
 
   formulasClicked(name: string): void {
     this.userGroupsService.changeSelectedUserGroup(name);
     this.viewCommunicationService.changeCurrentView('formulasInUserGroup');
+
+    this.executivesService.changeSelectedExecutive(null);
+    this.executivesService.changeSelectedExecutiveName(null);
+    this.sensorsService.changeSelectedSensor(null);
+    this.sensorsService.changeSelectedSensorName(null);
   }
 }

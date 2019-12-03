@@ -230,7 +230,7 @@
           <mat-label>Stan</mat-label>
           <mat-select [(value)]="selectedPositiveState">
             <ng-container *ngFor="let enumType of executiveType.enumerator">
-              <mat-option *ngIf="enumType.text !== executive.negativeState"
+              <mat-option *ngIf="executive !== null && enumType.text !== executive.negativeState"
                           [value]="enumType.text">{{enumType.text}}</mat-option>
             </ng-container>
           </mat-select>
@@ -263,7 +263,7 @@
           <mat-label>Stan</mat-label>
           <mat-select [(value)]="selectedNegativeState">
             <ng-container *ngFor="let enumType of executiveType.enumerator">
-              <mat-option *ngIf="enumType.text !== executive.positiveState"
+              <mat-option *ngIf="executive !== null && enumType.text !== executive.positiveState"
                           [value]="enumType.text">{{enumType.text}}</mat-option>
             </ng-container>
           </mat-select>

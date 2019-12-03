@@ -12,21 +12,25 @@
           <mat-icon>device_hub</mat-icon>
           Urządzenia główne
         </button>
-        <div *ngIf="currentView === 'userGroupAssignedToList'">
-          <button mat-flat-button>
+        <div *ngIf="selectedDeviceGroup !== null">
+          <button mat-flat-button (click)="getUserGroupList()">
             <mat-icon>group</mat-icon>
             Grupy użytkowników
           </button>
           <mat-divider></mat-divider>
-          <!--<button mat-flat-button>-->
-            <!--<mat-icon>power</mat-icon>-->
-            <!--Urządzenia-->
-          <!--</button>-->
-          <!--<button mat-flat-button>-->
-            <!--<mat-icon>settings_input_antenna</mat-icon>-->
-            <!--Czujniki-->
-          <!--</button>-->
-          <!--<mat-divider></mat-divider>-->
+        </div>
+        <div *ngIf="selectedUserGroup !== null">
+          <button mat-flat-button (click)="getExecutiveList()">
+            <mat-icon>power</mat-icon>
+            Urządzenia
+          </button>
+        </div>
+        <div *ngIf="selectedUserGroup !== null">
+          <button mat-flat-button (click)="getSensorList()">
+            <mat-icon>settings_input_antenna</mat-icon>
+            Czujniki
+          </button>
+          <mat-divider></mat-divider>
         </div>
       </div>
     </mat-sidenav>

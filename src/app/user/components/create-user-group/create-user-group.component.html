@@ -36,7 +36,9 @@
           <mat-form-field
             [hideRequiredMarker]="true"
             [floatLabel]="'auto'">
-            <input matInput placeholder="Nazwa grupy" value="{{groupNameFormGroup.get('groupNameCtrl').value}}" required disabled>
+            <input matInput placeholder="Nazwa grupy"
+                   value="{{groupNameFormGroup.get('groupNameCtrl') !== null ? groupNameFormGroup.get('groupNameCtrl').value : ''}}"
+                   required disabled>
           </mat-form-field>
           <button mat-stroked-button color="accent" class="btn-block" (click)="createUserGroup()">Stwórz</button>
           <div>

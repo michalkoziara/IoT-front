@@ -1,6 +1,6 @@
-import { TestBed } from '@angular/core/testing';
+import {TestBed} from '@angular/core/testing';
 
-import { FormulasService } from './formulas.service';
+import {FormulasService} from './formulas.service';
 
 describe('FormulasService', () => {
   beforeEach(() => TestBed.configureTestingModule({}));
