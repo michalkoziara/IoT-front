@@ -11,7 +11,8 @@
         <form [formGroup]="groupNameFormGroup">
           <ng-template matStepLabel>Podaj nazwę grupy</ng-template>
           <mat-form-field>
-            <input matInput placeholder="Nazwa" formControlName="groupNameCtrl" required>
+            <input matInput placeholder="Nazwa" formControlName="groupNameCtrl" required
+                   (keyup)="populateGroupName($event.target.value)">
           </mat-form-field>
           <div>
             <button mat-button matStepperNext>Dalej</button>
@@ -37,7 +38,7 @@
             [hideRequiredMarker]="true"
             [floatLabel]="'auto'">
             <input matInput placeholder="Nazwa grupy"
-                   value="{{groupNameFormGroup.get('groupNameCtrl') !== null ? groupNameFormGroup.get('groupNameCtrl').value : ''}}"
+                   value="{{selectedGroupName}}"
                    required disabled>
           </mat-form-field>
           <button mat-stroked-button color="accent" class="btn-block" (click)="createUserGroup()">Stwórz</button>

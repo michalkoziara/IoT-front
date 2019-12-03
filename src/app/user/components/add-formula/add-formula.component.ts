@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input} from '@angular/core';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {AbstractControl, FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {ViewCommunicationService} from '../../services/viewCommunicationService/view-communication.service';
@@ -12,8 +12,8 @@ import {ComplexFormula} from '../../models/formula/formula';
   templateUrl: './add-formula.component.html',
   styleUrls: ['./add-formula.component.scss']
 })
-export class AddFormulaComponent implements OnInit {
-  formulaFormGroup: FormGroup | null;
+export class AddFormulaComponent {
+  formulaFormGroup: FormGroup;
   progressBar = false;
 
   @Input()
@@ -27,16 +27,12 @@ export class AddFormulaComponent implements OnInit {
               private formBuilder: FormBuilder,
               private snackBar: MatSnackBar,
               private viewCommunicationService: ViewCommunicationService) {
-    this.formulaFormGroup = null;
-    this.productKey = '';
-    this.userGroupName = '';
-  }
-
-  ngOnInit(): void {
     this.formulaFormGroup = this.formBuilder.group({
       nameCtrl: ['', Validators.required],
       ruleCtrl: ['', Validators.required]
     });
+    this.productKey = '';
+    this.userGroupName = '';
   }
 
   createFormula(): void {

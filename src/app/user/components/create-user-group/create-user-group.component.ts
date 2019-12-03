@@ -15,6 +15,7 @@ export class CreateUserGroupComponent {
   groupNameFormGroup: FormGroup;
   passwordFormGroup: FormGroup;
   progressBar = false;
+  selectedGroupName: string;
 
   @Input()
   productKey: string;
@@ -30,6 +31,7 @@ export class CreateUserGroupComponent {
       passwordCtrl: ['', [Validators.required, Validators.minLength(8)]]
     });
     this.productKey = '';
+    this.selectedGroupName = '';
   }
 
   createUserGroup(): void {
@@ -72,5 +74,9 @@ export class CreateUserGroupComponent {
 
   afterComplete(): void {
     this.progressBar = false;
+  }
+
+  populateGroupName(groupName: string): void {
+    this.selectedGroupName = groupName;
   }
 }

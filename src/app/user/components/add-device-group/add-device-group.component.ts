@@ -15,6 +15,7 @@ export class AddDeviceGroupComponent {
   deviceKeyFormGroup: FormGroup;
   passwordFormGroup: FormGroup;
   progressBar = false;
+  selectedProductKey: string;
 
   constructor(private deviceGroupsApiService: DeviceGroupsApiService,
               private formBuilder: FormBuilder,
@@ -26,6 +27,7 @@ export class AddDeviceGroupComponent {
     this.passwordFormGroup = this.formBuilder.group({
       passwordCtrl: ['', Validators.required]
     });
+    this.selectedProductKey = '';
   }
 
   addDeviceGroup(): void {
@@ -38,7 +40,6 @@ export class AddDeviceGroupComponent {
       productKey = (this.deviceKeyFormGroup.get('deviceKeyCtrl') as AbstractControl).value;
       productPassword = (this.passwordFormGroup.get('passwordCtrl') as AbstractControl).value;
     }
-
 
     this.deviceGroupsApiService.addDeviceGroup(
       {productKey, productPassword}
@@ -74,5 +75,9 @@ export class AddDeviceGroupComponent {
 
   afterComplete(): void {
     this.progressBar = false;
+  }
+
+  populateProductKey(productKey: string): void {
+    this.selectedProductKey = productKey;
   }
 }
