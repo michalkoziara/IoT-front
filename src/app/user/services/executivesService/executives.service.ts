@@ -9,11 +9,11 @@ export class ExecutivesService {
   private selectedExecutiveNameSource = new BehaviorSubject(null as string | null);
   selectedExecutiveName$ = this.selectedExecutiveNameSource.asObservable();
 
-  changeSelectedExecutive(selectedExecutiveSource: string): void {
+  changeSelectedExecutive(selectedExecutiveSource: string | null): void {
     this.selectedExecutiveSource.next(selectedExecutiveSource);
   }
 
-  changeSelectedExecutiveName(selectedExecutiveNameSource: string): void {
+  changeSelectedExecutiveName(selectedExecutiveNameSource: string | null): void {
     this.selectedExecutiveNameSource.next(selectedExecutiveNameSource);
   }
 }

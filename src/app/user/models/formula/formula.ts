@@ -8,7 +8,7 @@ export class Formula {
   }
 }
 
-class ComplexFormula {
+export class ComplexFormula {
   isNegated: boolean | null;
   value: string | null;
   functor: string | null;

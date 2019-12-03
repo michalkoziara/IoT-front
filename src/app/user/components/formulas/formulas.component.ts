@@ -66,6 +66,6 @@ export class FormulasComponent implements OnInit {
   }
 
   createFormula(): void {
-    console.log();
+    this.viewCommunicationService.changeCurrentView('addFormula');
   }
 }
