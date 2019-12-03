@@ -34,6 +34,11 @@
                       [productKey]="productKey"
                       [deviceKey]="selectedDevice"></app-device-details>
 
+  <app-add-sensor *ngSwitchCase="'addSensor'"
+                  [productKey]="productKey"></app-add-sensor>
+
+  <app-add-executive *ngSwitchCase="'addDevice'"
+                  [productKey]="productKey"></app-add-executive>
 
   <app-admin-start-card *ngSwitchDefault></app-admin-start-card>
 </div>

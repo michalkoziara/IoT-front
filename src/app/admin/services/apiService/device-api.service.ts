@@ -35,6 +35,19 @@ export class DeviceApiService {
       );
   }
 
+  postExecutive(
+    productKey: string,
+    requestData: { deviceKey: string; password: string; deviceName: string; deviceTypeName: string }): Observable<object> {
+    return this.http
+      .post<object>(`${environment.apiUrl}/hubs/${productKey}/executive-devices`,
+        requestData,
+        this.httpOptions)
+      .pipe(
+        retry(1),
+        catchError(this.handleError)
+      );
+  }
+
   handleError(error: {
     error: ErrorEvent;
     status: string;

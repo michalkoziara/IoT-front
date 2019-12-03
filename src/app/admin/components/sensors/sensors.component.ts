@@ -64,18 +64,22 @@ export class SensorsComponent implements OnInit {
     });
   }
 
-  modifySensor(deviceKey: string) {
+  modifySensor(deviceKey: string): void {
     this.sensorsService.changeSelectedSensor(deviceKey);
     this.viewCommunicationService.changeCurrentView('sensorDetails');
   }
 
-  deleteSensor(deviceKey: string) {
+  deleteSensor(deviceKey: string): void {
     console.log(deviceKey);
   }
 
-  viewSensor(deviceKey: string, deviceName: string) {
+  viewSensor(deviceKey: string, deviceName: string): void {
     this.sensorsService.changeSelectedSensor(deviceKey);
     this.sensorsService.changeSelectedSensorName(deviceName);
     this.viewCommunicationService.changeCurrentView('showSensor');
+  }
+
+  addSensor(): void {
+    this.viewCommunicationService.changeCurrentView('addSensor');
   }
 }
