@@ -4,6 +4,7 @@ import {Observable, throwError} from 'rxjs';
 import {environment} from '../../../../environments/environment';
 import {catchError, retry} from 'rxjs/operators';
 import {Devices} from '../../models/devices';
+import {DeviceDetails} from '../../models/device-details';
 
 @Injectable({
   providedIn: 'root'
@@ -20,6 +21,14 @@ export class DeviceApiService {
 
   getDevices(productKey: string): Observable<Devices[]> {
     return this.http.get<[Devices]>(`${environment.apiUrl}/hubs/${productKey}/executive-devices`)
+      .pipe(
+        retry(1),
+        catchError(this.handleError)
+      );
+  }
+
+  getExecutive(productKey: string, deviceKey: string): Observable<DeviceDetails> {
+    return this.http.get<DeviceDetails>(`${environment.apiUrl}/hubs/${productKey}/executive-devices/${deviceKey}`)
       .pipe(
         retry(1),
         catchError(this.handleError)

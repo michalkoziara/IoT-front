@@ -4,6 +4,7 @@ import {Observable, throwError} from 'rxjs';
 import {environment} from '../../../../environments/environment';
 import {catchError, retry} from 'rxjs/operators';
 import {Sensor} from '../../models/sensor';
+import {SensorDetails} from '../../models/SensorDetails';
 
 @Injectable({
   providedIn: 'root'
@@ -20,6 +21,14 @@ export class SensorApiService {
 
   getSensors(productKey: string): Observable<[Sensor]> {
     return this.http.get<[Sensor]>(`${environment.apiUrl}/hubs/${productKey}/sensors`)
+      .pipe(
+        retry(1),
+        catchError(this.handleError)
+      );
+  }
+
+  getSensor(productKey: string, deviceKey: string): Observable<SensorDetails> {
+    return this.http.get<SensorDetails>(`${environment.apiUrl}/hubs/${productKey}/sensors/${deviceKey}`)
       .pipe(
         retry(1),
         catchError(this.handleError)

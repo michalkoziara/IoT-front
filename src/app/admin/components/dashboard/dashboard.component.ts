@@ -3,6 +3,8 @@ import {Subscription} from 'rxjs';
 import {AdminWelcomeService} from '../../services/adminWelcomeService/admin-welcome.service';
 import {ProductKeyApiService} from '../../services/apiService/product-key-api.service';
 import {AdminViewCommunicationService} from '../../services/admin-view-communication.service';
+import {SensorService} from '../../services/sensorService/sensor.service';
+import {DeviceService} from '../../services/deviceService/device.service';
 
 
 @Component({
@@ -15,56 +17,34 @@ export class DashboardComponent implements OnInit, OnDestroy {
   deviceGroupName: string;
   productKeyApiSubscription: Subscription;
 
+  selectedSensor: string | null;
+  selectedSensorSubscription: Subscription;
+
+  selectedDevice: string | null;
+  selectedDeviceSubscription: Subscription;
+
+
   currentView: string | null;
   currentViewSubscription: Subscription;
 
-  isGetUsersGroupsListButtonClicked: boolean;
-  isGetUsersGroupsListButtonClickedSubscription: Subscription;
-
-  isGetSensorsListButtonClicked: boolean;
-  isGetSensorsListButtonClickedSubscription: Subscription;
-
-  isGetDeviceListButtonClicked: boolean;
-  isGetDeviceListButtonClickedSubscription: Subscription;
-
-  isGetUnconfiguredListButtonClicked: boolean;
-  isGetUnconfiguredListButtonClickedSubscription: Subscription;
-
-  isGetSensorTypesListButtonClicked: boolean;
-  isGetSensorTypesListButtonClickedSubscription: Subscription;
-
-  isGetDevicesTypesListButtonClicked: boolean;
-  isGetDevicesTypesListButtonClickedSubscription: Subscription;
-
   constructor(private viewCommunicationService: AdminViewCommunicationService,
               private welcomeService: AdminWelcomeService,
-              private productKeyApiService: ProductKeyApiService) {
+              private productKeyApiService: ProductKeyApiService,
+              private sensorsService: SensorService,
+              private deviceService: DeviceService) {
+    this.productKeyApiSubscription = new Subscription();
+
     this.productKey = '';
     this.deviceGroupName = '';
-    this.deviceGroupName = '';
+
+    this.selectedSensor = null;
+    this.selectedSensorSubscription = new Subscription();
+
+    this.selectedDevice = null;
+    this.selectedDeviceSubscription = new Subscription();
 
     this.currentView = '';
     this.currentViewSubscription = new Subscription();
-
-    this.productKeyApiSubscription = new Subscription();
-
-    this.isGetUsersGroupsListButtonClicked = false;
-    this.isGetUsersGroupsListButtonClickedSubscription = new Subscription();
-
-    this.isGetSensorsListButtonClicked = false;
-    this.isGetSensorsListButtonClickedSubscription = new Subscription();
-
-    this.isGetDeviceListButtonClicked = false;
-    this.isGetDeviceListButtonClickedSubscription = new Subscription();
-
-    this.isGetUnconfiguredListButtonClicked = false;
-    this.isGetUnconfiguredListButtonClickedSubscription = new Subscription();
-
-    this.isGetSensorTypesListButtonClicked = false;
-    this.isGetSensorTypesListButtonClickedSubscription = new Subscription();
-
-    this.isGetDevicesTypesListButtonClicked = false;
-    this.isGetDevicesTypesListButtonClickedSubscription = new Subscription();
   }
 
   ngOnInit(): void {
@@ -81,35 +61,19 @@ export class DashboardComponent implements OnInit, OnDestroy {
       }
     });
 
-    this.isGetUsersGroupsListButtonClickedSubscription = this.welcomeService.isGetUsersGroupsListButtonClicked$.subscribe(
-      x => this.isGetUsersGroupsListButtonClicked = x
+    this.selectedSensorSubscription = this.sensorsService.selectedSensor$.subscribe(
+      x => this.selectedSensor = x
     );
-    this.isGetSensorsListButtonClickedSubscription = this.welcomeService.isGetSensorsListButtonClicked$.subscribe(
-      x => this.isGetSensorsListButtonClicked = x
-    );
-    this.isGetDeviceListButtonClickedSubscription = this.welcomeService.isGetDeviceListButtonClicked$.subscribe(
-      x => this.isGetDeviceListButtonClicked = x
-    );
-    this.isGetUnconfiguredListButtonClickedSubscription = this.welcomeService.isGetUnconfiguredListButtonClicked$.subscribe(
-      x => this.isGetUnconfiguredListButtonClicked = x
-    );
-    this.isGetSensorTypesListButtonClickedSubscription = this.welcomeService.isGetSensorTypesListButtonClicked$.subscribe(
-      x => this.isGetSensorTypesListButtonClicked = x
-    );
-    this.isGetDevicesTypesListButtonClickedSubscription = this.welcomeService.isGetDevicesTypesListButtonClicked$.subscribe(
-      x => this.isGetDevicesTypesListButtonClicked = x
+
+    this.selectedDeviceSubscription = this.deviceService.selectedExecutive$.subscribe(
+      x => this.selectedDevice = x
     );
   }
 
   ngOnDestroy(): void {
     this.productKeyApiSubscription.unsubscribe();
     this.currentViewSubscription.unsubscribe();
-
-    this.isGetUsersGroupsListButtonClickedSubscription.unsubscribe();
-    this.isGetSensorsListButtonClickedSubscription.unsubscribe();
-    this.isGetDeviceListButtonClickedSubscription.unsubscribe();
-    this.isGetUnconfiguredListButtonClickedSubscription.unsubscribe();
-    this.isGetSensorTypesListButtonClickedSubscription.unsubscribe();
-    this.isGetDevicesTypesListButtonClickedSubscription.unsubscribe();
+    this.selectedSensorSubscription.unsubscribe();
+    this.selectedDeviceSubscription.unsubscribe();
   }
 }

@@ -3,6 +3,8 @@ import {MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
 import {Sensor} from '../../models/sensor';
 import {SensorApiService} from '../../services/apiService/sensor-api.service';
 import {Subscription} from 'rxjs';
+import {AdminViewCommunicationService} from '../../services/admin-view-communication.service';
+import {SensorService} from '../../services/sensorService/sensor.service';
 
 @Component({
   selector: 'app-sensors',
@@ -10,7 +12,7 @@ import {Subscription} from 'rxjs';
   styleUrls: ['./sensors.component.scss']
 })
 export class SensorsComponent implements OnInit {
-  displayedColumns: string[] = ['name', 'isActive', 'deviceKey', 'actions'];
+  displayedColumns: string[] = ['name', 'isActive', 'deviceKey', 'modify', 'delete'];
   sensors: Sensor[] = [];
   dataSource: MatTableDataSource<Sensor>;
 
@@ -20,7 +22,9 @@ export class SensorsComponent implements OnInit {
   @ViewChild(MatSort, {static: true}) sort: MatSort;
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator | null;
 
-  constructor(private sensorApiService: SensorApiService) {
+  constructor(private sensorApiService: SensorApiService,
+              private viewCommunicationService: AdminViewCommunicationService,
+              private sensorsService: SensorService) {
     this.dataSource = new MatTableDataSource<Sensor>();
     this.productKey = '';
     this.sort = new MatSort();
@@ -58,5 +62,20 @@ export class SensorsComponent implements OnInit {
       });
       this.dataSource.sort = this.sort;
     });
+  }
+
+  modifySensor(deviceKey: string) {
+    this.sensorsService.changeSelectedSensor(deviceKey);
+    this.viewCommunicationService.changeCurrentView('sensorDetails');
+  }
+
+  deleteSensor(deviceKey: string) {
+    console.log(deviceKey);
+  }
+
+  viewSensor(deviceKey: string, deviceName: string) {
+    this.sensorsService.changeSelectedSensor(deviceKey);
+    this.sensorsService.changeSelectedSensorName(deviceName);
+    this.viewCommunicationService.changeCurrentView('showSensor');
   }
 }
