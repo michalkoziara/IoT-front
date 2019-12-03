@@ -1,0 +1,51 @@
+<div fxLayout="row" fxFlexFill>
+  <mat-card>
+    <mat-card-content>
+      <table *ngIf="formula">
+        <tr>
+          <td class="header">Nazwa:</td>
+          <td><b>{{formula.name}}</b></td>
+        </tr>
+
+        <tr>
+          <td colspan="3">
+            <mat-divider></mat-divider>
+          </td>
+        </tr>
+
+        <tr>
+          <td class="header">Formuła automatycznego sterowania:</td>
+          <td class="formula-text">
+            <ng-container [ngTemplateOutlet]="complexFormulaTemplate"
+                          [ngTemplateOutletContext]="{$implicit: formula.rule}"></ng-container>
+          </td>
+        </tr>
+      </table>
+    </mat-card-content>
+  </mat-card>
+</div>
+
+<ng-template #complexFormulaTemplate let-rule>
+  <b *ngIf="rule.isNegated">¬(</b>
+  <b *ngIf="rule.deviceKey">{{sensorNamesByDeviceKey.get(rule.deviceKey)}}
+    <ng-container [ngSwitch]="rule.functor">
+      <b *ngSwitchCase="'=>'"> ≥ </b>
+      <b *ngSwitchCase="'<='"> ≤ </b>
+      <b *ngSwitchCase="'=='"> = </b>
+      <b *ngSwitchCase="'!='"> ≠ </b>
+    </ng-container>
+    {{rule.value}}</b>
+  <b *ngIf="rule.isNegated">)</b>
+  <b *ngIf="rule.operator">(</b>
+  <ng-container *ngIf="rule.complexLeft"
+                [ngTemplateOutlet]="complexFormulaTemplate"
+                [ngTemplateOutletContext]="{$implicit: rule.complexLeft}"></ng-container>
+  <ng-container [ngSwitch]="rule.operator">
+    <b *ngSwitchCase="'and'"> ∧ </b>
+    <b *ngSwitchCase="'or'"> ∨ </b>
+  </ng-container>
+  <ng-container *ngIf="rule.complexRight"
+                [ngTemplateOutlet]="complexFormulaTemplate"
+                [ngTemplateOutletContext]="{$implicit: rule.complexRight}"></ng-container>
+  <b *ngIf="rule.operator">)</b>
+</ng-template>

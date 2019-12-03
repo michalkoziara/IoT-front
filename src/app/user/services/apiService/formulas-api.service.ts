@@ -3,6 +3,7 @@ import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Observable, throwError} from 'rxjs';
 import {environment} from '../../../../environments/environment';
 import {catchError, retry} from 'rxjs/operators';
+import {Formula} from '../../models/formula/formula';
 
 @Injectable()
 export class FormulasApiService {
@@ -17,6 +18,14 @@ export class FormulasApiService {
 
   getFormulas(productKey: string, userGroupName: string): Observable<{'names': string[]}> {
     return this.http.get<{'names': string[]}>(`${environment.apiUrl}/hubs/${productKey}/user-groups/${userGroupName}/formulas`)
+      .pipe(
+        retry(1),
+        catchError(this.handleError)
+      );
+  }
+
+  getFormula(productKey: string, userGroupName: string, formulaName: string): Observable<Formula> {
+    return this.http.get<Formula>(`${environment.apiUrl}/hubs/${productKey}/user-groups/${userGroupName}/formulas/${formulaName}`)
       .pipe(
         retry(1),
         catchError(this.handleError)

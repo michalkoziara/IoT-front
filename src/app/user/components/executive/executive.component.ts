@@ -296,7 +296,7 @@ export class ExecutiveComponent implements OnInit {
                 } else {
                   this.executive.positiveState = newPositiveState;
                 }
-
+                this.selectedPositiveState = newPositiveState;
                 this.snackBar.open(
                   `Stan urządzenia ${data.name} gdy formuła spełniona został zmieniony`,
                   undefined,
@@ -311,7 +311,7 @@ export class ExecutiveComponent implements OnInit {
                 } else {
                   this.executive.negativeState = newNegativeState;
                 }
-
+                this.selectedNegativeState = newNegativeState;
                 this.snackBar.open(
                   `Stan urządzenia ${data.name} gdy formuła niespełniona został zmieniony`,
                   undefined,
@@ -420,7 +420,8 @@ export class ExecutiveComponent implements OnInit {
         this.statePositiveFormGroup.controls.statePositiveCtrl.setValidators(
           [
             Validators.max(this.executiveType.stateRangeMax),
-            Validators.min(this.executiveType.stateRangeMin)
+            Validators.min(this.executiveType.stateRangeMin),
+            Validators.pattern(`^(?!${this.executive.negativeState}$).*$`)
           ]
         );
         this.statePositiveFormGroup.controls.statePositiveCtrl.updateValueAndValidity({onlySelf: true, emitEvent: false});
@@ -440,14 +441,26 @@ export class ExecutiveComponent implements OnInit {
       if (this.executiveType.stateType === 'Liczbowy') {
         this.selectedPositiveState = (this.statePositiveFormGroup.get('statePositiveCtrl') as AbstractControl).value as number;
       }
-      this.modifyExecutive(
-        '',
-        null,
-        '',
-        this.selectedPositiveState,
-        '',
-        null
-      );
+
+      if (this.executiveType.stateType === 'Logiczny') {
+        this.modifyExecutive(
+          '',
+          null,
+          '',
+          this.selectedPositiveState,
+          !this.selectedPositiveState,
+          null
+        );
+      } else {
+        this.modifyExecutive(
+          '',
+          null,
+          '',
+          this.selectedPositiveState,
+          '',
+          null
+        );
+      }
     }
   }
 
@@ -458,7 +471,8 @@ export class ExecutiveComponent implements OnInit {
         this.stateNegativeFormGroup.controls.stateNegativeCtrl.setValidators(
           [
             Validators.max(this.executiveType.stateRangeMax),
-            Validators.min(this.executiveType.stateRangeMin)
+            Validators.min(this.executiveType.stateRangeMin),
+            Validators.pattern(`^(?!${this.executive.positiveState}$).*$`)
           ]
         );
         this.stateNegativeFormGroup.controls.stateNegativeCtrl.updateValueAndValidity({onlySelf: true, emitEvent: false});
@@ -478,14 +492,26 @@ export class ExecutiveComponent implements OnInit {
       if (this.executiveType.stateType === 'Liczbowy') {
         this.selectedNegativeState = (this.stateNegativeFormGroup.get('stateNegativeCtrl') as AbstractControl).value as number;
       }
-      this.modifyExecutive(
-        '',
-        null,
-        '',
-        '',
-        this.selectedNegativeState,
-        null
-      );
+
+      if (this.executiveType.stateType === 'Logiczny') {
+        this.modifyExecutive(
+          '',
+          null,
+          '',
+          !this.selectedNegativeState,
+          this.selectedNegativeState,
+          null
+        );
+      } else {
+        this.modifyExecutive(
+          '',
+          null,
+          '',
+          '',
+          this.selectedNegativeState,
+          null
+        );
+      }
     }
   }
 

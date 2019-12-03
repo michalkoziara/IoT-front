@@ -40,6 +40,8 @@ import {ExecutiveComponent} from './components/executive/executive.component';
 import {ExecutiveTypesApiService} from './services/apiService/executive-types-api.service';
 import {ChartsModule} from 'ng2-charts';
 import 'moment/locale/pl';
+import { FormulaComponent } from './components/formula/formula.component';
+import {FormulasService} from './services/formulasService/formulas.service';
 
 @NgModule({
   declarations: [
@@ -59,7 +61,8 @@ import 'moment/locale/pl';
     CreateUserGroupComponent,
     JoinUserGroupComponent,
     SensorComponent,
-    ExecutiveComponent
+    ExecutiveComponent,
+    FormulaComponent
   ],
   imports: [
     CommonModule,
@@ -83,6 +86,7 @@ import 'moment/locale/pl';
     ExecutiveTypesApiService,
     ExecutivesService,
     FormulasApiService,
+    FormulasService,
     {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true},
     {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true},
     {provide: MatPaginatorIntl, useValue: CustomPaginator()}
