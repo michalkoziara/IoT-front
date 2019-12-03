@@ -21,13 +21,16 @@ import {DevicesComponent} from './components/devices/devices.component';
 import {SensorsComponent} from './components/sensors/sensors.component';
 import {ExecutiveTypeComponent} from './components/executive-type/executive-type.component';
 import {SensorTypeComponent} from './components/sensor-type/sensor-type.component';
-import { DeleteDeviceGroupComponent } from './components/delete-device-group/delete-device-group.component';
-import { ChangeDeviceGroupNameComponent } from './components/change-device-group-name/change-device-group-name.component';
-import { SensorDetailsComponent } from './components/sensor-details/sensor-details.component';
+import {DeleteDeviceGroupComponent} from './components/delete-device-group/delete-device-group.component';
+import {ChangeDeviceGroupNameComponent} from './components/change-device-group-name/change-device-group-name.component';
+import {SensorDetailsComponent} from './components/sensor-details/sensor-details.component';
 import {SensorService} from './services/sensorService/sensor.service';
 import {UserGroupService} from './services/user-group.service';
-import { DeviceDetailsComponent } from './components/device-details/device-details.component';
+import {DeviceDetailsComponent} from './components/device-details/device-details.component';
 import {DeviceService} from './services/deviceService/device.service';
+import {AddSensorComponent} from './components/add-sensor/add-sensor.component';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import { AddExecutiveComponent } from './components/add-executive/add-executive.component';
 
 @NgModule({
   declarations: [
@@ -42,13 +45,21 @@ import {DeviceService} from './services/deviceService/device.service';
     DevicesComponent,
     SensorsComponent,
     ExecutiveTypeComponent,
-    SensorTypeComponent, DeleteDeviceGroupComponent, ChangeDeviceGroupNameComponent, SensorDetailsComponent, DeviceDetailsComponent],
+    SensorTypeComponent,
+    DeleteDeviceGroupComponent,
+    ChangeDeviceGroupNameComponent,
+    SensorDetailsComponent,
+    DeviceDetailsComponent,
+    AddSensorComponent,
+    AddExecutiveComponent],
   imports: [
     CommonModule,
     AdminRoutingModule,
     AngularMaterialModule,
     SharedModule,
     FlexModule,
+    FormsModule,
+    ReactiveFormsModule
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true},
