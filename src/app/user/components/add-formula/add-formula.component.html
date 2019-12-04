@@ -1,0 +1,26 @@
+<div fxLayout="row" fxFlexFill fxLayoutAlign="center">
+  <mat-card>
+    <section>
+      <mat-progress-bar *ngIf="progressBar"
+                        [color]="'primary'"
+                        [mode]="'indeterminate'">
+      </mat-progress-bar>
+    </section>
+
+    <mat-card-content>
+      <form fxLayout="column" [formGroup]="formulaFormGroup">
+        <mat-card-header>Stwórz formułę automatycznego sterowania</mat-card-header>
+        <mat-form-field>
+          <input matInput placeholder="Nazwa" formControlName="nameCtrl" required>
+        </mat-form-field>
+        <mat-form-field>
+          <textarea matInput placeholder="Formuła" formControlName="ruleCtrl" required></textarea>
+        </mat-form-field>
+        <button mat-stroked-button color="accent" class="btn-block" (click)="createFormula()"
+                [disabled]="!formulaFormGroup.valid">
+          Stwórz formułę
+        </button>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>

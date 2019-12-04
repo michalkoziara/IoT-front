@@ -18,8 +18,8 @@ export class SensorTypeApiService {
   constructor(private http: HttpClient) {
   }
 
-  getSensorTypes(productKey: string): Observable<[string]> {
-    return this.http.get<[string]>(`${environment.apiUrl}/hubs/${productKey}/sensor-types`)
+  getSensorTypes(productKey: string): Observable<string[]> {
+    return this.http.get<string[]>(`${environment.apiUrl}/hubs/${productKey}/sensor-types`)
       .pipe(
         retry(1),
         catchError(this.handleError)

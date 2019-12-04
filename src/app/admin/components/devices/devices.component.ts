@@ -69,8 +69,11 @@ export class DevicesComponent implements OnInit {
     this.viewCommunicationService.changeCurrentView('deviceDetails');
   }
 
-
-  deleteDevice(deviceKey: string) {
+  deleteDevice(deviceKey: string): void {
     console.log(deviceKey);
+  }
+
+  addDevice(): void {
+    this.viewCommunicationService.changeCurrentView('addDevice');
   }
 }

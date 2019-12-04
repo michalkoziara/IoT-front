@@ -40,8 +40,9 @@ import {ExecutiveComponent} from './components/executive/executive.component';
 import {ExecutiveTypesApiService} from './services/apiService/executive-types-api.service';
 import {ChartsModule} from 'ng2-charts';
 import 'moment/locale/pl';
-import { FormulaComponent } from './components/formula/formula.component';
+import {FormulaComponent} from './components/formula/formula.component';
 import {FormulasService} from './services/formulasService/formulas.service';
+import {AddFormulaComponent} from './components/add-formula/add-formula.component';
 
 @NgModule({
   declarations: [
@@ -62,7 +63,8 @@ import {FormulasService} from './services/formulasService/formulas.service';
     JoinUserGroupComponent,
     SensorComponent,
     ExecutiveComponent,
-    FormulaComponent
+    FormulaComponent,
+    AddFormulaComponent
   ],
   imports: [
     CommonModule,

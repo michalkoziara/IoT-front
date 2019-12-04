@@ -11,7 +11,8 @@
         <form [formGroup]="deviceKeyFormGroup">
           <ng-template matStepLabel>Podaj klucz produktu</ng-template>
           <mat-form-field>
-            <input matInput placeholder="Klucz produktu" formControlName="deviceKeyCtrl" required>
+            <input matInput placeholder="Klucz produktu" formControlName="deviceKeyCtrl" required
+                   (keyup)="populateProductKey($event.target.value)">
           </mat-form-field>
           <div>
             <button mat-button matStepperNext>Dalej</button>
@@ -36,7 +37,9 @@
           <mat-form-field
             [hideRequiredMarker]="true"
             [floatLabel]="'auto'">
-            <input matInput placeholder="Klucz produktu" value="{{deviceKeyFormGroup.get('deviceKeyCtrl').value}}" required disabled>
+            <input matInput placeholder="Klucz produktu"
+                   value="{{selectedProductKey}}"
+                   required disabled>
           </mat-form-field>
           <button mat-stroked-button color="accent" class="btn-block" (click)="addDeviceGroup()">Dodaj</button>
           <div>
