@@ -1,0 +1,36 @@
+<div fxLayout="row" fxFlexFill fxLayoutAlign="center">
+  <mat-card>
+    <section>
+      <mat-progress-bar *ngIf="progressBar"
+                        [color]="'primary'"
+                        [mode]="'indeterminate'">
+      </mat-progress-bar>
+    </section>
+    <mat-card-header>Dodaj czujnik do urządzenia głównego</mat-card-header>
+    <mat-card-content>
+      <form fxLayout="column" [formGroup]="sensorFormGroup">
+        <mat-form-field>
+          <input matInput placeholder="Klucz urządzenia" formControlName="deviceKeyCtrl" required>
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput placeholder="Hasło" formControlName="passwordCtrl" required>
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput placeholder="Nazwa" formControlName="nameCtrl" required>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Typ czujnika</mat-label>
+          <mat-select [(value)]="selectedTypeName">
+            <ng-container *ngFor="let typeName of sensorTypes">
+              <mat-option [value]="typeName">{{typeName}}</mat-option>
+            </ng-container>
+          </mat-select>
+        </mat-form-field>
+        <button mat-stroked-button color="accent" class="btn-block" (click)="createSensor()"
+                [disabled]="!sensorFormGroup.valid || selectedTypeName === null">
+          Dodaj czujnik
+        </button>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>

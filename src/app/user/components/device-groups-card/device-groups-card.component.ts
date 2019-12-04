@@ -5,6 +5,9 @@ import {DeviceGroupInList} from '../../models/device-group-in-list/device-group-
 import {DeviceGroupsService} from '../../services/deviceGroupsService/device-groups.service';
 import {ViewCommunicationService} from '../../services/viewCommunicationService/view-communication.service';
 import {Subscription} from 'rxjs';
+import {UserGroupsService} from '../../services/userGroupsService/user-groups.service';
+import {ExecutivesService} from '../../services/executivesService/executives.service';
+import {SensorsService} from '../../services/sensorsService/sensors.service';
 
 @Component({
   selector: 'app-device-groups-card',
@@ -21,7 +24,10 @@ export class DeviceGroupsCardComponent implements OnInit {
 
   constructor(private viewCommunicationService: ViewCommunicationService,
               private deviceGroupsApi: DeviceGroupsApiService,
-              private deviceGroupService: DeviceGroupsService) {
+              private deviceGroupService: DeviceGroupsService,
+              private userGroupsService: UserGroupsService,
+              private executivesService: ExecutivesService,
+              private sensorsService: SensorsService) {
     this.dataSource = new MatTableDataSource<DeviceGroupInList>();
     this.sort = new MatSort();
     this.paginator = null;
@@ -52,6 +58,12 @@ export class DeviceGroupsCardComponent implements OnInit {
   userGroupClicked(productKey: string): void {
     this.deviceGroupService.changeSelectedDeviceGroup(productKey);
     this.viewCommunicationService.changeCurrentView('userGroupAssignedToList');
+
+    this.userGroupsService.changeSelectedUserGroup(null);
+    this.executivesService.changeSelectedExecutive(null);
+    this.executivesService.changeSelectedExecutiveName(null);
+    this.sensorsService.changeSelectedSensor(null);
+    this.sensorsService.changeSelectedSensorName(null);
   }
 
   addNewDeviceGroup(): void {

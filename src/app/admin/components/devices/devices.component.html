@@ -1,53 +1,63 @@
-<mat-card class="table-card">
-  <mat-form-field>
-    <input matInput
-           (keyup)="applyFilter($event.target.value)"
-           placeholder="Filtr">
-  </mat-form-field>
+<div fxLayout="row" fxFlexFill>
+  <mat-card class="table-card">
+    <mat-form-field>
+      <input matInput
+             (keyup)="applyFilter($event.target.value)"
+             placeholder="Filtr">
+    </mat-form-field>
 
-  <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
+    <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
 
-    <ng-container matColumnDef="name">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> Nazwa</th>
-      <td mat-cell *matCellDef="let element"> {{element.name}}</td>
-    </ng-container>
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Nazwa</th>
+        <td mat-cell *matCellDef="let element"> {{element.name}}</td>
+      </ng-container>
 
-    <ng-container matColumnDef="isActive">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> Aktywny</th>
-      <td mat-cell *matCellDef="let element"> {{element.isActive}}</td>
-    </ng-container>
+      <ng-container matColumnDef="isActive">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Aktywny</th>
+        <td mat-cell *matCellDef="let element"> {{element.isActive}}</td>
+      </ng-container>
 
-    <ng-container matColumnDef="deviceKey">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> Klucz urządzenia</th>
-      <td mat-cell *matCellDef="let element"> {{element.deviceKey}}</td>
-    </ng-container>
+      <ng-container matColumnDef="deviceKey">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Klucz urządzenia</th>
+        <td mat-cell *matCellDef="let element"> {{element.deviceKey}}</td>
+      </ng-container>
 
-    <ng-container matColumnDef="modify">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> Modyfikuj </th>
-      <td mat-cell *matCellDef="let element" class="td-btn">
-        <button mat-button class="group-btn" (click)="modifyDevice(element.deviceKey)">
-          <mat-icon>settings</mat-icon>
-        </button>
-      </td>
-    </ng-container>
+      <ng-container matColumnDef="modify">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Modyfikuj</th>
+        <td mat-cell *matCellDef="let element" class="td-btn">
+          <button mat-button class="group-btn" (click)="modifyDevice(element.deviceKey)">
+            <mat-icon>settings</mat-icon>
+          </button>
+        </td>
+      </ng-container>
 
-    <ng-container matColumnDef="delete">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> Usuń</th>
-      <td mat-cell *matCellDef="let element" class="td-btn">
-        <button mat-button class="group-btn" (click)="deleteDevice(element.deviceKey)">
-          <mat-icon>delete</mat-icon>
-        </button>
-      </td>
-    </ng-container>
+      <ng-container matColumnDef="delete">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Usuń</th>
+        <td mat-cell *matCellDef="let element" class="td-btn">
+          <button mat-button class="group-btn" (click)="deleteDevice(element.deviceKey)">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </td>
+      </ng-container>
 
 
-    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-  </table>
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
 
-  <mat-paginator [pageSize]="10"
-                 [pageSizeOptions]="[5, 10, 25, 100]">
-  </mat-paginator>
+    <mat-paginator [pageSize]="10"
+                   [pageSizeOptions]="[5, 10, 25, 100]">
+    </mat-paginator>
 
-</mat-card>
+  </mat-card>
 
+  <mat-card class="add-device-card" fxFlex>
+    <mat-card-content fxLayout="column" fxLayoutAlign="center center">
+      <p>Dodaj nowe urządzenie</p>
+      <button mat-stroked-button color="accent" class="btn-block" (click)="addDevice()">
+        Dodaj urządzenie
+      </button>
+    </mat-card-content>
+  </mat-card>
+</div>

@@ -36,5 +36,9 @@
                [productKey]="selectedDeviceGroup"
                [userGroupName]="selectedUserGroup"
                [formulaName]="selectedFormula"></app-formula>
+  <app-add-formula *ngSwitchCase="'addFormula'"
+                   [productKey]="selectedDeviceGroup"
+                   [userGroupName]="selectedUserGroup">
+  </app-add-formula>
   <app-start-card *ngSwitchDefault></app-start-card>
 </div>

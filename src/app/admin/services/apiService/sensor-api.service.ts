@@ -35,6 +35,19 @@ export class SensorApiService {
       );
   }
 
+  postSensor(
+    productKey: string,
+    requestData: { deviceKey: string; password: string; sensorName: string; sensorTypeName: string }): Observable<object> {
+    return this.http
+      .post<object>(`${environment.apiUrl}/hubs/${productKey}/sensors`,
+        requestData,
+        this.httpOptions)
+      .pipe(
+        retry(1),
+        catchError(this.handleError)
+      );
+  }
+
   handleError(error: {
     error: ErrorEvent;
     status: string;

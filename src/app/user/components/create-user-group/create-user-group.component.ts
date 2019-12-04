@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input} from '@angular/core';
 import {AbstractControl, FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {MatSnackBar} from '@angular/material';
 import {finalize} from 'rxjs/operators';
@@ -11,10 +11,11 @@ import {ViewCommunicationService} from '../../services/viewCommunicationService/
   templateUrl: './create-user-group.component.html',
   styleUrls: ['./create-user-group.component.scss']
 })
-export class CreateUserGroupComponent implements OnInit {
-  groupNameFormGroup: FormGroup | null;
-  passwordFormGroup: FormGroup | null;
+export class CreateUserGroupComponent {
+  groupNameFormGroup: FormGroup;
+  passwordFormGroup: FormGroup;
   progressBar = false;
+  selectedGroupName: string;
 
   @Input()
   productKey: string;
@@ -23,18 +24,14 @@ export class CreateUserGroupComponent implements OnInit {
               private formBuilder: FormBuilder,
               private snackBar: MatSnackBar,
               private viewCommunicationService: ViewCommunicationService) {
-    this.groupNameFormGroup = null;
-    this.passwordFormGroup = null;
-    this.productKey = '';
-  }
-
-  ngOnInit(): void {
     this.groupNameFormGroup = this.formBuilder.group({
       groupNameCtrl: ['', [Validators.required, Validators.pattern(/^(?!.*[$\\].*).*$/)]]
     });
     this.passwordFormGroup = this.formBuilder.group({
       passwordCtrl: ['', [Validators.required, Validators.minLength(8)]]
     });
+    this.productKey = '';
+    this.selectedGroupName = '';
   }
 
   createUserGroup(): void {
@@ -77,5 +74,9 @@ export class CreateUserGroupComponent implements OnInit {
 
   afterComplete(): void {
     this.progressBar = false;
+  }
+
+  populateGroupName(groupName: string): void {
+    this.selectedGroupName = groupName;
   }
 }

@@ -32,6 +32,18 @@ export class FormulasApiService {
       );
   }
 
+  postFormula(
+    productKey: string,
+    userGroupName: string,
+    requestData: { formulaName: string; rule: object }): Observable<object> {
+    return this.http
+      .post<object>(`${environment.apiUrl}/hubs/${productKey}/user-groups/${userGroupName}/formulas`, requestData, this.httpOptions)
+      .pipe(
+        retry(1),
+        catchError(this.handleError)
+      );
+  }
+
   handleError(error: {
     error: ErrorEvent;
     status: string;

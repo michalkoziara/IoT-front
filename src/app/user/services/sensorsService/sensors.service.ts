@@ -9,11 +9,11 @@ export class SensorsService {
   private selectedSensorNameSource = new BehaviorSubject(null as string | null);
   selectedSensorName$ = this.selectedSensorNameSource.asObservable();
 
-  changeSelectedSensor(selectedSensorSource: string): void {
+  changeSelectedSensor(selectedSensorSource: string | null): void {
     this.selectedSensorSource.next(selectedSensorSource);
   }
 
-  changeSelectedSensorName(selectedSensorNameSource: string): void {
+  changeSelectedSensorName(selectedSensorNameSource: string | null): void {
     this.selectedSensorNameSource.next(selectedSensorNameSource);
   }
 }

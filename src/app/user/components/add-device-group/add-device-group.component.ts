@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component} from '@angular/core';
 import {AbstractControl, FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {DeviceGroupsApiService} from '../../services/apiService/device-groups-api.service';
 import {MatSnackBar} from '@angular/material';
@@ -11,26 +11,23 @@ import {ViewCommunicationService} from '../../services/viewCommunicationService/
   templateUrl: './add-device-group.component.html',
   styleUrls: ['./add-device-group.component.scss']
 })
-export class AddDeviceGroupComponent implements OnInit {
-  deviceKeyFormGroup: FormGroup | null;
-  passwordFormGroup: FormGroup | null;
+export class AddDeviceGroupComponent {
+  deviceKeyFormGroup: FormGroup;
+  passwordFormGroup: FormGroup;
   progressBar = false;
+  selectedProductKey: string;
 
   constructor(private deviceGroupsApiService: DeviceGroupsApiService,
               private formBuilder: FormBuilder,
               private snackBar: MatSnackBar,
               private viewCommunicationService: ViewCommunicationService) {
-    this.deviceKeyFormGroup = null;
-    this.passwordFormGroup = null;
-  }
-
-  ngOnInit(): void {
     this.deviceKeyFormGroup = this.formBuilder.group({
       deviceKeyCtrl: ['', Validators.required]
     });
     this.passwordFormGroup = this.formBuilder.group({
       passwordCtrl: ['', Validators.required]
     });
+    this.selectedProductKey = '';
   }
 
   addDeviceGroup(): void {
@@ -38,14 +35,11 @@ export class AddDeviceGroupComponent implements OnInit {
 
     let productKey = '';
     let productPassword = '';
-    if (this.deviceKeyFormGroup !== null
-      && this.deviceKeyFormGroup.get('deviceKeyCtrl') !== null
-      && this.passwordFormGroup !== null
+    if (this.deviceKeyFormGroup.get('deviceKeyCtrl') !== null
       && this.passwordFormGroup.get('passwordCtrl') !== null) {
       productKey = (this.deviceKeyFormGroup.get('deviceKeyCtrl') as AbstractControl).value;
       productPassword = (this.passwordFormGroup.get('passwordCtrl') as AbstractControl).value;
     }
-
 
     this.deviceGroupsApiService.addDeviceGroup(
       {productKey, productPassword}
@@ -81,5 +75,9 @@ export class AddDeviceGroupComponent implements OnInit {
 
   afterComplete(): void {
     this.progressBar = false;
+  }
+
+  populateProductKey(productKey: string): void {
+    this.selectedProductKey = productKey;
   }
 }
