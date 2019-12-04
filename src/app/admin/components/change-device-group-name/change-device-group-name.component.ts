@@ -3,7 +3,6 @@ import {FormBuilder, FormControl, Validators} from '@angular/forms';
 import {MatSnackBar} from '@angular/material';
 import {ProductKeyApiService} from '../../services/apiService/product-key-api.service';
 import {first} from 'rxjs/operators';
-import {AdminViewCommunicationService} from '../../services/admin-view-communication.service';
 
 @Component({
   selector: 'app-change-device-group-name',
