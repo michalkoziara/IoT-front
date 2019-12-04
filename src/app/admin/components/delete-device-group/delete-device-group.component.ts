@@ -12,4 +12,6 @@ export class DeleteDeviceGroupComponent {
   constructor() {
     this.productKey = '';
   }
+
+
 }

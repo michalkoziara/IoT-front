@@ -32,6 +32,7 @@ import {AddSensorComponent} from './components/add-sensor/add-sensor.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { AddExecutiveComponent } from './components/add-executive/add-executive.component';
 
+
 @NgModule({
   declarations: [
     routingComponents,
@@ -60,6 +61,7 @@ import { AddExecutiveComponent } from './components/add-executive/add-executive.
     FlexModule,
     FormsModule,
     ReactiveFormsModule
+
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true},
