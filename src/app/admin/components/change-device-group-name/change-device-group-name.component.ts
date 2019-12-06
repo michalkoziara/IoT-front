@@ -3,8 +3,8 @@ import {FormBuilder, FormControl, Validators} from '@angular/forms';
 import {MatSnackBar} from '@angular/material';
 import {ProductKeyApiService} from '../../services/apiService/product-key-api.service';
 import {first} from 'rxjs/operators';
-import {MatDialog} from "@angular/material/dialog";
-import {ChangeNameDialogComponent} from "../change-name-dialog/change-name-dialog.component";
+import {MatDialog} from '@angular/material/dialog';
+import {ChangeNameDialogComponent} from '../change-name-dialog/change-name-dialog.component';
 
 @Component({
   selector: 'app-change-device-group-name',

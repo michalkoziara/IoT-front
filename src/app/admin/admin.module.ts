@@ -33,6 +33,7 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { AddExecutiveComponent } from './components/add-executive/add-executive.component';
 import { ChangeNameDialogComponent } from './components/change-name-dialog/change-name-dialog.component';
 import {MatDialogModule} from "@angular/material/dialog";
+import { DeleteUserGroupDialogComponent } from './components/delete-user-group-dialog/delete-user-group-dialog.component';
 
 
 @NgModule({
@@ -55,7 +56,8 @@ import {MatDialogModule} from "@angular/material/dialog";
     DeviceDetailsComponent,
     AddSensorComponent,
     AddExecutiveComponent,
-    ChangeNameDialogComponent],
+    ChangeNameDialogComponent,
+    DeleteUserGroupDialogComponent],
   imports: [
     CommonModule,
     AdminRoutingModule,
@@ -78,7 +80,8 @@ import {MatDialogModule} from "@angular/material/dialog";
 
   ],
   entryComponents:[
-    ChangeNameDialogComponent
+    ChangeNameDialogComponent,
+    DeleteUserGroupDialogComponent
   ]
 })
 export class AdminModule {
