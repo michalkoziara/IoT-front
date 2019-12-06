@@ -81,7 +81,7 @@ export class SensorsComponent implements OnInit {
       if (result === true) {
         this.sensorApiService.deleteSensor(this.productKey, deviceKey).pipe().subscribe(
           data => {
-            console.log('sensor group was deleted');
+            console.log('sensor was deleted');
           },
           error => {
             this.snackBar.open('Wystąpił błąd poczas usuwania czujnika spróbuj ponownie', undefined, {duration: 2000});

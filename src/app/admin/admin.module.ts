@@ -30,11 +30,12 @@ import {DeviceDetailsComponent} from './components/device-details/device-details
 import {DeviceService} from './services/deviceService/device.service';
 import {AddSensorComponent} from './components/add-sensor/add-sensor.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import { AddExecutiveComponent } from './components/add-executive/add-executive.component';
-import { ChangeNameDialogComponent } from './components/change-name-dialog/change-name-dialog.component';
+import {AddExecutiveComponent} from './components/add-executive/add-executive.component';
+import {ChangeNameDialogComponent} from './components/change-name-dialog/change-name-dialog.component';
 import {MatDialogModule} from "@angular/material/dialog";
-import { DeleteUserGroupDialogComponent } from './components/delete-user-group-dialog/delete-user-group-dialog.component';
-import { DeleteSensorDialogComponent } from './components/delete-sensor-dialog/delete-sensor-dialog.component';
+import {DeleteUserGroupDialogComponent} from './components/delete-user-group-dialog/delete-user-group-dialog.component';
+import {DeleteSensorDialogComponent} from './components/delete-sensor-dialog/delete-sensor-dialog.component';
+import {DeleteDeviceDialogComponent} from './components/delete-device-dialog/delete-device-dialog.component';
 
 
 @NgModule({
@@ -59,7 +60,8 @@ import { DeleteSensorDialogComponent } from './components/delete-sensor-dialog/d
     AddExecutiveComponent,
     ChangeNameDialogComponent,
     DeleteUserGroupDialogComponent,
-    DeleteSensorDialogComponent],
+    DeleteSensorDialogComponent,
+    DeleteDeviceDialogComponent],
   imports: [
     CommonModule,
     AdminRoutingModule,
@@ -81,9 +83,10 @@ import { DeleteSensorDialogComponent } from './components/delete-sensor-dialog/d
     DeviceService
 
   ],
-  entryComponents:[
+  entryComponents: [
     ChangeNameDialogComponent,
-    DeleteUserGroupDialogComponent
+    DeleteUserGroupDialogComponent,
+    DeleteDeviceDialogComponent
   ]
 })
 export class AdminModule {
