@@ -48,6 +48,15 @@ export class SensorApiService {
       );
   }
 
+  deleteSensor(productKey: string, deviceKey: string): Observable<object> {
+    return this.http
+      .delete<object>(`${environment.apiUrl}/hubs/${productKey}/sensors/${deviceKey}`, this.httpOptions)
+      .pipe(
+        retry(1),
+        catchError(this.handleError)
+      );
+  }
+
   handleError(error: {
     error: ErrorEvent;
     status: string;

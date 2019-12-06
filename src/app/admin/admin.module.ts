@@ -34,6 +34,7 @@ import { AddExecutiveComponent } from './components/add-executive/add-executive.
 import { ChangeNameDialogComponent } from './components/change-name-dialog/change-name-dialog.component';
 import {MatDialogModule} from "@angular/material/dialog";
 import { DeleteUserGroupDialogComponent } from './components/delete-user-group-dialog/delete-user-group-dialog.component';
+import { DeleteSensorDialogComponent } from './components/delete-sensor-dialog/delete-sensor-dialog.component';
 
 
 @NgModule({
@@ -57,7 +58,8 @@ import { DeleteUserGroupDialogComponent } from './components/delete-user-group-d
     AddSensorComponent,
     AddExecutiveComponent,
     ChangeNameDialogComponent,
-    DeleteUserGroupDialogComponent],
+    DeleteUserGroupDialogComponent,
+    DeleteSensorDialogComponent],
   imports: [
     CommonModule,
     AdminRoutingModule,
