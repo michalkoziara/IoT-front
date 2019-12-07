@@ -30,7 +30,12 @@ import {DeviceDetailsComponent} from './components/device-details/device-details
 import {DeviceService} from './services/deviceService/device.service';
 import {AddSensorComponent} from './components/add-sensor/add-sensor.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import { AddExecutiveComponent } from './components/add-executive/add-executive.component';
+import {AddExecutiveComponent} from './components/add-executive/add-executive.component';
+import {ChangeNameDialogComponent} from './components/change-name-dialog/change-name-dialog.component';
+import {MatDialogModule} from "@angular/material/dialog";
+import {DeleteUserGroupDialogComponent} from './components/delete-user-group-dialog/delete-user-group-dialog.component';
+import {DeleteSensorDialogComponent} from './components/delete-sensor-dialog/delete-sensor-dialog.component';
+import {DeleteDeviceDialogComponent} from './components/delete-device-dialog/delete-device-dialog.component';
 
 
 @NgModule({
@@ -52,7 +57,11 @@ import { AddExecutiveComponent } from './components/add-executive/add-executive.
     SensorDetailsComponent,
     DeviceDetailsComponent,
     AddSensorComponent,
-    AddExecutiveComponent],
+    AddExecutiveComponent,
+    ChangeNameDialogComponent,
+    DeleteUserGroupDialogComponent,
+    DeleteSensorDialogComponent,
+    DeleteDeviceDialogComponent],
   imports: [
     CommonModule,
     AdminRoutingModule,
@@ -60,7 +69,8 @@ import { AddExecutiveComponent } from './components/add-executive/add-executive.
     SharedModule,
     FlexModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatDialogModule
 
   ],
   providers: [
@@ -73,6 +83,11 @@ import { AddExecutiveComponent } from './components/add-executive/add-executive.
     DeviceService
 
   ],
+  entryComponents: [
+    ChangeNameDialogComponent,
+    DeleteUserGroupDialogComponent,
+    DeleteDeviceDialogComponent
+  ]
 })
 export class AdminModule {
 }

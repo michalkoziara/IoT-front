@@ -5,6 +5,9 @@ import {Devices} from '../../models/devices';
 import {Subscription} from 'rxjs';
 import {DeviceService} from '../../services/deviceService/device.service';
 import {AdminViewCommunicationService} from '../../services/admin-view-communication.service';
+import {DeleteUserGroupDialogComponent} from "../delete-user-group-dialog/delete-user-group-dialog.component";
+import {MatSnackBar} from "@angular/material/snack-bar";
+import {MatDialog} from "@angular/material/dialog";
 
 @Component({
   selector: 'app-devices',
@@ -24,7 +27,9 @@ export class DevicesComponent implements OnInit {
 
   constructor(private viewCommunicationService: AdminViewCommunicationService,
               private deviceApiService: DeviceApiService,
-              private deviceService: DeviceService) {
+              private deviceService: DeviceService,
+              private snackBar: MatSnackBar,
+              public dialog: MatDialog) {
     this.productKey = '';
     this.dataSource = new MatTableDataSource<Devices>();
     this.sort = new MatSort();
@@ -70,7 +75,20 @@ export class DevicesComponent implements OnInit {
   }
 
   deleteDevice(deviceKey: string): void {
-    console.log(deviceKey);
+    const dialogRef = this.dialog.open(DeleteUserGroupDialogComponent);
+    dialogRef.afterClosed().subscribe(result => {
+
+      if (result === true) {
+        this.deviceApiService.deleteExecutive(this.productKey, deviceKey).pipe().subscribe(
+          data => {
+            console.log('device was deleted');
+          },
+          error => {
+            this.snackBar.open('Wystąpił błąd poczas usuwania urządzenia spróbuj ponownie', undefined, {duration: 2000});
+          }
+        );
+      }
+    });
   }
 
   addDevice(): void {

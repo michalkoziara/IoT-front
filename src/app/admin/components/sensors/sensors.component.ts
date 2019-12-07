@@ -5,6 +5,9 @@ import {SensorApiService} from '../../services/apiService/sensor-api.service';
 import {Subscription} from 'rxjs';
 import {AdminViewCommunicationService} from '../../services/admin-view-communication.service';
 import {SensorService} from '../../services/sensorService/sensor.service';
+import {DeleteUserGroupDialogComponent} from "../delete-user-group-dialog/delete-user-group-dialog.component";
+import {MatSnackBar} from "@angular/material/snack-bar";
+import {MatDialog} from "@angular/material/dialog";
 
 @Component({
   selector: 'app-sensors',
@@ -24,7 +27,9 @@ export class SensorsComponent implements OnInit {
 
   constructor(private sensorApiService: SensorApiService,
               private viewCommunicationService: AdminViewCommunicationService,
-              private sensorsService: SensorService) {
+              private sensorsService: SensorService,
+              private snackBar: MatSnackBar,
+              public dialog: MatDialog) {
     this.dataSource = new MatTableDataSource<Sensor>();
     this.productKey = '';
     this.sort = new MatSort();
@@ -70,7 +75,20 @@ export class SensorsComponent implements OnInit {
   }
 
   deleteSensor(deviceKey: string): void {
-    console.log(deviceKey);
+    const dialogRef = this.dialog.open(DeleteUserGroupDialogComponent);
+    dialogRef.afterClosed().subscribe(result => {
+
+      if (result === true) {
+        this.sensorApiService.deleteSensor(this.productKey, deviceKey).pipe().subscribe(
+          data => {
+            console.log('sensor was deleted');
+          },
+          error => {
+            this.snackBar.open('Wystąpił błąd poczas usuwania czujnika spróbuj ponownie', undefined, {duration: 2000});
+          }
+        );
+      }
+    });
   }
 
   viewSensor(deviceKey: string, deviceName: string): void {

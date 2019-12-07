@@ -3,6 +3,9 @@ import {MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
 import {UserGroupInList} from '../../models/user-group-in-list';
 import {UserGroupApiService} from '../../services/apiService/user-group-api.service';
 import {Subscription} from 'rxjs';
+import {MatDialog} from '@angular/material/dialog';
+import {MatSnackBar} from '@angular/material/snack-bar';
+import {DeleteUserGroupDialogComponent} from '../delete-user-group-dialog/delete-user-group-dialog.component';
 
 @Component({
   selector: 'app-user-group',
@@ -20,7 +23,9 @@ export class UserGroupComponent implements OnInit {
   @ViewChild(MatSort, {static: true}) sort: MatSort;
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator | null;
 
-  constructor(private userGroupApi: UserGroupApiService) {
+  constructor(private userGroupApi: UserGroupApiService,
+              private snackBar: MatSnackBar,
+              public dialog: MatDialog) {
     this.dataSource = new MatTableDataSource<UserGroupInList>();
     this.productKey = '';
     this.sort = new MatSort();
@@ -49,6 +54,19 @@ export class UserGroupComponent implements OnInit {
   }
 
   deleteUserGroup(userGroupName: string): void {
-    console.log(userGroupName);
+    const dialogRef = this.dialog.open(DeleteUserGroupDialogComponent);
+    dialogRef.afterClosed().subscribe(result => {
+
+      if (result === true) {
+        this.userGroupApi.deleteUserGroup(this.productKey, userGroupName).pipe().subscribe(
+          data => {
+            console.log('User group was deleted');
+          },
+          error => {
+            this.snackBar.open('Wystąpił błąd poczas usuwania grupy urządzeń spróbuj ponownie', undefined, {duration: 2000});
+          }
+        );
+      }
+    });
   }
 }

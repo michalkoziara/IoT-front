@@ -9,7 +9,7 @@ import {Subscription} from 'rxjs';
   styleUrls: ['./unconfigured-devices.component.scss']
 })
 export class UnconfiguredDevicesComponent implements OnInit {
-  displayedColumns: string[] = ['name', 'actions'];
+  displayedColumns: string[] = ['name'];
   unconfigured: { deviceKey: string }[] = [];
   dataSource: MatTableDataSource<{ deviceKey: string }>;
 

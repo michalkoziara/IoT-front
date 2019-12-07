@@ -19,13 +19,21 @@ export class UserGroupApiService {
   constructor(private http: HttpClient) {
   }
 
-  getUserGroups(productKey: string): Observable<{'userGroups': UserGroupInList[]}> {
-    return this.http.get<{'userGroups': [UserGroupInList]}>(`${environment.apiUrl}/hubs/${productKey}/user-groups`)
+  getUserGroups(productKey: string): Observable<{ 'userGroups': UserGroupInList[] }> {
+    return this.http.get<{ 'userGroups': [UserGroupInList] }>(`${environment.apiUrl}/hubs/${productKey}/user-groups`)
       .pipe(
         retry(1),
         catchError(this.handleError)
       );
   }
+
+  deleteUserGroup(productKey: string, userGroupName: string): Observable<object> {
+    return this.http.delete(`${environment.apiUrl}/hubs/${productKey}/user-groups/${userGroupName}`, this.httpOptions).pipe(
+      retry(1),
+      catchError(this.handleError)
+    );
+  }
+
 
   handleError(error: {
     error: ErrorEvent;

@@ -48,6 +48,17 @@ export class DeviceApiService {
       );
   }
 
+  deleteExecutive(productKey: string, deviceKey: string): Observable<object> {
+    return this.http
+      .delete<object>(`${environment.apiUrl}/hubs/${productKey}/executive-devices/${deviceKey}`, this.httpOptions)
+      .pipe(
+        retry(1),
+        catchError(this.handleError)
+      );
+  }
+
+
+
   handleError(error: {
     error: ErrorEvent;
     status: string;
