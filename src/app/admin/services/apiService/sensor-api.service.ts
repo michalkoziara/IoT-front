@@ -46,6 +46,20 @@ export class SensorApiService {
       );
   }
 
+  modifySensor(
+    changedSensor: { name: string; typeName: string; userGroupName: string | null },
+    productKey: string,
+    deviceKey: string): Observable<object> {
+    return this.http
+      .put<object>(`${environment.apiUrl}/hubs/${productKey}/sensors/${deviceKey}`,
+        changedSensor,
+        this.httpOptions)
+      .pipe(
+        retry(1),
+        catchError(this.handleError)
+      );
+  }
+
   deleteSensor(productKey: string, deviceKey: string): Observable<object> {
     return this.http
       .delete<object>(`${environment.apiUrl}/hubs/${productKey}/sensors/${deviceKey}`, this.httpOptions)

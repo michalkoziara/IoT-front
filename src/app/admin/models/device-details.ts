@@ -1,32 +1,32 @@
 export class DeviceDetails {
   name: string;
-  state: boolean | string;
+  state: boolean | string | number;
   isUpdated: boolean | string;
   isActive: boolean | string;
   isAssigned: boolean;
-  positiveState: boolean | string;
-  negativeState: boolean | string;
+  positiveState: boolean | string | number | null;
+  negativeState: boolean | string | number | null;
   deviceKey: string;
   deviceTypeName: string;
-  deviceUserGroup: string;
+  deviceUserGroup: string | null;
   isFormulaUsed: boolean | string;
-  formulaName: string;
-  defaultState: boolean | string;
+  formulaName: string | null;
+  defaultState: boolean | string | number;
 
   constructor(
     name: string,
-    state: boolean | string,
+    state: boolean | string | number,
     isUpdated: boolean | string,
     isActive: boolean | string,
     isAssigned: boolean,
-    positiveState: boolean | string,
-    negativeState: boolean | string,
+    positiveState: boolean | string | number | null,
+    negativeState: boolean | string | number | null,
     deviceKey: string,
     deviceTypeName: string,
-    deviceUserGroup: string,
+    deviceUserGroup: string | null,
     isFormulaUsed: boolean | string,
-    formulaName: string,
-    defaultState: boolean | string) {
+    formulaName: string | null,
+    defaultState: boolean | string | number ) {
     this.name = name;
     this.state = state;
     this.isUpdated = isUpdated;

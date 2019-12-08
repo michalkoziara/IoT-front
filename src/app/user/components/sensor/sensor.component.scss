@@ -3,6 +3,10 @@ mat-card {
   padding: 50px;
   height: fit-content;
 
+  mat-card-header {
+    margin-bottom: 20px;
+  }
+
   tr {
 
     td {

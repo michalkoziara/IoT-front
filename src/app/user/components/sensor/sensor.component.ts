@@ -181,7 +181,7 @@ export class SensorComponent implements OnInit, OnDestroy {
             }, {});
         },
         () => {
-          this.snackBar.open('Wystąpił błąd poczas dodawania, spróbuj ponownie', undefined, {duration: 3000});
+          this.snackBar.open('Wystąpił błąd poczas modyfikacji, spróbuj ponownie', undefined, {duration: 3000});
           this.isUserGroupChangeCardVisible = false;
         });
     }
@@ -229,11 +229,11 @@ export class SensorComponent implements OnInit, OnDestroy {
               }
             },
             () => {
-              this.snackBar.open('Wystąpił błąd poczas dodawania, spróbuj ponownie', undefined, {duration: 3000});
+              this.snackBar.open('Wystąpił błąd poczas modyfikacji, spróbuj ponownie', undefined, {duration: 3000});
             });
         },
         () => {
-          this.snackBar.open('Wystąpił błąd poczas dodawania, spróbuj ponownie', undefined, {duration: 3000});
+          this.snackBar.open('Wystąpił błąd poczas modyfikacji, spróbuj ponownie', undefined, {duration: 3000});
         });
     }
 

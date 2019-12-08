@@ -33,6 +33,29 @@ export class DeviceApiService {
       );
   }
 
+  putExecutive(
+    changedExecutive: {
+      name: string;
+      typeName: string;
+      state: string | boolean | number;
+      positiveState: string | boolean | number | null;
+      negativeState: string | boolean | number | null;
+      formulaName: string | null;
+      userGroupName: string | null;
+      isFormulaUsed: boolean;
+    },
+    productKey: string,
+    deviceKey: string): Observable<object> {
+    return this.http
+      .post<object>(`${environment.apiUrl}/hubs/${productKey}/executive-devices/${deviceKey}`,
+        changedExecutive,
+        this.httpOptions)
+      .pipe(
+        retry(1),
+        catchError(this.handleError)
+      );
+  }
+
   postExecutive(
     productKey: string,
     requestData: { deviceKey: string; password: string; deviceName: string; deviceTypeName: string }): Observable<object> {

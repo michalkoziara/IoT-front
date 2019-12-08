@@ -45,6 +45,7 @@ import {AddExecutiveTypeComponent} from './components/add-executive-type/add-exe
 import {CustomPaginator} from '../shared/custom-paginator-conf';
 import {MatPaginatorIntl} from '@angular/material/paginator';
 import { AddSensorTypeComponent } from './components/add-sensor-type/add-sensor-type.component';
+import {FormulaApiService} from './services/apiService/formula-api.service';
 
 
 @NgModule({
@@ -97,6 +98,7 @@ import { AddSensorTypeComponent } from './components/add-sensor-type/add-sensor-
     ExecutiveTypeApiService,
     UnconfiguredApiService,
     UserGroupApiService,
+    FormulaApiService,
     {provide: MatPaginatorIntl, useValue: CustomPaginator()}
   ],
   entryComponents: [
