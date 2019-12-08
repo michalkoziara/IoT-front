@@ -5,9 +5,7 @@ import {environment} from '../../../../environments/environment';
 import {catchError, retry} from 'rxjs/operators';
 import {DeviceGroup} from '../../models/device-group';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class ProductKeyApiService {
 
   httpOptions = {
@@ -27,8 +25,8 @@ export class ProductKeyApiService {
       );
   }
 
-  changeDeviceGroupName(productKey: string, changedName: string): Observable<any> {
-    return this.http.put<object>(`${environment.apiUrl}/hubs/${productKey}`,
+  changeDeviceGroupName(productKey: string, changedName: string): Observable<{ name: string }> {
+    return this.http.put<{ name: string }>(`${environment.apiUrl}/hubs/${productKey}`,
       {name: changedName},
       this.httpOptions)
       .pipe(

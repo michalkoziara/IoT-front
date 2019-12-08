@@ -1,8 +1,7 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Subscription} from 'rxjs';
-import {AdminWelcomeService} from '../../services/adminWelcomeService/admin-welcome.service';
 import {ProductKeyApiService} from '../../services/apiService/product-key-api.service';
-import {AdminViewCommunicationService} from '../../services/admin-view-communication.service';
+import {AdminViewCommunicationService} from '../../services/adminViewCommunicationService/admin-view-communication.service';
 import {SensorService} from '../../services/sensorService/sensor.service';
 import {DeviceService} from '../../services/deviceService/device.service';
 
@@ -23,12 +22,10 @@ export class DashboardComponent implements OnInit, OnDestroy {
   selectedDevice: string | null;
   selectedDeviceSubscription: Subscription;
 
-
   currentView: string | null;
   currentViewSubscription: Subscription;
 
   constructor(private viewCommunicationService: AdminViewCommunicationService,
-              private welcomeService: AdminWelcomeService,
               private productKeyApiService: ProductKeyApiService,
               private sensorsService: SensorService,
               private deviceService: DeviceService) {
@@ -54,10 +51,10 @@ export class DashboardComponent implements OnInit, OnDestroy {
       }
     );
 
-    this.productKeyApiSubscription = this.productKeyApiService.getDeviceGroup().subscribe(x => {
-      if (x != null) {
-        this.productKey = x[0].productKey;
-        this.deviceGroupName = x[0].name;
+    this.productKeyApiSubscription = this.productKeyApiService.getDeviceGroup().subscribe(data => {
+      if (data.length > 0) {
+        this.productKey = data[0].productKey;
+        this.deviceGroupName = data[0].name;
       }
     });
 

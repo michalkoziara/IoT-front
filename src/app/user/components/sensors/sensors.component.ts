@@ -59,7 +59,7 @@ export class SensorsComponent implements OnInit, OnDestroy {
   }
 
   loadSensorsInList(): Subscription {
-    return interval(5000)
+    return interval(5500)
       .pipe(
         startWith(0),
         flatMap(() => this.sensorsApiService.getSensors(this.productKey, this.userGroupName))
@@ -68,11 +68,11 @@ export class SensorsComponent implements OnInit, OnDestroy {
         this.sensors = data.map(
           x => {
             if (x.sensorReadingValue === true) {
-              x.sensorReadingValue = 'Podstawowy';
+              x.sensorReadingValue = 'Alternatywny';
             }
 
             if (x.sensorReadingValue === false) {
-              x.sensorReadingValue = 'Alternatywny';
+              x.sensorReadingValue = 'Podstawowy';
             }
 
             if (x.isActive === true) {

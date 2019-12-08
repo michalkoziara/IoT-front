@@ -14,7 +14,7 @@
         </button>
         <mat-divider></mat-divider>
         <button mat-flat-button (click)="getSensors()">
-          <mat-icon>usb</mat-icon>
+          <mat-icon>settings_input_antenna</mat-icon>
           Czujniki
         </button>
         <button mat-flat-button (click)="getDevices()">
@@ -27,11 +27,11 @@
           Nieskonfigurowane
         </button>
         <button mat-flat-button (click)="getSensorTypes()">
-          <mat-icon>usb</mat-icon>
+          <mat-icon>settings_input_component</mat-icon>
           Typy czujników
         </button>
         <button mat-flat-button (click)="getDevicesTypes()">
-          <mat-icon>power</mat-icon>
+          <mat-icon>devices</mat-icon>
           Typy urządzeń
         </button>
         <mat-divider></mat-divider>
@@ -39,9 +39,10 @@
           <mat-icon>settings</mat-icon>
           Zmień nazwę urządzenia
         </button>
-        
+
       </div>
     </mat-sidenav>
+
     <mat-sidenav-content>
       <ng-content select="div[role=dashboard]"></ng-content>
     </mat-sidenav-content>

@@ -4,10 +4,10 @@ import {DeviceApiService} from '../../services/apiService/device-api.service';
 import {Devices} from '../../models/devices';
 import {Subscription} from 'rxjs';
 import {DeviceService} from '../../services/deviceService/device.service';
-import {AdminViewCommunicationService} from '../../services/admin-view-communication.service';
-import {DeleteUserGroupDialogComponent} from "../delete-user-group-dialog/delete-user-group-dialog.component";
-import {MatSnackBar} from "@angular/material/snack-bar";
-import {MatDialog} from "@angular/material/dialog";
+import {AdminViewCommunicationService} from '../../services/adminViewCommunicationService/admin-view-communication.service';
+import {MatSnackBar} from '@angular/material/snack-bar';
+import {MatDialog} from '@angular/material/dialog';
+import {DeleteDeviceDialogComponent} from '../delete-device-dialog/delete-device-dialog.component';
 
 @Component({
   selector: 'app-devices',
@@ -48,12 +48,11 @@ export class DevicesComponent implements OnInit {
     return this.deviceApiService.getDevices(this.productKey).subscribe((data) => {
       this.devices = data.map(
         x => {
-
-          if (x.isActive === 'true') {
+          if (x.isActive === true) {
             x.isActive = 'Tak';
           }
 
-          if (x.isActive === 'false') {
+          if (x.isActive === false) {
             x.isActive = 'Nie';
           }
           return x;
@@ -66,25 +65,28 @@ export class DevicesComponent implements OnInit {
         disableClear: false
       });
       this.dataSource.sort = this.sort;
+      this.dataSource.paginator = this.paginator;
     });
   }
 
-  modifyDevice(deviceKey: string): void {
+  showDevice(deviceKey: string, name: string): void {
     this.deviceService.changeSelectedExecutive(deviceKey);
-    this.viewCommunicationService.changeCurrentView('deviceDetails');
+    this.deviceService.changeSelectedExecutiveName(name);
+    this.viewCommunicationService.changeCurrentView('showDevice');
   }
 
   deleteDevice(deviceKey: string): void {
-    const dialogRef = this.dialog.open(DeleteUserGroupDialogComponent);
+    const dialogRef = this.dialog.open(DeleteDeviceDialogComponent);
     dialogRef.afterClosed().subscribe(result => {
 
       if (result === true) {
         this.deviceApiService.deleteExecutive(this.productKey, deviceKey).pipe().subscribe(
-          data => {
-            console.log('device was deleted');
+          () => {
+            this.snackBar.open('Urządzenie zostało usunięte', undefined, {duration: 3000});
+            this.loadDevicesInList();
           },
-          error => {
-            this.snackBar.open('Wystąpił błąd poczas usuwania urządzenia spróbuj ponownie', undefined, {duration: 2000});
+          () => {
+            this.snackBar.open('Wystąpił błąd poczas usuwania urządzenia spróbuj ponownie', undefined, {duration: 3000});
           }
         );
       }

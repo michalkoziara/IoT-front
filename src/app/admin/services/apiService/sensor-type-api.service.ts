@@ -3,10 +3,9 @@ import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Observable, throwError} from 'rxjs';
 import {environment} from '../../../../environments/environment';
 import {catchError, retry} from 'rxjs/operators';
+import {SensorType} from '../../models/sensor-type';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class SensorTypeApiService {
 
   httpOptions = {
@@ -26,17 +25,33 @@ export class SensorTypeApiService {
       );
   }
 
-  handleError(error: {
-    error: ErrorEvent;
+  getSensorType(productKey: string, name: string): Observable<SensorType> {
+    return this.http.get<SensorType>(`${environment.apiUrl}/hubs/${productKey}/sensor-types/${name}`)
+      .pipe(
+        retry(1),
+        catchError(this.handleError)
+      );
+  }
+
+  postSensorType(productKey: string, requestData: SensorType): Observable<object> {
+    return this.http.post<object>(`${environment.apiUrl}/hubs/${productKey}/sensor-types`, requestData, this.httpOptions)
+      .pipe(
+        retry(1),
+        catchError(this.handleError)
+      );
+  }
+
+  handleError(response: {
+    error: ErrorEvent | { errorMessage: string };
     status: string;
     message: string;
   }): Observable<never> {
-    let errorMessage: string;
-    if (error.error instanceof ErrorEvent) {
-      errorMessage = error.error.message;
+    if (response.error instanceof ErrorEvent) {
+      console.log(response.error.message);
+      return throwError(response.error.message);
     } else {
-      errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
+      console.log(`Error Code: ${response.status}\nMessage: ${response.error.errorMessage}`);
+      return throwError({errorCode: response.status, message: response.error.errorMessage});
     }
-    return throwError(errorMessage);
   }
 }

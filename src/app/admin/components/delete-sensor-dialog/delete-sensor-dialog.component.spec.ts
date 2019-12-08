@@ -10,7 +10,7 @@ describe('DeleteSensorDialogComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ DeleteSensorDialogComponent ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

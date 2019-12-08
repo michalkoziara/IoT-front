@@ -5,7 +5,7 @@ import {finalize} from 'rxjs/operators';
 import {Subscription} from 'rxjs';
 import {SensorTypeApiService} from '../../services/apiService/sensor-type-api.service';
 import {SensorApiService} from '../../services/apiService/sensor-api.service';
-import {AdminViewCommunicationService} from '../../services/admin-view-communication.service';
+import {AdminViewCommunicationService} from '../../services/adminViewCommunicationService/admin-view-communication.service';
 
 @Component({
   selector: 'app-add-sensor',

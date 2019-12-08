@@ -1,0 +1,45 @@
+mat-card {
+  margin: 50px;
+  padding: 50px;
+  width: 40vw;
+
+  section {
+    height: 4px;
+  }
+
+  mat-card-header {
+    padding: 10px;
+  }
+
+  mat-card-content {
+
+    mat-form-field {
+      margin: 3px;
+    }
+
+    .add-button {
+      margin-top: 10px;
+    }
+
+    .add-reading-button {
+      height: fit-content;
+      width: fit-content;
+      margin: 3px;
+    }
+
+    .delete-btn {
+      width: fit-content;
+      min-width: fit-content;
+      line-height: 0;
+      padding: 14px;
+    }
+
+    mat-divider {
+      margin: 15px 0;
+    }
+
+    .mat-list-base .mat-list-option {
+      font-size: 14px;
+    }
+  }
+}

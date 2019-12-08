@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {ExecutivesApiService} from '../../services/apiService/executives-api.service';
 import {Executive} from '../../models/executive/executive';
 import {UserGroupsApiService} from '../../services/apiService/user-groups-api.service';
@@ -9,17 +9,21 @@ import {ExecutiveTypesApiService} from '../../services/apiService/executive-type
 import {ExecutiveType} from '../../models/executive-type/executive-type';
 import {AbstractControl, FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {FormulasApiService} from '../../services/apiService/formulas-api.service';
+import {interval, Subscriber, Subscription} from 'rxjs';
+import {flatMap, startWith} from 'rxjs/operators';
 
 @Component({
   selector: 'app-executive',
   templateUrl: './executive.component.html',
   styleUrls: ['./executive.component.scss']
 })
-export class ExecutiveComponent implements OnInit {
+export class ExecutiveComponent implements OnInit, OnDestroy {
   executive: Executive | null;
   executiveType: ExecutiveType | null;
   formulas: string[];
   userGroups: UserGroupInList[];
+
+  executive$: Subscription;
 
   isUserGroupChangeCardVisible = false;
   isStateChangeCardVisible = false;
@@ -67,108 +71,118 @@ export class ExecutiveComponent implements OnInit {
     this.stateFormGroup = this.formBuilder.group({stateCtrl: ['']});
     this.statePositiveFormGroup = this.formBuilder.group({statePositiveCtrl: ['']});
     this.stateNegativeFormGroup = this.formBuilder.group({stateNegativeCtrl: ['']});
+    this.executive$ = new Subscriber();
   }
 
   ngOnInit(): void {
-    this.getExecutive();
+    this.executive$ = this.getExecutive();
   }
 
-  getExecutive(): void {
-    this.executiveApiService.getExecutive(
-      this.productKey,
-      this.deviceKey
-    ).subscribe(
-      data => {
-        this.selectedIsFormulaUsed = data.isFormulaUsed as boolean;
+  ngOnDestroy(): void {
+    this.executive$.unsubscribe();
+  }
 
-        if (data.state === true) {
-          data.state = 'Alternatywny';
-        }
+  getExecutive(): Subscription {
+    return interval(9500)
+      .pipe(
+        startWith(0),
+        flatMap(() => this.executiveApiService.getExecutive(
+          this.productKey,
+          this.deviceKey
+        ))
+      )
+      .subscribe(
+        data => {
+          this.selectedIsFormulaUsed = data.isFormulaUsed as boolean;
 
-        if (data.state === false) {
-          data.state = 'Podstawowy';
-        }
-
-        if (data.isUpdated === true) {
-          data.isUpdated = 'Tak';
-        }
-
-        if (data.isUpdated === false) {
-          data.isUpdated = 'Nie';
-        }
-
-        if (data.isActive === true) {
-          data.isActive = 'Tak';
-        }
-
-        if (data.isActive === false) {
-          data.isActive = 'Nie';
-        }
-
-        if (data.positiveState === true) {
-          data.positiveState = 'Alternatywny';
-        }
-
-        if (data.positiveState === false) {
-          data.positiveState = 'Podstawowy';
-        }
-
-        if (data.negativeState === true) {
-          data.negativeState = 'Alternatywny';
-        }
-
-        if (data.negativeState === false) {
-          data.negativeState = 'Podstawowy';
-        }
-
-        if (data.isFormulaUsed === true) {
-          data.isFormulaUsed = 'Tak';
-        }
-
-        if (data.isFormulaUsed === false) {
-          data.isFormulaUsed = 'Nie';
-        }
-
-        if (data.defaultState === true) {
-          data.defaultState = 'Tak';
-        }
-
-        if (data.defaultState === false) {
-          data.defaultState = 'Nie';
-        }
-
-        this.selectedUserGroup = data.deviceUserGroup;
-        this.selectedFormula = data.formulaName;
-        this.executive = data;
-
-        this.executiveTypesApiService.getExecutiveType(this.productKey, data.deviceTypeName).subscribe(
-          typeData => {
-            if (typeData.stateType) {
-              if (typeData.stateType === 'Decimal') {
-                typeData.stateType = 'Liczbowy';
-              } else if (typeData.stateType === 'Enum') {
-                typeData.stateType = 'Wyliczeniowy';
-                this.selectedState = data.state;
-                this.selectedNegativeState = data.negativeState;
-                this.selectedPositiveState = data.positiveState;
-              } else {
-                typeData.stateType = 'Logiczny';
-                this.selectedState = data.state === 'Alternatywny';
-                this.selectedNegativeState = data.negativeState === 'Alternatywny';
-                this.selectedPositiveState = data.positiveState === 'Alternatywny';
-              }
-            }
-            this.executiveType = typeData;
-          },
-          () => {
-            this.snackBar.open('Wystąpił błąd, spróbuj ponownie', undefined, {duration: 3000});
+          if (data.state === true) {
+            data.state = 'Alternatywny';
           }
-        );
-      },
-      () => {
-        this.snackBar.open('Wystąpił błąd, spróbuj ponownie', undefined, {duration: 3000});
-      }
-    );
+
+          if (data.state === false) {
+            data.state = 'Podstawowy';
+          }
+
+          if (data.isUpdated === true) {
+            data.isUpdated = 'Nie';
+          }
+
+          if (data.isUpdated === false) {
+            data.isUpdated = 'Tak';
+          }
+
+          if (data.isActive === true) {
+            data.isActive = 'Tak';
+          }
+
+          if (data.isActive === false) {
+            data.isActive = 'Nie';
+          }
+
+          if (data.positiveState === true) {
+            data.positiveState = 'Alternatywny';
+          }
+
+          if (data.positiveState === false) {
+            data.positiveState = 'Podstawowy';
+          }
+
+          if (data.negativeState === true) {
+            data.negativeState = 'Alternatywny';
+          }
+
+          if (data.negativeState === false) {
+            data.negativeState = 'Podstawowy';
+          }
+
+          if (data.isFormulaUsed === true) {
+            data.isFormulaUsed = 'Tak';
+          }
+
+          if (data.isFormulaUsed === false) {
+            data.isFormulaUsed = 'Nie';
+          }
+
+          if (data.defaultState === true) {
+            data.defaultState = 'Tak';
+          }
+
+          if (data.defaultState === false) {
+            data.defaultState = 'Nie';
+          }
+
+          this.selectedUserGroup = data.deviceUserGroup;
+          this.selectedFormula = data.formulaName;
+          this.executive = data;
+
+          this.executiveTypesApiService.getExecutiveType(this.productKey, data.deviceTypeName).subscribe(
+            typeData => {
+              if (typeData.stateType) {
+                if (typeData.stateType === 'Decimal') {
+                  typeData.stateType = 'Liczbowy';
+                } else if (typeData.stateType === 'Enum') {
+                  typeData.stateType = 'Wyliczeniowy';
+                  this.selectedState = data.state;
+                  this.selectedNegativeState = data.negativeState;
+                  this.selectedPositiveState = data.positiveState;
+                } else {
+                  typeData.stateType = 'Logiczny';
+                  this.selectedState = data.state === 'Alternatywny';
+                  this.selectedNegativeState = data.negativeState === 'Alternatywny';
+                  this.selectedPositiveState = data.positiveState === 'Alternatywny';
+                }
+              }
+              this.executiveType = typeData;
+            },
+            () => {
+              this.snackBar.open('Wystąpił błąd, spróbuj ponownie', undefined, {duration: 3000});
+            }
+          );
+        },
+        () => {
+          this.snackBar.open('Wystąpił błąd, spróbuj ponownie', undefined, {duration: 3000});
+        }
+      );
   }
 
   showUserGroupChangeCard(): void {
@@ -252,6 +266,8 @@ export class ExecutiveComponent implements OnInit {
             this.isFormulaUsedChangeCardVisible = false;
 
             if (this.executive !== null) {
+              this.executive.isUpdated = 'Nie';
+
               if (newUserGroup !== '') {
                 if (newUserGroup !== null) {
                   this.executive.isAssigned = true;

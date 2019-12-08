@@ -6,9 +6,7 @@ import {catchError, retry} from 'rxjs/operators';
 import {Devices} from '../../models/devices';
 import {DeviceDetails} from '../../models/device-details';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class DeviceApiService {
   httpOptions = {
     headers: new HttpHeaders({
@@ -56,8 +54,6 @@ export class DeviceApiService {
         catchError(this.handleError)
       );
   }
-
-
 
   handleError(error: {
     error: ErrorEvent;

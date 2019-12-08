@@ -10,7 +10,7 @@ describe('ChangeNameDialogComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ ChangeNameDialogComponent ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

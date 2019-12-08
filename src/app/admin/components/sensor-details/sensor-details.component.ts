@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {SensorDetails} from '../../models/SensorDetails';
+import {SensorDetails} from '../../models/sensor-details';
 import {SensorApiService} from '../../services/apiService/sensor-api.service';
 
 @Component({
@@ -8,7 +8,6 @@ import {SensorApiService} from '../../services/apiService/sensor-api.service';
   styleUrls: ['./sensor-details.component.scss']
 })
 export class SensorDetailsComponent implements OnInit {
-
   sensor: SensorDetails | null;
 
   @Input()

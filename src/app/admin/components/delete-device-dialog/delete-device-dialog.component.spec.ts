@@ -10,7 +10,7 @@ describe('DeleteDeviceDialogComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ DeleteDeviceDialogComponent ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

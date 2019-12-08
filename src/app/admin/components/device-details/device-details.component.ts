@@ -1,6 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {DeviceDetails} from '../../models/device-details';
-import {DeviceApiService} from '../../services/apiService/device-api.service'
+import {DeviceApiService} from '../../services/apiService/device-api.service';
 
 @Component({
   selector: 'app-device-details',
@@ -23,7 +23,7 @@ export class DeviceDetailsComponent implements OnInit {
     this.deviceKey = '';
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.getDeviceDetails();
   }
 

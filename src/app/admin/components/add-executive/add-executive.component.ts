@@ -1,7 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {AbstractControl, FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {MatSnackBar} from '@angular/material/snack-bar';
-import {AdminViewCommunicationService} from '../../services/admin-view-communication.service';
+import {AdminViewCommunicationService} from '../../services/adminViewCommunicationService/admin-view-communication.service';
 import {Subscription} from 'rxjs';
 import {finalize} from 'rxjs/operators';
 import {ExecutiveTypeApiService} from '../../services/apiService/executive-type-api.service';

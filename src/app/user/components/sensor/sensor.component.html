@@ -32,8 +32,9 @@
           <td class="header">Grupa użytkowników:</td>
           <td><b>{{sensor.isAssigned ? sensor.sensorUserGroup : 'Brak grupy'}}</b></td>
           <td>
-            <button mat-button class="view-btn" (click)="showUserGroupChangeCard()">
-              <mat-icon matTooltip='Zmień grupę użytkowników urządzenia'>edit</mat-icon>
+            <button mat-button class="view-btn" (click)="showUserGroupChangeCard()"
+                    matTooltip='Zmień grupę użytkowników urządzenia'>
+              <mat-icon>edit</mat-icon>
             </button>
           </td>
         </tr>

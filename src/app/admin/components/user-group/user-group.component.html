@@ -15,7 +15,8 @@
     <ng-container matColumnDef="actions">
       <th mat-header-cell *matHeaderCellDef mat-sort-header> Usuń</th>
       <td mat-cell *matCellDef="let element" class="td-btn">
-        <button mat-button class="group-btn" (click)="deleteUserGroup(element.name)">
+        <button mat-button class="group-btn" (click)="deleteUserGroup(element.name)"
+                matTooltip='Usuń grupę użytkowników z grupy urządzeń'>
           <mat-icon>delete</mat-icon>
         </button>
       </td>

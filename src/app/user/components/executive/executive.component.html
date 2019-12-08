@@ -11,8 +11,8 @@
           <td class="header">Stan:</td>
           <td><b>{{executive.state}}</b></td>
           <td *ngIf="executive && executive.isFormulaUsed !== 'Tak'">
-            <button mat-button class="view-btn" (click)="showStateChangeCard()">
-              <mat-icon matTooltip='Zmień stan'>edit</mat-icon>
+            <button mat-button class="view-btn" (click)="showStateChangeCard()" matTooltip='Zmień stan'>
+              <mat-icon>edit</mat-icon>
             </button>
           </td>
         </tr>
@@ -71,8 +71,9 @@
           <td class="header">Grupa użytkowników:</td>
           <td><b>{{executive.isAssigned ? executive.deviceUserGroup : 'Brak grupy'}}</b></td>
           <td>
-            <button mat-button class="view-btn" (click)="showUserGroupChangeCard()">
-              <mat-icon matTooltip='Zmień grupę użytkowników urządzenia'>edit</mat-icon>
+            <button mat-button class="view-btn" (click)="showUserGroupChangeCard()"
+                    matTooltip='Zmień grupę użytkowników urządzenia'>
+              <mat-icon>edit</mat-icon>
             </button>
           </td>
         </tr>
@@ -119,8 +120,9 @@
           </td>
 
           <td *ngIf="executive.formulaName && executive.positiveState !== null && executive.negativeState !== null">
-            <button mat-button class="view-btn" (click)="showIsFormulaUsedChangeCard()">
-              <mat-icon matTooltip='Zmień automatyczne sterowanie'>edit</mat-icon>
+            <button mat-button class="view-btn" (click)="showIsFormulaUsedChangeCard()"
+                    matTooltip='Zmień automatyczne sterowanie'>
+              <mat-icon>edit</mat-icon>
             </button>
           </td>
         </tr>
@@ -129,8 +131,9 @@
           <td class="header">Nazwa formuły:</td>
           <td><b>{{executive.formulaName ? executive.formulaName : 'Brak formuły'}}</b></td>
           <td>
-            <button mat-button class="view-btn" (click)="showFormulaChangeCard()">
-              <mat-icon matTooltip='Zmień formułę sterującą'>edit</mat-icon>
+            <button mat-button class="view-btn" (click)="showFormulaChangeCard()"
+                    matTooltip='Zmień formułę sterującą'>
+              <mat-icon>edit</mat-icon>
             </button>
           </td>
         </tr>
@@ -139,8 +142,9 @@
           <td class="header">Stan gdy formuła spełniona:</td>
           <td><b>{{executive.positiveState}}</b></td>
           <td>
-            <button mat-button class="view-btn" (click)="showPositiveStateChangeCard()">
-              <mat-icon matTooltip='Zmień stan gdy formuła spełniona'>edit</mat-icon>
+            <button mat-button class="view-btn" (click)="showPositiveStateChangeCard()"
+                    matTooltip='Zmień stan gdy formuła spełniona'>
+              <mat-icon>edit</mat-icon>
             </button>
           </td>
         </tr>
@@ -149,8 +153,9 @@
           <td class="header">Stan gdy formuła niespełniona:</td>
           <td><b>{{executive.negativeState}}</b></td>
           <td>
-            <button mat-button class="view-btn" (click)="showNegativeStateChangeCard()">
-              <mat-icon matTooltip='Zmień stan gdy formuła niespełniona'>edit</mat-icon>
+            <button mat-button class="view-btn" (click)="showNegativeStateChangeCard()"
+                    matTooltip='Zmień stan gdy formuła niespełniona'>
+              <mat-icon>edit</mat-icon>
             </button>
           </td>
         </tr>

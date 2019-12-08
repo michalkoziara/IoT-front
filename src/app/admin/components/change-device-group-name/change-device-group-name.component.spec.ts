@@ -10,7 +10,7 @@ describe('ChangeDeviceGroupNameComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ ChangeDeviceGroupNameComponent ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

@@ -1,6 +1,9 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Subscription} from 'rxjs';
-import {AdminViewCommunicationService} from '../../services/admin-view-communication.service';
+import {AdminViewCommunicationService} from '../../services/adminViewCommunicationService/admin-view-communication.service';
+import {ProductKeyApiService} from '../../services/apiService/product-key-api.service';
+import {SensorService} from '../../services/sensorService/sensor.service';
+import {DeviceService} from '../../services/deviceService/device.service';
 
 @Component({
   selector: 'app-admin-inner-toolbar',
@@ -8,12 +11,36 @@ import {AdminViewCommunicationService} from '../../services/admin-view-communica
   styleUrls: ['./admin-inner-toolbar.component.scss']
 })
 export class AdminInnerToolbarComponent implements OnInit, OnDestroy {
+  productKey: string;
+  deviceGroupName: string;
+  productKeyApiSubscription: Subscription;
+
+  selectedSensor: string | null;
+  selectedSensorSubscription: Subscription;
+
+  selectedDevice: string | null;
+  selectedDeviceSubscription: Subscription;
+
 
   currentView: string | null;
   currentViewSubscription: Subscription;
 
-  constructor(private viewCommunicationService: AdminViewCommunicationService) {
-    this.currentView = null;
+  constructor(private viewCommunicationService: AdminViewCommunicationService,
+              private productKeyApiService: ProductKeyApiService,
+              private sensorsService: SensorService,
+              private deviceService: DeviceService) {
+    this.productKeyApiSubscription = new Subscription();
+
+    this.productKey = '';
+    this.deviceGroupName = '';
+
+    this.selectedSensor = null;
+    this.selectedSensorSubscription = new Subscription();
+
+    this.selectedDevice = null;
+    this.selectedDeviceSubscription = new Subscription();
+
+    this.currentView = '';
     this.currentViewSubscription = new Subscription();
   }
 
@@ -23,10 +50,27 @@ export class AdminInnerToolbarComponent implements OnInit, OnDestroy {
         this.currentView = x;
       }
     );
+
+    this.productKeyApiSubscription = this.productKeyApiService.getDeviceGroup().subscribe(data => {
+      if (data.length > 0) {
+        this.productKey = data[0].productKey;
+        this.deviceGroupName = data[0].name;
+      }
+    });
+
+    this.selectedSensorSubscription = this.sensorsService.selectedSensor$.subscribe(
+      x => this.selectedSensor = x
+    );
+
+    this.selectedDeviceSubscription = this.deviceService.selectedExecutive$.subscribe(
+      x => this.selectedDevice = x
+    );
   }
 
   ngOnDestroy(): void {
+    this.productKeyApiSubscription.unsubscribe();
     this.currentViewSubscription.unsubscribe();
+    this.selectedSensorSubscription.unsubscribe();
+    this.selectedDeviceSubscription.unsubscribe();
   }
-
 }

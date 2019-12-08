@@ -5,9 +5,7 @@ import {environment} from '../../../../environments/environment';
 import {catchError, retry} from 'rxjs/operators';
 import {UserGroupInList} from '../../models/user-group-in-list';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class UserGroupApiService {
 
   httpOptions = {
