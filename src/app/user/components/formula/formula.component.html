@@ -77,14 +77,16 @@
           </tr>
 
           <tr>
-            <td class="header">Reguła spełnienia formuły:</td>
+            <td class="header">Reguła formuły:</td>
             <td class="formula" *ngIf="formulaDisplay === 'showMathDisplay'">
               <ng-container [ngTemplateOutlet]="complexFormulaTemplate"
                             [ngTemplateOutletContext]="{$implicit: formula.rule.sensorRule}"></ng-container>
             </td>
             <td class="formula-text" *ngIf="formulaDisplay === 'showTextDisplay'">
+              <b>Reguła jest spełniona, </b>
               <ng-container [ngTemplateOutlet]="complexFormulaTextTemplate"
                             [ngTemplateOutletContext]="{$implicit: formula.rule.sensorRule}"></ng-container>
+              <b>.</b>
             </td>
           </tr>
         </ng-container>
@@ -95,34 +97,39 @@
 
 <ng-template #complexFormulaTextTemplate let-rule>
   <b>
+    <ng-container *ngIf="rule.isNegated && !rule.operator">gdy nieprawdą jest, że czujnik o nazwie</ng-container>
+    <ng-container *ngIf="!rule.isNegated">jeżeli czujnik o nazwie</ng-container>
     <ng-container *ngIf="rule.deviceKey">
-      Jeżeli czujnik o nazwie
-      {{sensorNamesByDeviceKey.get(rule.deviceKey)}}
-      przyjmuje stan
+      <b class="color-primary"> {{sensorNamesByDeviceKey.get(rule.deviceKey)}}</b>
+
       <ng-container [ngSwitch]="rule.functor">
-        <ng-container *ngSwitchCase="'=>'"> większy równy od</ng-container>
-        <ng-container *ngSwitchCase="'<='"> mniejszy równy od</ng-container>
-        <ng-container *ngSwitchCase="'=='"> równy</ng-container>
-        <ng-container *ngSwitchCase="'!='"> nierówny</ng-container>
+        <ng-container *ngSwitchCase="'=>'"> przyjmuje stan równy lub większy od</ng-container>
+        <ng-container *ngSwitchCase="'<='"> przyjmuje stan równy lub mniejszy od</ng-container>
+        <ng-container *ngSwitchCase="'=='"> przyjmuje stan</ng-container>
+        <ng-container *ngSwitchCase="'!='"> nie przyjmuje stanu</ng-container>
+
       </ng-container>
-      <ng-container *ngIf="rule.value === true"> alternatywny</ng-container>
-      <ng-container *ngIf="rule.value === false"> podstawowy</ng-container>
-      <ng-container *ngIf="rule.value !== true && rule.value !== false"> {{rule.value}}</ng-container>
+      <b *ngIf="rule.value === true" class="color-primary"> alternatywny</b>
+      <b *ngIf="rule.value === false" class="color-primary"> podstawowy</b>
+      <b *ngIf="rule.value !== true && rule.value !== false" class="color-primary"> {{rule.value}}</b>
     </ng-container>
-    <ng-container *ngIf="rule.operator">(</ng-container>
+
+    <ng-container *ngIf="rule.operator">gdy zdania (</ng-container>
     <ng-container *ngIf="rule.complexLeft"
                   [ngTemplateOutlet]="complexFormulaTextTemplate"
                   [ngTemplateOutletContext]="{$implicit: rule.complexLeft}"></ng-container>
+
     <ng-container [ngSwitch]="rule.operator">
       <ng-container *ngSwitchCase="'and'"><br> i <br></ng-container>
       <ng-container *ngSwitchCase="'or'"><br> lub <br></ng-container>
     </ng-container>
+
     <ng-container *ngIf="rule.complexRight"
                   [ngTemplateOutlet]="complexFormulaTextTemplate"
                   [ngTemplateOutletContext]="{$implicit: rule.complexRight}"></ng-container>
+
     <ng-container *ngIf="rule.operator">)</ng-container>
-    <ng-container *ngIf="rule.isNegated && rule.operator"> łącznie</ng-container>
-    <ng-container *ngIf="rule.isNegated"> nie jest spełnione</ng-container>
+    <ng-container *ngIf="rule.isNegated && rule.operator"> łącznie są nieprawdziwe</ng-container>
   </b>
 </ng-template>
 
@@ -130,6 +137,7 @@
   <b>
     <ng-container *ngIf="rule.isNegated"> ¬</ng-container>
     <ng-container *ngIf="rule.isNegated && !rule.operator">(</ng-container>
+
     <ng-container *ngIf="rule.deviceKey">{{sensorNamesByDeviceKey.get(rule.deviceKey)}}
       <ng-container [ngSwitch]="rule.functor">
         <ng-container *ngSwitchCase="'=>'"> ≥</ng-container>
@@ -137,16 +145,24 @@
         <ng-container *ngSwitchCase="'=='"> =</ng-container>
         <ng-container *ngSwitchCase="'!='"> ≠</ng-container>
       </ng-container>
-      {{rule.value}}</ng-container>
+
+      <b *ngIf="rule.value === true" class="color-primary"> alternatywny</b>
+      <b *ngIf="rule.value === false" class="color-primary"> podstawowy</b>
+      <b *ngIf="rule.value !== true && rule.value !== false" class="color-primary"> {{rule.value}}</b>
+    </ng-container>
+
     <ng-container *ngIf="rule.isNegated && !rule.operator">)</ng-container>
     <ng-container *ngIf="rule.operator">(</ng-container>
+
     <ng-container *ngIf="rule.complexLeft"
                   [ngTemplateOutlet]="complexFormulaTemplate"
                   [ngTemplateOutletContext]="{$implicit: rule.complexLeft}"></ng-container>
+
     <ng-container [ngSwitch]="rule.operator">
       <ng-container *ngSwitchCase="'and'"> ∧</ng-container>
       <ng-container *ngSwitchCase="'or'"> ∨</ng-container>
     </ng-container>
+
     <ng-container *ngIf="rule.complexRight"
                   [ngTemplateOutlet]="complexFormulaTemplate"
                   [ngTemplateOutletContext]="{$implicit: rule.complexRight}"></ng-container>
