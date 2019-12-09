@@ -155,6 +155,8 @@ export class ExecutiveComponent implements OnInit, OnDestroy {
           this.selectedFormula = data.formulaName;
           this.executive = data;
 
+          this.userGroupsService.changeSelectedUserGroup(data.deviceUserGroup);
+
           this.executiveTypesApiService.getExecutiveType(this.productKey, data.deviceTypeName).subscribe(
             typeData => {
               if (typeData.stateType) {

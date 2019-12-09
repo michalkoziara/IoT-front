@@ -124,4 +124,9 @@ export class SideNavComponent implements OnInit, OnDestroy {
   getExecutiveList(): void {
     this.viewCommunicationService.changeCurrentView('executivesInUserGroup');
   }
+
+  getFormulaList(): void {
+    this.viewCommunicationService.changeCurrentView('formulasInUserGroup');
+  }
+
 }

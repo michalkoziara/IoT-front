@@ -119,6 +119,8 @@
           <td class="header">Automatyczne sterowanie:</td>
           <td *ngIf="!executive.formulaName || executive.positiveState === null || executive.negativeState === null">
             <b class="non-configured-text">Nieskonfigurowane</b>
+          </td>
+          <td *ngIf="!executive.formulaName || executive.positiveState === null || executive.negativeState === null">
             <mat-icon
               color="primary"
               matTooltip="Aby skonfigurować automatyczne sterowanie należy wybrać formułę sterującą oraz stan przyjęty gdy formuła spełniona i niespełniona">
@@ -140,11 +142,18 @@
         <tr>
           <td class="header">Nazwa formuły:</td>
           <td><b>{{executive.formulaName ? executive.formulaName : 'Brak formuły'}}</b></td>
-          <td>
+          <td *ngIf="executive && executive.deviceUserGroup !== null">
             <button mat-button class="view-btn" (click)="showFormulaChangeCard()"
                     matTooltip='Zmień formułę sterującą'>
               <mat-icon>edit</mat-icon>
             </button>
+          </td>
+          <td *ngIf="executive && executive.deviceUserGroup === null">
+            <mat-icon
+              color="primary"
+              matTooltip="Aby wybrać formułę sterującą należy dodać urządzenie do grupy użytkowników do której należy formuła">
+              info
+            </mat-icon>
           </td>
         </tr>
 

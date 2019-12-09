@@ -167,6 +167,8 @@ export class SensorComponent implements OnInit, OnDestroy {
             }
             this.selectedUserGroup = data.sensorUserGroup;
             this.sensor = data;
+
+            this.userGroupsService.changeSelectedUserGroup(data.sensorUserGroup);
           }
         );
     }

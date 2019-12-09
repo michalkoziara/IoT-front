@@ -12,6 +12,8 @@ import {MatSnackBar} from '@angular/material/snack-bar';
 export class FormulaComponent implements OnInit {
   formula: Formula | null;
   sensorNamesByDeviceKey: Map<string, string>;
+  formulaDisplay = 'showTextDisplay';
+  activeDays: string[] = [];
 
   @Input()
   productKey: string;
@@ -44,6 +46,29 @@ export class FormulaComponent implements OnInit {
     ).subscribe(
       data => {
         this.formula = data;
+
+        if (data.rule.datetimeRule) {
+          this.activeDays = data.rule.datetimeRule.days
+            .split(',')
+            .map(dayNumber => {
+              if (dayNumber === '0') {
+                return 'Poniedziałek';
+              } else if (dayNumber === '1') {
+                return 'Wtorek';
+              } else if (dayNumber === '2') {
+                return 'Środa';
+              } else if (dayNumber === '3') {
+                return 'Czwartek';
+              } else if (dayNumber === '4') {
+                return 'Piątek';
+              } else if (dayNumber === '5') {
+                return 'Sobota';
+              } else {
+                return 'Niedziela';
+              }
+            }
+            );
+        }
 
         this.sensorsApiService.getSensors(this.productKey, this.userGroupName).subscribe(
           sensorsData => {

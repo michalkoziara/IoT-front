@@ -2,79 +2,135 @@
   <div *ngSwitchCase="'deviceGroupList'">Urządzenia główne</div>
   <div *ngSwitchCase="'addNewDeviceGroup'">Dodaj urządzenie główne</div>
   <div *ngSwitchCase="'userGroupAssignedToList'" fxLayoutAlign="center center">
+    Grupy urządzeń
+    <mat-icon>arrow_forward_ios</mat-icon>
     {{selectedDeviceGroup}}
     <mat-icon>arrow_forward_ios</mat-icon>
     Grupy użytkowników
   </div>
   <div *ngSwitchCase="'sensorsInUserGroup'" fxLayoutAlign="center center">
+    Grupy urządzeń
+    <mat-icon>arrow_forward_ios</mat-icon>
     {{selectedDeviceGroup}}
+    <mat-icon>arrow_forward_ios</mat-icon>
+    Grupy użytkowników
     <mat-icon>arrow_forward_ios</mat-icon>
     {{selectedUserGroup}}
     <mat-icon>arrow_forward_ios</mat-icon>
     Sensory
   </div>
   <div *ngSwitchCase="'executivesInUserGroup'" fxLayoutAlign="center center">
+    Grupy urządzeń
+    <mat-icon>arrow_forward_ios</mat-icon>
     {{selectedDeviceGroup}}
+    <mat-icon>arrow_forward_ios</mat-icon>
+    Grupy użytkowników
     <mat-icon>arrow_forward_ios</mat-icon>
     {{selectedUserGroup}}
     <mat-icon>arrow_forward_ios</mat-icon>
     Urządzenia
   </div>
   <div *ngSwitchCase="'formulasInUserGroup'" fxLayoutAlign="center center">
+    Grupy urządzeń
+    <mat-icon>arrow_forward_ios</mat-icon>
     {{selectedDeviceGroup}}
+    <mat-icon>arrow_forward_ios</mat-icon>
+    Grupy użytkowników
     <mat-icon>arrow_forward_ios</mat-icon>
     {{selectedUserGroup}}
     <mat-icon>arrow_forward_ios</mat-icon>
     Formuły
   </div>
   <div *ngSwitchCase="'joiningUserGroupsInDevice'" fxLayoutAlign="center center">
+    Grupy urządzeń
+    <mat-icon>arrow_forward_ios</mat-icon>
     {{selectedDeviceGroup}}
     <mat-icon>arrow_forward_ios</mat-icon>
     Dostępne grupy użytkowników
   </div>
   <div *ngSwitchCase="'listUnassignedExecutives'" fxLayoutAlign="center center">
+    Grupy urządzeń
+    <mat-icon>arrow_forward_ios</mat-icon>
     {{selectedDeviceGroup}}
     <mat-icon>arrow_forward_ios</mat-icon>
     Dostępne nieprzypisane urządzenia
   </div>
   <div *ngSwitchCase="'listUnassignedSensors'" fxLayoutAlign="center center">
+    Grupy urządzeń
+    <mat-icon>arrow_forward_ios</mat-icon>
     {{selectedDeviceGroup}}
     <mat-icon>arrow_forward_ios</mat-icon>
     Dostępne nieprzypisane czujniki
   </div>
   <div *ngSwitchCase="'createUserGroup'" fxLayoutAlign="center center">
+    Grupy urządzeń
+    <mat-icon>arrow_forward_ios</mat-icon>
     {{selectedDeviceGroup}}
     <mat-icon>arrow_forward_ios</mat-icon>
     Stwórz grupę użytkowników
   </div>
   <div *ngSwitchCase="'joiningUserGroup'" fxLayoutAlign="center center">
+    Grupy urządzeń
+    <mat-icon>arrow_forward_ios</mat-icon>
     {{selectedDeviceGroup}}
     <mat-icon>arrow_forward_ios</mat-icon>
     Dołącz do grupy użytkowników
   </div>
   <div *ngSwitchCase="'showSensor'" fxLayoutAlign="center center">
+    Grupy urządzeń
+    <mat-icon>arrow_forward_ios</mat-icon>
     {{selectedDeviceGroup}}
-    <mat-icon *ngIf="selectedUserGroup !== null">arrow_forward_ios</mat-icon>
-    <div *ngIf="selectedUserGroup !== null">{{selectedUserGroup}}</div>
+    <mat-icon>arrow_forward_ios</mat-icon>
+    <ng-container *ngIf="selectedUserGroup !== null">
+      Grupy użytkowników
+      <mat-icon>arrow_forward_ios</mat-icon>
+      {{selectedUserGroup}}
+      <mat-icon>arrow_forward_ios</mat-icon>
+      Czujniki
+    </ng-container>
+    <ng-container *ngIf="selectedUserGroup === null">
+      Dostępne nieprzypisane czujniki
+    </ng-container>
     <mat-icon>arrow_forward_ios</mat-icon>
     {{selectedSensorName}}
   </div>
   <div *ngSwitchCase="'showExecutive'" fxLayoutAlign="center center">
+    Grupy urządzeń
+    <mat-icon>arrow_forward_ios</mat-icon>
     {{selectedDeviceGroup}}
-    <mat-icon *ngIf="selectedUserGroup !== null">arrow_forward_ios</mat-icon>
-    <div *ngIf="selectedUserGroup !== null">{{selectedUserGroup}}</div>
+    <mat-icon>arrow_forward_ios</mat-icon>
+    <ng-container *ngIf="selectedUserGroup !== null">
+      Grupy użytkowników
+      <mat-icon>arrow_forward_ios</mat-icon>
+      {{selectedUserGroup}}
+      <mat-icon>arrow_forward_ios</mat-icon>
+      Urządzenia
+    </ng-container>
+    <ng-container *ngIf="selectedUserGroup === null">
+      Dostępne nieprzypisane urządzenia
+    </ng-container>
     <mat-icon>arrow_forward_ios</mat-icon>
     {{selectedExecutiveName}}
   </div>
   <div *ngSwitchCase="'showFormula'" fxLayoutAlign="center center">
+    Grupy urządzeń
+    <mat-icon>arrow_forward_ios</mat-icon>
     {{selectedDeviceGroup}}
     <mat-icon>arrow_forward_ios</mat-icon>
+    Grupy użytkowników
+    <mat-icon>arrow_forward_ios</mat-icon>
     {{selectedUserGroup}}
+    <mat-icon>arrow_forward_ios</mat-icon>
+    Formuły
     <mat-icon>arrow_forward_ios</mat-icon>
     {{selectedFormula}}
   </div>
   <div *ngSwitchCase="'addFormula'" fxLayoutAlign="center center">
+    Grupy urządzeń
+    <mat-icon>arrow_forward_ios</mat-icon>
     {{selectedDeviceGroup}}
+    <mat-icon>arrow_forward_ios</mat-icon>
+    Grupy użytkowników
     <mat-icon>arrow_forward_ios</mat-icon>
     {{selectedUserGroup}}
     <mat-icon>arrow_forward_ios</mat-icon>

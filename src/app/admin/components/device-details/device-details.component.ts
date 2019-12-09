@@ -151,11 +151,11 @@ export class DeviceDetailsComponent implements OnInit, OnDestroy {
           }
 
           if (data.defaultState === true) {
-            data.defaultState = 'Tak';
+            data.defaultState = 'Alternatywny';
           }
 
           if (data.defaultState === false) {
-            data.defaultState = 'Nie';
+            data.defaultState = 'Podstawowy';
           }
 
           this.selectedUserGroup = data.deviceUserGroup;
@@ -250,7 +250,6 @@ export class DeviceDetailsComponent implements OnInit, OnDestroy {
     if (newDeviceType && this.executive) {
       newState = this.executive.defaultState;
 
-      newFormula = null;
       newPositiveState = null;
       newNegativeState = null;
       newIsFormulaUsed = false;

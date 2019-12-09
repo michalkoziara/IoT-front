@@ -74,6 +74,14 @@ export class ExecutiveTypeComponent implements OnInit {
           }
         }
 
+        if (data.defaultState === true) {
+          data.defaultState = 'Alternatywny';
+        }
+
+        if (data.defaultState === false) {
+          data.defaultState = 'Podstawowy';
+        }
+
         this.executiveType = data;
       }
     );
