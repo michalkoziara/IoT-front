@@ -105,7 +105,7 @@ export class AddFormulaComponent {
       const formulaName = (this.formulaFormGroup.get('nameCtrl') as AbstractControl).value;
 
       let datetimeRule = null;
-      // let sensorRule = null;
+      const sensorRule = null;
 
       if (this.isTimeRuleCreatorVisible) {
         const formattedDays = this.selectableDays
