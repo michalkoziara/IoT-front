@@ -3,14 +3,17 @@ mat-card {
   padding: 50px;
   display: inline-flex;
 
+  mat-card-header {
+    margin-bottom: 20px;
+  }
+
   tr {
     td {
       padding-bottom: 30px;
 
       .view-btn {
         height: 24px;
-        width: 24px;
-        padding: 0;
+        padding: 0 5px;
         margin: 0;
         line-height: 0;
       }
@@ -48,10 +51,6 @@ mat-card {
 .user-group-card {
   height: fit-content;
 
-  mat-card-header {
-    margin-bottom: 20px;
-  }
-
   .btn-block {
     margin: 5px;
     width: 100%;
@@ -60,10 +59,6 @@ mat-card {
 
 .state-card {
   height: fit-content;
-
-  mat-card-header {
-    margin-bottom: 20px;
-  }
 
   mat-slide-toggle {
     margin-bottom: 20px;
@@ -77,10 +72,6 @@ mat-card {
 
 .formula-card {
   height: fit-content;
-
-  mat-card-header {
-    margin-bottom: 20px;
-  }
 
   .btn-block {
     margin: 5px;

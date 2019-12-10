@@ -15,11 +15,32 @@ mat-card {
         margin: 0;
         line-height: 0;
       }
+    }
 
+    .displayFormulaBtnGroup {
+      width: fit-content;
+    }
+
+    mat-button-toggle-group {
+      margin-left: 12px;
+
+      mat-button-toggle ::ng-deep .mat-button-toggle-label-content {
+        line-height: 10px !important;
+      }
+
+      .mat-button-toggle-checked {
+        background-color: rgb(63, 81, 181);
+        color: white;
+      }
+    }
+
+    .formula {
+      font-size: 18px;
     }
 
     .formula-text {
       font-size: 18px;
+      text-align: center;
     }
 
     .header {
@@ -32,4 +53,8 @@ mat-card {
       border-width: 2px;
     }
   }
+}
+
+.color-primary {
+  color: rgb(63, 81, 181);
 }

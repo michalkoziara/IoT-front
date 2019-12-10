@@ -4,11 +4,9 @@ import {Observable, throwError} from 'rxjs';
 import {environment} from '../../../../environments/environment';
 import {catchError, retry} from 'rxjs/operators';
 import {Sensor} from '../../models/sensor';
-import {SensorDetails} from '../../models/SensorDetails';
+import {SensorDetails} from '../../models/sensor-details';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class SensorApiService {
   httpOptions = {
     headers: new HttpHeaders({
@@ -41,6 +39,20 @@ export class SensorApiService {
     return this.http
       .post<object>(`${environment.apiUrl}/hubs/${productKey}/sensors`,
         requestData,
+        this.httpOptions)
+      .pipe(
+        retry(1),
+        catchError(this.handleError)
+      );
+  }
+
+  modifySensor(
+    changedSensor: { name: string; typeName: string; userGroupName: string | null },
+    productKey: string,
+    deviceKey: string): Observable<object> {
+    return this.http
+      .put<object>(`${environment.apiUrl}/hubs/${productKey}/sensors/${deviceKey}`,
+        changedSensor,
         this.httpOptions)
       .pipe(
         retry(1),

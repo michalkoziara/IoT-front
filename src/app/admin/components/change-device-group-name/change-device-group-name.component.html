@@ -1,22 +1,30 @@
-<div class="change-device-group-name-wrapper" fxLayout="row" fxLayoutAlign="center center">
+<div fxLayout="row" fxFlexFill fxLayoutAlign="center">
+  <mat-card>
+    <section>
+      <mat-progress-bar *ngIf="progressBar"
+                        [color]="'primary'"
+                        [mode]="'indeterminate'">
+      </mat-progress-bar>
+    </section>
 
-  <mat-card class="box">
     <mat-card-header>
-      <mat-card-title>Nazwa grupy urządzeń</mat-card-title>
+      Zmień nazwę grupy urządzeń
     </mat-card-header>
 
-    <form class="form">
+    <form fxLayout="column" [formGroup]="nameFormGroup">
       <mat-card-content>
-        <mat-form-field class="full-width">
-          <input matInput placeholder="Nazwa grupy urządzeń" [formControl]="nameFormControl" value = "{{deviceGroupName}}">
-          <mat-error *ngIf="nameFormControl.hasError('required')">
+        <mat-form-field>
+          <input matInput placeholder="Nazwa grupy urządzeń" formControlName="nameCtrl"
+                 value="{{deviceGroupName}}">
+          <mat-error *ngIf="nameFormGroup.get('nameCtrl').hasError('required')">
             Nazwa grupy jest <strong>wymagana</strong>
           </mat-error>
         </mat-form-field>
 
       </mat-card-content>
-      <button mat-stroked-button color="accent" class="btn-block" (click)="onChangeName()">Zmień nazwę</button>
+      <button mat-stroked-button color="accent" class="btn-block" (click)="onChangeName()"
+              [disabled]="!nameFormGroup.valid">Zmień nazwę
+      </button>
     </form>
   </mat-card>
-
 </div>

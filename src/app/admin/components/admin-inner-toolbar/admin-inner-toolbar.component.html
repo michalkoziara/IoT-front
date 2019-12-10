@@ -1,2 +1,12 @@
-<mat-toolbar color="primary">
+<mat-toolbar [ngSwitch]="currentView" color="primary">
+  <div *ngSwitchCase="'userGroupList'">Grupy użytkowników</div>
+  <div *ngSwitchCase="'unconfiguredList'">Nieskonfigurowane urządzenia</div>
+  <div *ngSwitchCase="'devicesList'">Urządzenia</div>
+  <div *ngSwitchCase="'sensorsList'">Czujniki</div>
+  <div *ngSwitchCase="'executiveTypesList'">Typy urządzeń</div>
+  <div *ngSwitchCase="'sensorTypesList'">Typy czujników</div>
+  <div *ngSwitchCase="'changeDeviceGroupName'">Zmień nazwę grupy urządzeń</div>
+  <div *ngSwitchCase="'addDevice'">Dodaj nowe urządzenie</div>
+  <div *ngSwitchCase="'addSensor'">Dodaj nowy czujnik</div>
+  <div *ngSwitchDefault>Strona domowa</div>
 </mat-toolbar>

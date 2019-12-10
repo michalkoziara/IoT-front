@@ -1,0 +1,80 @@
+<div fxLayout="row" fxFlexFill fxLayoutAlign="center">
+  <mat-card>
+    <section>
+      <mat-progress-bar *ngIf="progressBar"
+                        [color]="'primary'"
+                        [mode]="'indeterminate'">
+      </mat-progress-bar>
+    </section>
+    <mat-card-header>Dodaj typ czujnika</mat-card-header>
+    <mat-card-content>
+      <form fxLayout="column" [formGroup]="sensorTypeFormGroup">
+        <mat-form-field>
+          <mat-label>Bazowy rodzaj czujnika</mat-label>
+          <mat-select [(value)]="selectedType" (selectionChange)="changeSelectedType($event.value)">
+            <ng-container *ngFor="let typeName of ['Liczbowy', 'Wyliczeniowy', 'Logiczny']">
+              <mat-option [value]="typeName">{{typeName}}</mat-option>
+            </ng-container>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput placeholder="Nazwa" formControlName="nameCtrl" required>
+          <mat-error *ngIf="!sensorTypeFormGroup.valid">
+            Nazwa jest <b>wymagana</b>
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field *ngIf="selectedType === 'Liczbowy'">
+          <input matInput placeholder="Minimalna wartość" type='number' formControlName="minValueCtrl" required
+                 (keyup)="populateMinValue($event.target.value)">
+          <mat-error *ngIf="!sensorTypeFormGroup.valid">
+            Podaj poprawną wartość
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field *ngIf="selectedType === 'Liczbowy'">
+          <input matInput placeholder="Maksymalna wartość" type='number' formControlName="maxValueCtrl" required
+                 (keyup)="populateMaxValue($event.target.value)">
+          <mat-error *ngIf="!sensorTypeFormGroup.valid">
+            Podaj poprawną wartość
+          </mat-error>
+        </mat-form-field>
+        <ng-container *ngIf="selectedType === 'Wyliczeniowy' && sensorTypeFormGroup.get('nameCtrl').value !== null">
+          <mat-divider [inset]="true"></mat-divider>
+
+          <p>Dodaj możliwe odczyty do tworzonego typu</p>
+          <div fxLayout="row">
+            <mat-form-field fxFlex>
+              <input matInput placeholder="Nowy odczyt" formControlName="readingEnumCtrl">
+              <mat-error *ngIf="!sensorTypeFormGroup.valid">
+                Podaj poprawną wartość
+              </mat-error>
+            </mat-form-field>
+            <button mat-stroked-button color="accent" class="add-reading-button" (click)="addEnumReading()"
+                    [disabled]="sensorTypeFormGroup.get('readingEnumCtrl').value === null">
+              Utwórz nowy odczyt
+            </button>
+          </div>
+          <mat-divider [inset]="true"></mat-divider>
+
+          <div *ngIf="listOfEnumReadings.length > 0" fxLayout="row">
+            <p fxFlex>Możliwe odczyty tworzonego typu czujnika:</p>
+            <button mat-button class="delete-btn" (click)="deleteEnumReadings()"
+                    matTooltip='Usuń zaznaczone odczyty z listy'>
+              <mat-icon>delete</mat-icon>
+            </button>
+          </div>
+          <mat-selection-list #enumReadings (selectionChange)="changeSelectedList($event.source)">
+            <mat-list-option [value]="readings.number" *ngFor="let readings of listOfEnumReadings">
+              {{readings.text}}
+            </mat-list-option>
+          </mat-selection-list>
+        </ng-container>
+        <button mat-stroked-button color="accent" class="add-button" (click)="createSensorType()"
+                [disabled]="!sensorTypeFormGroup.valid
+                || selectedType === null
+                || (selectedType === 'Wyliczeniowy' && listOfEnumReadings.length === 0 )">
+          Dodaj typ czujnika
+        </button>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>

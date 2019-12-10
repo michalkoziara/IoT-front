@@ -15,8 +15,9 @@
     <ng-container matColumnDef="sensor">
       <th mat-header-cell *matHeaderCellDef mat-sort-header> Czujniki</th>
       <td mat-cell *matCellDef="let element" class="td-btn">
-        <button mat-button class="action-btn" (click)="sensorsClicked(element.name)">
-          <mat-icon matTooltip='Wyświetl listę czujników w grupie użytkowników'>settings_input_antenna</mat-icon>
+        <button mat-button class="action-btn" (click)="sensorsClicked(element.name)"
+                matTooltip='Wyświetl listę czujników w grupie użytkowników'>
+          <mat-icon>settings_input_antenna</mat-icon>
         </button>
       </td>
     </ng-container>
@@ -24,8 +25,9 @@
     <ng-container matColumnDef="executive">
       <th mat-header-cell *matHeaderCellDef mat-sort-header> Urządzenia</th>
       <td mat-cell *matCellDef="let element" class="td-btn">
-        <button mat-button class="action-btn" (click)="executivesClicked(element.name)">
-          <mat-icon matTooltip='Wyświetl listę urządzeń w grupie użytkowników'>power</mat-icon>
+        <button mat-button class="action-btn" (click)="executivesClicked(element.name)"
+                matTooltip='Wyświetl listę urządzeń w grupie użytkowników'>
+          <mat-icon>power</mat-icon>
         </button>
       </td>
     </ng-container>
@@ -33,8 +35,9 @@
     <ng-container matColumnDef="formula">
       <th mat-header-cell *matHeaderCellDef mat-sort-header> Formuły</th>
       <td mat-cell *matCellDef="let element" class="td-btn">
-        <button mat-button class="action-btn" (click)="formulasClicked(element.name)">
-          <mat-icon matTooltip='Wyświetl listę formuł w grupie użytkowników'>functions</mat-icon>
+        <button mat-button class="action-btn" (click)="formulasClicked(element.name)"
+                matTooltip='Wyświetl listę formuł w grupie użytkowników'>
+          <mat-icon>functions</mat-icon>
         </button>
       </td>
     </ng-container>
@@ -46,7 +49,6 @@
   <mat-paginator [pageSize]="10"
                  [pageSizeOptions]="[5, 10, 25, 100]">
   </mat-paginator>
-
 </mat-card>
 
 <div fxFlex fxLayout="column">

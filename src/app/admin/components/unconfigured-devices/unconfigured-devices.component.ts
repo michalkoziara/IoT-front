@@ -47,6 +47,7 @@ export class UnconfiguredDevicesComponent implements OnInit {
         disableClear: false
       });
       this.dataSource.sort = this.sort;
+      this.dataSource.paginator = this.paginator;
     });
   }
 

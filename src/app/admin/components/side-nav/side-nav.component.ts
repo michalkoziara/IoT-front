@@ -1,7 +1,6 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {AdminWelcomeService} from '../../services/adminWelcomeService/admin-welcome.service';
 import {Subscription} from 'rxjs';
-import {AdminViewCommunicationService} from '../../services/admin-view-communication.service';
+import {AdminViewCommunicationService} from '../../services/adminViewCommunicationService/admin-view-communication.service';
 
 @Component({
   selector: 'app-admin-side-nav',
@@ -12,8 +11,7 @@ export class SideNavComponent implements OnInit, OnDestroy {
   currentView: string | null;
   currentViewSubscription: Subscription;
 
-  constructor(private welcomeService: AdminWelcomeService,
-              private viewCommunicationService: AdminViewCommunicationService) {
+  constructor(private viewCommunicationService: AdminViewCommunicationService) {
     this.currentView = null;
     this.currentViewSubscription = new Subscription();
   }
@@ -62,14 +60,8 @@ export class SideNavComponent implements OnInit, OnDestroy {
     this.viewCommunicationService.changeCurrentView('sensorTypesList');
   }
 
-  changeDeviceGroupName() {
+  changeDeviceGroupName(): void {
     this.closeChildren();
     this.viewCommunicationService.changeCurrentView('changeDeviceGroupName');
   }
-
-  deleteDeviceGroup() {
-    this.closeChildren();
-    this.viewCommunicationService.changeCurrentView('deleteDeviceGroup');
-  }
-
 }

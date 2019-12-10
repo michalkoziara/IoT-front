@@ -1,12 +1,12 @@
 import {TestBed} from '@angular/core/testing';
 
-import {AdminWelcomeService} from './admin-welcome.service';
+import {FormulaApiService} from './formula-api.service';
 
-describe('AdminWelcomeService', () => {
+describe('FormulaApiService', () => {
   beforeEach(() => TestBed.configureTestingModule({}));
 
   it('should be created', () => {
-    const service: AdminWelcomeService = TestBed.get(AdminWelcomeService);
+    const service: FormulaApiService = TestBed.get(FormulaApiService);
     expect(service).toBeTruthy();
   });
 });

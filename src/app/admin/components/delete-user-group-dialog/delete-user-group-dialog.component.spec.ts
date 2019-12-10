@@ -10,7 +10,7 @@ describe('DeleteUserGroupDialogComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ DeleteUserGroupDialogComponent ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

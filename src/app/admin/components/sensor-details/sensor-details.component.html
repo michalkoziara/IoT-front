@@ -1,10 +1,16 @@
-<div fxLayout="row" fxFlexFill fxLayoutAlign="center">
+<div fxLayout="row" fxFlexFill>
   <mat-card>
     <mat-card-content>
       <table *ngIf="sensor">
         <tr>
           <td class="header">Nazwa:</td>
           <td><b>{{sensor.name}}</b></td>
+          <td>
+            <button mat-button class="edit-btn" (click)="showNameChangeCard()"
+                    matTooltip='Zmień nazwę czujnika'>
+              <mat-icon>edit</mat-icon>
+            </button>
+          </td>
         </tr>
 
         <tr>
@@ -26,13 +32,22 @@
         <tr>
           <td class="header">Typ:</td>
           <td><b>{{sensor.sensorTypeName}}</b></td>
+          <td>
+            <button mat-button class="edit-btn" (click)="showSensorTypeChangeCard()"
+                    matTooltip='Zmień typ czujnika'>
+              <mat-icon>edit</mat-icon>
+            </button>
+          </td>
         </tr>
 
         <tr>
           <td class="header">Grupa użytkowników:</td>
           <td><b>{{sensor.isAssigned ? sensor.sensorUserGroup : 'Brak grupy'}}</b></td>
           <td>
-            <mat-icon>edit</mat-icon>
+            <button mat-button class="edit-btn" (click)="showUserGroupChangeCard()"
+                    matTooltip='Zmień grupę użytkowników czujnika'>
+              <mat-icon>edit</mat-icon>
+            </button>
           </td>
         </tr>
 
@@ -54,4 +69,59 @@
       </table>
     </mat-card-content>
   </mat-card>
+
+  <div fxLayout="column">
+    <mat-card class='change-card' *ngIf="isUserGroupChangeCardVisible">
+      <mat-card-content fxLayout="column">
+        <mat-card-header>Zmień grupę użytkowników do której należy czujnik</mat-card-header>
+        <mat-form-field>
+          <mat-label>Nazwa grupy</mat-label>
+          <mat-select [(value)]="selectedUserGroup">
+            <mat-option *ngFor="let userGroup of userGroups" [value]="userGroup.name">{{userGroup.name}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <button mat-stroked-button color="accent" class="btn-block" (click)="changeUserGroup()">
+          Zmień grupę użytkowników
+        </button>
+        <button mat-stroked-button color="primary" class="btn-block" (click)="deleteUserGroup()">
+          Usuń z grupy użytkowników
+        </button>
+      </mat-card-content>
+    </mat-card>
+  </div>
+
+  <div fxLayout="column">
+    <mat-card class='change-card' *ngIf="isSensorTypeChangeCardVisible">
+      <mat-card-header>Zmień typ czujnika</mat-card-header>
+      <mat-card-content fxLayout="column">
+        <mat-form-field>
+          <mat-label>Nazwa typu czujnika</mat-label>
+          <mat-select [(value)]="selectedSensorType">
+            <mat-option *ngFor="let sensorType of sensorTypes" [value]="sensorType">{{sensorType}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <button mat-stroked-button color="accent" class="btn-block" (click)="changeSensorType()">
+          Zmień typ
+        </button>
+      </mat-card-content>
+    </mat-card>
+  </div>
+
+  <div fxLayout="column">
+    <mat-card class='change-card' fxLayout="column" *ngIf="isNameChangeCardVisible && sensor">
+      <mat-card-header>Zmień nazwę czujnika</mat-card-header>
+      <mat-card-content fxLayout="column" fxLayoutAlign="center">
+        <form fxLayout="column" [formGroup]="nameFormGroup">
+          <mat-form-field>
+            <input matInput placeholder="Nowa nazwa" [value]="sensor.name" formControlName="nameCtrl" required>
+          </mat-form-field>
+        </form>
+        <button mat-stroked-button color="accent" class="btn-block" (click)="changeName()"
+                [disabled]="!nameFormGroup.valid">
+          Zmień nazwę
+        </button>
+      </mat-card-content>
+    </mat-card>
+  </div>
 </div>
+

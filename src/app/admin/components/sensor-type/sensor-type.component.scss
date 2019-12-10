@@ -2,12 +2,9 @@ mat-card {
   margin: 50px;
 }
 
-.add-device-card {
-  height: 125px;
-}
-
 .table-card {
   width: 700px;
+  height: fit-content;
 
   mat-form-field {
     font-size: 14px;
@@ -39,5 +36,26 @@ mat-card {
         }
       }
     }
+  }
+}
+
+.details-card {
+  margin: 50px;
+  padding: 50px;
+  display: inline-flex;
+  height: fit-content;
+
+  td {
+    padding-bottom: 30px;
+  }
+
+  .header {
+    text-align: right;
+    padding-right: 10px;
+  }
+
+  mat-divider {
+    position: static;
+    border-width: 2px;
   }
 }

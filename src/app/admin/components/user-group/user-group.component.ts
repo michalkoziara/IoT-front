@@ -50,6 +50,7 @@ export class UserGroupComponent implements OnInit {
         disableClear: false
       });
       this.dataSource.sort = this.sort;
+      this.dataSource.paginator = this.paginator;
     });
   }
 
@@ -59,11 +60,12 @@ export class UserGroupComponent implements OnInit {
 
       if (result === true) {
         this.userGroupApi.deleteUserGroup(this.productKey, userGroupName).pipe().subscribe(
-          data => {
-            console.log('User group was deleted');
+          () => {
+            this.snackBar.open(`Grupa użytkowników ${userGroupName} została usunięta`, undefined, {duration: 3000});
+            this.loadUserGroupsInList();
           },
-          error => {
-            this.snackBar.open('Wystąpił błąd poczas usuwania grupy urządzeń spróbuj ponownie', undefined, {duration: 2000});
+          () => {
+            this.snackBar.open('Wystąpił błąd poczas usuwania grupy urządzeń spróbuj ponownie', undefined, {duration: 3000});
           }
         );
       }

@@ -32,8 +32,9 @@
           <td class="header">Grupa użytkowników:</td>
           <td><b>{{sensor.isAssigned ? sensor.sensorUserGroup : 'Brak grupy'}}</b></td>
           <td>
-            <button mat-button class="view-btn" (click)="showUserGroupChangeCard()">
-              <mat-icon matTooltip='Zmień grupę użytkowników urządzenia'>edit</mat-icon>
+            <button mat-button class="view-btn" (click)="showUserGroupChangeCard()"
+                    matTooltip='Zmień grupę użytkowników czujnika'>
+              <mat-icon>edit</mat-icon>
             </button>
           </td>
         </tr>
@@ -59,6 +60,7 @@
 
   <div fxLayout="column">
     <mat-card class='user-group-card' *ngIf="isUserGroupChangeCardVisible">
+      <mat-card-header>Zmień grupę użytkowników do której należy czujnik</mat-card-header>
       <mat-card-content fxLayout="column">
         <mat-form-field>
           <mat-label>Nazwa grupy</mat-label>

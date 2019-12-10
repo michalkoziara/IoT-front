@@ -20,14 +20,11 @@
   <app-sensor-type *ngSwitchCase="'sensorTypesList'"
                    [productKey]="productKey"></app-sensor-type>
 
-  <app-delete-device-group *ngSwitchCase="'deleteDeviceGroup'"
-                           [productKey]="productKey"></app-delete-device-group>
-
-  <app-sensor-details *ngSwitchCase="'sensorDetails'"
+  <app-sensor-details *ngSwitchCase="'showSensor'"
                       [productKey]="productKey"
                       [deviceKey]="selectedSensor"></app-sensor-details>
 
-  <app-device-details *ngSwitchCase="'deviceDetails'"
+  <app-device-details *ngSwitchCase="'showDevice'"
                       [productKey]="productKey"
                       [deviceKey]="selectedDevice"></app-device-details>
 
@@ -40,7 +37,13 @@
                   [productKey]="productKey"></app-add-sensor>
 
   <app-add-executive *ngSwitchCase="'addDevice'"
-                  [productKey]="productKey"></app-add-executive>
+                     [productKey]="productKey"></app-add-executive>
+
+  <app-add-executive-type *ngSwitchCase="'addExecutiveType'"
+                          [productKey]="productKey"></app-add-executive-type>
+
+  <app-add-sensor-type *ngSwitchCase="'addSensorType'"
+                          [productKey]="productKey"></app-add-sensor-type>
 
   <app-admin-start-card *ngSwitchDefault></app-admin-start-card>
 </div>

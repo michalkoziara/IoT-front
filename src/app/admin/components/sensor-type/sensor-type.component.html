@@ -1,34 +1,91 @@
-<mat-card class="table-card">
-  <mat-form-field>
-    <input matInput
-           (keyup)="applyFilter($event.target.value)"
-           placeholder="Filtr">
-  </mat-form-field>
+<div fxLayout="row">
+  <mat-card class="table-card">
+    <mat-form-field>
+      <input matInput
+             (keyup)="applyFilter($event.target.value)"
+             placeholder="Filtr">
+    </mat-form-field>
 
-  <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
+    <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
 
-    <ng-container matColumnDef="name">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> Nazwa</th>
-      <td mat-cell *matCellDef="let element"> {{element.name}}</td>
-    </ng-container>
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Nazwa</th>
+        <td mat-cell *matCellDef="let element"> {{element.name}}</td>
+      </ng-container>
 
-    <ng-container matColumnDef="actions">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> Modyfikuj</th>
-      <td mat-cell *matCellDef="let element" class="td-btn">
-        <button mat-button class="group-btn" (click)="deleteExecutiveType(element.name)">
-          <mat-icon>settings</mat-icon>
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Szczegóły</th>
+        <td mat-cell *matCellDef="let element" class="td-btn">
+          <button mat-button class="group-btn" (click)="viewSensorType(element.name)"
+                  matTooltip='Sprawdź szczegóły i modyfikuj typ czujnika'>
+            <mat-icon>zoom_in</mat-icon>
+          </button>
+        </td>
+      </ng-container>
+
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+
+    <mat-paginator [pageSize]="10"
+                   [pageSizeOptions]="[5, 10, 25, 100]">
+    </mat-paginator>
+
+  </mat-card>
+
+  <div fxLayout="column" fxFlex>
+    <mat-card class="details-card" *ngIf="sensorType">
+      <mat-card-content>
+        <table>
+          <tr>
+            <td>Nazwa typu czujnika:</td>
+            <b>
+              <td>{{sensorType.name}}</td>
+            </b>
+          </tr>
+          <tr>
+            <td colspan="2">
+              <mat-divider></mat-divider>
+            </td>
+          </tr>
+          <tr>
+            <td>Typ bazowy:</td>
+            <b>
+              <td>{{sensorType.readingType}}</td>
+            </b>
+          </tr>
+          <tr *ngIf="sensorType.readingType === 'Liczbowy'">
+            <td>Minimalna wartość:</td>
+            <b>
+              <td>{{sensorType.rangeMin}}</td>
+            </b>
+          </tr>
+          <tr *ngIf="sensorType.readingType === 'Liczbowy'">
+            <td>Maksymalna wartość:</td>
+            <b>
+              <td>{{sensorType.rangeMax}}</td>
+            </b>
+          </tr>
+          <tr *ngIf="sensorType.readingType === 'Wyliczeniowy'">
+            <td>Dostępne wartości:</td>
+            <b>
+              <td>
+                <div *ngFor="let enumType of sensorType.enumerator">{{enumType.text}}</div>
+              </td>
+            </b>
+          </tr>
+        </table>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card>
+      <mat-card-content fxLayout="column" fxLayoutAlign="center center">
+        <p>Dodaj nowy typ czujnika</p>
+        <button mat-stroked-button color="accent" class="btn-block" (click)="addSensorType()">
+          Dodaj typ czujnika
         </button>
-      </td>
-    </ng-container>
-
-
-    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-  </table>
-
-  <mat-paginator [pageSize]="10"
-                 [pageSizeOptions]="[5, 10, 25, 100]">
-  </mat-paginator>
-
-</mat-card>
-
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>

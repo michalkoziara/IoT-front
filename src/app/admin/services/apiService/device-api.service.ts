@@ -6,9 +6,7 @@ import {catchError, retry} from 'rxjs/operators';
 import {Devices} from '../../models/devices';
 import {DeviceDetails} from '../../models/device-details';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class DeviceApiService {
   httpOptions = {
     headers: new HttpHeaders({
@@ -29,6 +27,29 @@ export class DeviceApiService {
 
   getExecutive(productKey: string, deviceKey: string): Observable<DeviceDetails> {
     return this.http.get<DeviceDetails>(`${environment.apiUrl}/hubs/${productKey}/executive-devices/${deviceKey}`)
+      .pipe(
+        retry(1),
+        catchError(this.handleError)
+      );
+  }
+
+  putExecutive(
+    changedExecutive: {
+      name: string;
+      typeName: string;
+      state: string | boolean | number;
+      positiveState: string | boolean | number | null;
+      negativeState: string | boolean | number | null;
+      formulaName: string | null;
+      userGroupName: string | null;
+      isFormulaUsed: boolean;
+    },
+    productKey: string,
+    deviceKey: string): Observable<object> {
+    return this.http
+      .post<object>(`${environment.apiUrl}/hubs/${productKey}/executive-devices/${deviceKey}`,
+        changedExecutive,
+        this.httpOptions)
       .pipe(
         retry(1),
         catchError(this.handleError)
@@ -56,8 +77,6 @@ export class DeviceApiService {
         catchError(this.handleError)
       );
   }
-
-
 
   handleError(error: {
     error: ErrorEvent;

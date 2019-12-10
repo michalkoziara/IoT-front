@@ -24,11 +24,13 @@
             <mat-icon>power</mat-icon>
             Urządzenia
           </button>
-        </div>
-        <div *ngIf="selectedUserGroup !== null">
           <button mat-flat-button (click)="getSensorList()">
             <mat-icon>settings_input_antenna</mat-icon>
             Czujniki
+          </button>
+          <button mat-flat-button (click)="getFormulaList()">
+            <mat-icon>functions</mat-icon>
+            Formuły
           </button>
           <mat-divider></mat-divider>
         </div>

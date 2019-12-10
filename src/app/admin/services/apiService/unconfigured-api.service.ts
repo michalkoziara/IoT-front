@@ -4,9 +4,7 @@ import {Observable, throwError} from 'rxjs';
 import {environment} from '../../../../environments/environment';
 import {catchError, retry} from 'rxjs/operators';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class UnconfiguredApiService {
 
   httpOptions = {
@@ -18,8 +16,8 @@ export class UnconfiguredApiService {
   constructor(private http: HttpClient) {
   }
 
-  getUnconfigured(productKey: string): Observable<[string]> {
-    return this.http.get<[string]>(`${environment.apiUrl}/hubs/${productKey}/non-configured-devices`)
+  getUnconfigured(productKey: string): Observable<string[]> {
+    return this.http.get<string[]>(`${environment.apiUrl}/hubs/${productKey}/non-configured-devices`)
       .pipe(
         retry(1),
         catchError(this.handleError)

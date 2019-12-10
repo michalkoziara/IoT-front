@@ -1,0 +1,98 @@
+<div fxLayout="row" fxFlexFill fxLayoutAlign="center">
+  <mat-card>
+    <section>
+      <mat-progress-bar *ngIf="progressBar"
+                        [color]="'primary'"
+                        [mode]="'indeterminate'">
+      </mat-progress-bar>
+    </section>
+    <mat-card-header>Dodaj typ urządzenia</mat-card-header>
+    <mat-card-content>
+      <form fxLayout="column" [formGroup]="executiveTypeFormGroup">
+        <mat-form-field>
+          <mat-label>Bazowy rodzaj urządzenia</mat-label>
+          <mat-select [(value)]="selectedType" (selectionChange)="changeSelectedType($event.value)">
+            <ng-container *ngFor="let typeName of ['Liczbowy', 'Wyliczeniowy', 'Logiczny']">
+              <mat-option [value]="typeName">{{typeName}}</mat-option>
+            </ng-container>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput placeholder="Nazwa" formControlName="nameCtrl" required>
+          <mat-error *ngIf="!executiveTypeFormGroup.valid">
+            Nazwa jest <b>wymagana</b>
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field *ngIf="selectedType === 'Liczbowy'">
+          <input matInput placeholder="Minimalna wartość" type='number' formControlName="minValueCtrl" required
+                 (keyup)="populateMinValue($event.target.value)">
+          <mat-error *ngIf="!executiveTypeFormGroup.valid">
+            Podaj poprawną wartość
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field *ngIf="selectedType === 'Liczbowy'">
+          <input matInput placeholder="Maksymalna wartość" type='number' formControlName="maxValueCtrl" required
+                 (keyup)="populateMaxValue($event.target.value)">
+          <mat-error *ngIf="!executiveTypeFormGroup.valid">
+            Podaj poprawną wartość
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field *ngIf="selectedType === 'Liczbowy' && maxNumberValue && minNumberValue">
+          <input matInput placeholder="Stan domyślny" type='number' formControlName="defaultNumberValueCtrl" required>
+          <mat-error *ngIf="!executiveTypeFormGroup.valid">
+            Podaj poprawną wartość
+          </mat-error>
+        </mat-form-field>
+        <ng-container *ngIf="selectedType === 'Logiczny'">
+          <mat-slide-toggle (change)="changeDefaultBoolean($event.checked)">Stan domyślny</mat-slide-toggle>
+        </ng-container>
+        <ng-container *ngIf="selectedType === 'Wyliczeniowy' && executiveTypeFormGroup.get('nameCtrl').value !== null">
+          <mat-divider [inset]="true"></mat-divider>
+
+          <p>Dodaj możliwe stany do tworzonego typu</p>
+          <div fxLayout="row">
+            <mat-form-field fxFlex>
+              <input matInput placeholder="Nowy stan" formControlName="stateEnumCtrl">
+              <mat-error *ngIf="!executiveTypeFormGroup.valid">
+                Podaj poprawną wartość
+              </mat-error>
+            </mat-form-field>
+            <button mat-stroked-button color="accent" class="add-state-button" (click)="addEnumState()"
+                    [disabled]="executiveTypeFormGroup.get('stateEnumCtrl').value === null">
+              Utwórz nowy stan
+            </button>
+          </div>
+          <mat-divider [inset]="true"></mat-divider>
+
+          <div *ngIf="listOfEnumStates.length > 0" fxLayout="row">
+            <p fxFlex>Możliwe stany tworzonego typu urządzenia:</p>
+            <button mat-button class="delete-btn" (click)="deleteEnumStates()"
+                    matTooltip='Usuń zaznaczone stany z listy'>
+              <mat-icon>delete</mat-icon>
+            </button>
+          </div>
+          <mat-selection-list #enumStates (selectionChange)="changeSelectedList($event.source)">
+            <mat-list-option [value]="state.number" *ngFor="let state of listOfEnumStates">
+              {{state.text}}
+            </mat-list-option>
+          </mat-selection-list>
+
+          <mat-form-field *ngIf="listOfEnumStates.length > 0">
+            <mat-label>Stan domyślny</mat-label>
+            <mat-select [(value)]="defaultEnumValue">
+              <ng-container *ngFor="let enumState of listOfEnumStates">
+                <mat-option [value]="enumState.number">{{enumState.text}}</mat-option>
+              </ng-container>
+            </mat-select>
+          </mat-form-field>
+        </ng-container>
+        <button mat-stroked-button color="accent" class="add-button" (click)="createExecutiveType()"
+                [disabled]="!executiveTypeFormGroup.valid
+                || selectedType === null
+                || (selectedType === 'Wyliczeniowy' && (listOfEnumStates.length === 0 || defaultEnumValue === null))">
+          Dodaj typ urządzenia
+        </button>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>

@@ -3,11 +3,11 @@ import {MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
 import {Sensor} from '../../models/sensor';
 import {SensorApiService} from '../../services/apiService/sensor-api.service';
 import {Subscription} from 'rxjs';
-import {AdminViewCommunicationService} from '../../services/admin-view-communication.service';
+import {AdminViewCommunicationService} from '../../services/adminViewCommunicationService/admin-view-communication.service';
 import {SensorService} from '../../services/sensorService/sensor.service';
-import {DeleteUserGroupDialogComponent} from "../delete-user-group-dialog/delete-user-group-dialog.component";
-import {MatSnackBar} from "@angular/material/snack-bar";
-import {MatDialog} from "@angular/material/dialog";
+import {MatSnackBar} from '@angular/material/snack-bar';
+import {MatDialog} from '@angular/material/dialog';
+import {DeleteSensorDialogComponent} from '../delete-sensor-dialog/delete-sensor-dialog.component';
 
 @Component({
   selector: 'app-sensors',
@@ -66,25 +66,21 @@ export class SensorsComponent implements OnInit {
         disableClear: false
       });
       this.dataSource.sort = this.sort;
+      this.dataSource.paginator = this.paginator;
     });
   }
 
-  modifySensor(deviceKey: string): void {
-    this.sensorsService.changeSelectedSensor(deviceKey);
-    this.viewCommunicationService.changeCurrentView('sensorDetails');
-  }
-
   deleteSensor(deviceKey: string): void {
-    const dialogRef = this.dialog.open(DeleteUserGroupDialogComponent);
+    const dialogRef = this.dialog.open(DeleteSensorDialogComponent);
     dialogRef.afterClosed().subscribe(result => {
-
       if (result === true) {
         this.sensorApiService.deleteSensor(this.productKey, deviceKey).pipe().subscribe(
-          data => {
-            console.log('sensor was deleted');
+          () => {
+            this.snackBar.open('Czujnik został usunięty', undefined, {duration: 3000});
+            this.loadSenorsInList();
           },
-          error => {
-            this.snackBar.open('Wystąpił błąd poczas usuwania czujnika spróbuj ponownie', undefined, {duration: 2000});
+          () => {
+            this.snackBar.open('Wystąpił błąd poczas usuwania czujnika spróbuj ponownie', undefined, {duration: 3000});
           }
         );
       }
