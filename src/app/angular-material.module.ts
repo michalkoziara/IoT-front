@@ -26,12 +26,15 @@ import {
   MatTableModule,
   MatToolbarModule,
   MatTooltipModule,
-  MatButtonToggleModule
+  MatButtonToggleModule,
 } from '@angular/material';
+
+import {DragDropModule} from '@angular/cdk/drag-drop';
 
 @NgModule({
   imports: [
     CommonModule,
+    DragDropModule,
     MatCardModule,
     MatButtonModule,
     MatToolbarModule,
@@ -59,6 +62,7 @@ import {
     MatButtonToggleModule
   ],
   exports: [
+    DragDropModule,
     MatButtonModule,
     MatCardModule,
     MatToolbarModule,

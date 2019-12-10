@@ -25,14 +25,14 @@
 
           <tr>
             <td class="header">Godzina rozpoczęcia:</td>
-            <td><b>{{formula.rule.datetimeRule.datetimeStart | date:'HH:mm:ss'}}</b></td>
+            <td><b>{{formula.rule.datetimeRule.datetimeStart | date:'HH:mm:ss':'UTC'}}</b></td>
           </tr>
 
           <tr>
             <td class="header">Godzina zakończenia:</td>
             <td>
               <b>
-                {{formula.rule.datetimeRule.datetimeEnd | date:'HH:mm:ss'}}
+                {{formula.rule.datetimeRule.datetimeEnd | date:'HH:mm:ss':'UTC'}}
                 <ng-container *ngIf="formula.rule.datetimeRule.datetimeEnd < formula.rule.datetimeRule.datetimeStart">
                   następnego dnia
                 </ng-container>

@@ -1,12 +1,13 @@
 export class Formula {
   name: string;
   rule: {
-    sensorRule: ComplexFormula;
-    datetimeRule: DatetimeRule;
+    sensorRule: ComplexFormula | null;
+    datetimeRule: DatetimeRule | null;
     operator: string;
   };
 
-  constructor(name: string, rule: { sensorRule: ComplexFormula; datetimeRule: DatetimeRule; operator: string }) {
+
+  constructor(name: string, rule: { sensorRule: ComplexFormula | null; datetimeRule: DatetimeRule | null; operator: string }) {
     this.name = name;
     this.rule = rule;
   }
