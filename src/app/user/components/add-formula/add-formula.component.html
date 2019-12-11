@@ -168,7 +168,7 @@
               </tr>
             </table>
 
-            <div fxLayout="row" fxLayoutAlign="start start" *ngIf="sensorName && comparisonSign && sensorType &&
+            <div fxLayout="row" fxLayoutAlign="start start" *ngIf="sensorName !== null && comparisonSign !== null && sensorType !== null &&
               (selectedBooleanSensorValue !== null && sensorType.readingType === 'Boolean')
               || (selectedEnumerator && sensorType.readingType === 'Enum')
               || (selectedDecimalSensorValue !== null && sensorType.readingType === 'Decimal')">
@@ -180,15 +180,15 @@
                   <b class="color-primary"> {{sensorName}}</b>
                   {{comparisonSign}}
                   <b class="color-primary"
-                     *ngIf="sensorType.readingType === 'Boolean' && selectedBooleanSensorValue === true">
+                     *ngIf="sensorType !== null && sensorType.readingType === 'Boolean' && selectedBooleanSensorValue === true">
                     alternatywny</b>
                   <b class="color-primary"
-                     *ngIf="sensorType.readingType === 'Boolean' && selectedBooleanSensorValue === false">
+                     *ngIf="sensorType !== null && sensorType.readingType === 'Boolean' && selectedBooleanSensorValue === false">
                     podstawowy</b>
                   <b class="color-primary"
-                     *ngIf="sensorType.readingType === 'Enum' && selectedEnumerator"> {{selectedEnumerator}}</b>
+                     *ngIf="sensorType !== null && sensorType.readingType === 'Enum' && selectedEnumerator"> {{selectedEnumerator}}</b>
                   <b class="color-primary"
-                     *ngIf="sensorType.readingType === 'Decimal' && selectedDecimalSensorValue !== null"> {{selectedDecimalSensorValue}}</b>.
+                     *ngIf="sensorType !== null && sensorType.readingType === 'Decimal' && selectedDecimalSensorValue !== null"> {{selectedDecimalSensorValue}}</b>.
                 </b>
               </div>
 
