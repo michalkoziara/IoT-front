@@ -27,7 +27,7 @@ export class DatetimeRule {
 
 export class ComplexFormula {
   isNegated: boolean | null;
-  value: string | null;
+  value: string | number | boolean | null;
   functor: string | null;
   deviceKey: string | null;
   complexLeft: ComplexFormula | null;
@@ -36,7 +36,7 @@ export class ComplexFormula {
 
   constructor(
     isNegated: boolean | null,
-    value: string | null,
+    value: string | number | boolean | null,
     functor: string | null,
     deviceKey: string | null,
     complexLeft: ComplexFormula | null,

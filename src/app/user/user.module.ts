@@ -43,6 +43,7 @@ import 'moment/locale/pl';
 import {FormulaComponent} from './components/formula/formula.component';
 import {FormulasService} from './services/formulasService/formulas.service';
 import {AddFormulaComponent} from './components/add-formula/add-formula.component';
+import {SensorTypeApiService} from './services/apiService/sensor-type-api.service';
 
 @NgModule({
   declarations: [
@@ -84,6 +85,7 @@ import {AddFormulaComponent} from './components/add-formula/add-formula.componen
     UserGroupsService,
     SensorsApiService,
     SensorsService,
+    SensorTypeApiService,
     ExecutivesApiService,
     ExecutiveTypesApiService,
     ExecutivesService,

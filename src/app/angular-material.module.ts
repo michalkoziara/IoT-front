@@ -27,6 +27,7 @@ import {
   MatToolbarModule,
   MatTooltipModule,
   MatButtonToggleModule,
+  MatCheckboxModule
 } from '@angular/material';
 
 import {DragDropModule} from '@angular/cdk/drag-drop';
@@ -59,7 +60,8 @@ import {DragDropModule} from '@angular/cdk/drag-drop';
     MatProgressBarModule,
     MatExpansionModule,
     MatSlideToggleModule,
-    MatButtonToggleModule
+    MatButtonToggleModule,
+    MatCheckboxModule
   ],
   exports: [
     DragDropModule,
@@ -86,7 +88,8 @@ import {DragDropModule} from '@angular/cdk/drag-drop';
     MatProgressBarModule,
     MatExpansionModule,
     MatSlideToggleModule,
-    MatButtonToggleModule
+    MatButtonToggleModule,
+    MatCheckboxModule
   ],
   providers: [
     MatDatepickerModule,

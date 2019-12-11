@@ -1,10 +1,12 @@
 .card-container {
   padding: 50px;
+  width: fit-content;
 }
 
 mat-card {
   padding: 50px;
   min-width: 350px;
+  width: fit-content;
 
   section {
     display: flex;
@@ -53,9 +55,28 @@ mat-card {
   }
 }
 
+.add-rule-button {
+  height: fit-content;
+  width: fit-content;
+  margin: 3px 3px 3px 15px;
+}
+
+.color-primary {
+  color: rgb(63, 81, 181);
+}
+
+.rule-selector {
+  margin: 15px;
+
+  td {
+    min-width: 190px;
+  }
+}
+
 .drag-boundary {
   border: solid #ccc 2px;
   min-height: 700px;
+  width: fit-content;
   padding: 3px;
 }
 

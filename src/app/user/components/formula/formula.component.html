@@ -98,7 +98,7 @@
 <ng-template #complexFormulaTextTemplate let-rule>
   <b>
     <ng-container *ngIf="rule.isNegated && !rule.operator">gdy nieprawdą jest, że czujnik o nazwie</ng-container>
-    <ng-container *ngIf="!rule.isNegated">jeżeli czujnik o nazwie</ng-container>
+    <ng-container *ngIf="!rule.isNegated && !rule.operator">jeżeli czujnik o nazwie</ng-container>
     <ng-container *ngIf="rule.deviceKey">
       <b class="color-primary"> {{sensorNamesByDeviceKey.get(rule.deviceKey)}}</b>
 
@@ -130,6 +130,7 @@
 
     <ng-container *ngIf="rule.operator">)</ng-container>
     <ng-container *ngIf="rule.isNegated && rule.operator"> łącznie są nieprawdziwe</ng-container>
+    <ng-container *ngIf="!rule.isNegated && rule.operator"> są prawdziwe</ng-container>
   </b>
 </ng-template>
 

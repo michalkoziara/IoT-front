@@ -49,13 +49,26 @@
 
           <mat-card-subtitle>Aktywna w dni tygodnia:</mat-card-subtitle>
           <div>
-            <mat-button-toggle-group name=" daysPicker" multiple>
+            <mat-button-toggle-group name="daysPicker" multiple>
               <mat-button-toggle *ngFor="let day of selectableDays" [value]="day"
                                  (change)="day.selected = !day.selected"
                                  [checked]="day.selected">{{day.name}}</mat-button-toggle>
             </mat-button-toggle-group>
           </div>
         </ng-container>
+
+        <div *ngIf="isLogicRuleCreatorVisible && isTimeRuleCreatorVisible">
+          <mat-card-subtitle>Operator logiczny pomiędzy okresem czasu i regułą:</mat-card-subtitle>
+
+          <mat-button-toggle-group #group="matButtonToggleGroup" [(value)]="mainOperator">
+            <mat-button-toggle value="or">
+              LUB
+            </mat-button-toggle>
+            <mat-button-toggle value="and">
+              I
+            </mat-button-toggle>
+          </mat-button-toggle-group>
+        </div>
 
         <button mat-stroked-button color="accent" class="btn-block" (click)="changeLogicRule()"
                 *ngIf="!isLogicRuleCreatorVisible">
@@ -72,6 +85,122 @@
               </button>
             </div>
           </mat-card-title>
+          <mat-card-subtitle>
+            1. Należy utworzyć fragmenty reguły wykorzystująć poniższe opcje
+          </mat-card-subtitle>
+
+          <div class="rule-selector" fxLayout="column" fxLayoutAlign="start start">
+            <table>
+              <tr>
+                <th>Reguła zanegowana?</th>
+                <th>Nazwa czujnika</th>
+                <th>Operator porównania</th>
+                <th>Wartość czujnika</th>
+              </tr>
+              <tr>
+                <td>
+                  <div fxLayout="column" fxLayoutAlign="center center">
+                    <mat-checkbox [checked]="isNegated" (change)="toggleIsNegated($event.checked)"></mat-checkbox>
+                  </div>
+                </td>
+                <td>
+                  <mat-form-field fxLayout="column" fxLayoutAlign="center center">
+                    <mat-select [(value)]="sensorName" (selectionChange)="sensorSelectionChanged($event.value)">
+                      <mat-option *ngFor="let sensor of sensors" [value]="sensor">{{sensor}}</mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </td>
+                <td>
+                  <ng-container *ngIf="sensorType">
+                    <mat-form-field *ngIf="sensorType.readingType === 'Decimal'" fxLayout="column"
+                                    fxLayoutAlign="center center">
+                      <mat-select [(value)]="comparisonSign">
+                        <mat-option
+                          *ngFor="let comparison of
+                        ['przyjmuje stan',
+                        'nie przyjmuje stanu',
+                        'przyjmuje stan równy lub większy od',
+                        'przyjmuje stan równy lub mniejszy od']"
+                          [value]="comparison">{{comparison}}</mat-option>
+                      </mat-select>
+                    </mat-form-field>
+                    <mat-form-field *ngIf="sensorType.readingType !== 'Decimal'" fxLayout="column"
+                                    fxLayoutAlign="center center">
+                      <mat-select [(value)]="comparisonSign">
+                        <mat-option
+                          *ngFor="let comparison of
+                        ['przyjmuje stan',
+                        'nie przyjmuje stanu']"
+                          [value]="comparison">{{comparison}}</mat-option>
+                      </mat-select>
+                    </mat-form-field>
+                  </ng-container>
+                </td>
+                <td>
+                  <ng-container *ngIf="sensorType">
+                    <ng-container *ngIf="sensorType.readingType === 'Decimal'">
+                      <form>
+                        <mat-form-field fxLayout="column" fxLayoutAlign="center center">
+                          <input matInput type="number" placeholder="Wartość odczytu" [formControl]="sensorValueControl"
+                                 (keyup)="setDecimalSensorValue()">
+                        </mat-form-field>
+                      </form>
+                    </ng-container>
+                    <ng-container *ngIf="sensorType.readingType === 'Enum'">
+                      <mat-form-field fxLayout="column" fxLayoutAlign="center center">
+                        <mat-select [(value)]="selectedEnumerator">
+                          <mat-option *ngFor="let enumerator of enumerators"
+                                      [value]="enumerator">
+                            {{enumerator}}
+                          </mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                    </ng-container>
+                    <ng-container *ngIf="sensorType.readingType === 'Boolean'">
+                      <div fxLayout="column" fxLayoutAlign="center center">
+                        <mat-slide-toggle [(ngModel)]="selectedBooleanSensorValue"
+                                          (change)="onChangeBooleanSensorValue($event.checked)">
+                        </mat-slide-toggle>
+                      </div>
+                    </ng-container>
+                  </ng-container>
+                </td>
+              </tr>
+            </table>
+
+            <div fxLayout="row" fxLayoutAlign="start start" *ngIf="sensorName && comparisonSign && sensorType &&
+              (selectedBooleanSensorValue !== null && sensorType.readingType === 'Boolean')
+              || (selectedEnumerator && sensorType.readingType === 'Enum')
+              || (selectedDecimalSensorValue !== null && sensorType.readingType === 'Decimal')">
+              <div fxLayout="column">
+                <mat-card-subtitle>Obecnie tworzony fragment reguły</mat-card-subtitle>
+                <b fxFlex>
+                  <ng-container *ngIf="isNegated">Gdy nieprawdą jest, że czujnik o nazwie</ng-container>
+                  <ng-container *ngIf="!isNegated">Jeżeli czujnik o nazwie</ng-container>
+                  <b class="color-primary"> {{sensorName}}</b>
+                  {{comparisonSign}}
+                  <b class="color-primary"
+                     *ngIf="sensorType.readingType === 'Boolean' && selectedBooleanSensorValue === true">
+                    alternatywny</b>
+                  <b class="color-primary"
+                     *ngIf="sensorType.readingType === 'Boolean' && selectedBooleanSensorValue === false">
+                    podstawowy</b>
+                  <b class="color-primary"
+                     *ngIf="sensorType.readingType === 'Enum' && selectedEnumerator"> {{selectedEnumerator}}</b>
+                  <b class="color-primary"
+                     *ngIf="sensorType.readingType === 'Decimal' && selectedDecimalSensorValue !== null"> {{selectedDecimalSensorValue}}</b>.
+                </b>
+              </div>
+
+              <button mat-stroked-button color="accent" class="add-rule-button" (click)="addRule()">
+                Utwórz fragment reguły
+              </button>
+            </div>
+          </div>
+
+          <mat-card-subtitle>
+            2. Należy wykorzystać uprzednio stworzone fragmenty do utworzenia reguły w kreatorze reguł
+          </mat-card-subtitle>
 
           <div cdkDropListGroup class="drag-boundary" fxLayout="row">
 
@@ -83,6 +212,7 @@
                   cdkDropList
                   #ruleFragmentList="cdkDropList"
                   [id]="'ruleFragmentList'"
+                  [cdkDropListConnectedTo]="cdkDropTrackLists"
                   [cdkDropListData]="ruleFragmentListData"
                   class="drag-list"
                   (cdkDropListDropped)="dropBasic($event)">
@@ -100,6 +230,7 @@
                   cdkDropList
                   #basicList="cdkDropList"
                   [id]="'basicList'"
+                  [cdkDropListConnectedTo]="cdkDropTrackLists"
                   [cdkDropListData]="basicListData"
                   class="drag-list"
                   (cdkDropListDropped)="dropBasic($event)">
@@ -117,20 +248,26 @@
               <h3>Kreator reguły</h3>
 
               <ng-container [ngTemplateOutlet]="ruleCreator"
-                            [ngTemplateOutletContext]="{$implicit: []}"></ng-container>
+                            [ngTemplateOutletContext]="{$implicit:
+                            ruleFragmentData === null
+                            ? createRuleFragmentData(null, null)
+                            : ruleFragmentData}">
+              </ng-container>
 
-              <ng-template #ruleCreator let-arrayData>
-                <div fxLayout="row">
+              <ng-template #ruleCreator let-ruleItemData>
+                <div fxLayout="row" fxLayoutAlign="start center">
                   <div class="drag-container custom-drag-container">
                     <div
                       cdkDropList
-                      [cdkDropListData]="arrayData"
+                      [cdkDropListConnectedTo]="cdkDropTrackLists"
+                      [cdkDropListData]="ruleItemData.currentData"
                       class="drag-list"
                       (cdkDropListDropped)="drop($event)">
-                      <p *ngIf="arrayData.length === 0" fxLayoutAlign="center center" class="drag-list-text">
+                      <p *ngIf="ruleItemData.currentData.length === 0" fxLayoutAlign="center center"
+                         class="drag-list-text">
                         <i>Upuść fragment reguły lub operator logiczny łączący kolejne elementy</i>
                       </p>
-                      <div class="drag-box" *ngFor="let item of arrayData" cdkDrag [cdkDragData]="item"
+                      <div class="drag-box" *ngFor="let item of ruleItemData.currentData" cdkDrag [cdkDragData]="item"
                            cdkDragBoundary=".drag-boundary">
                         <div *cdkDragPlaceholder class="drag-placeholder"><p>Test</p></div>
                         {{item}}
@@ -138,17 +275,26 @@
                     </div>
                   </div>
 
-<!--                  <div fxLayout="column">-->
-<!--                    <ng-container *ngIf="ruleListData && ruleListData.length > 0" [ngTemplateOutlet]="ruleCreator"-->
-<!--                                  [ngTemplateOutletContext]="{$implicit: []}"></ng-container>-->
-<!--                    <ng-container *ngIf="ruleListData && ruleListData.length > 0" [ngTemplateOutlet]="ruleCreator"-->
-<!--                                  [ngTemplateOutletContext]="{$implicit: []}"></ng-container>-->
-<!--                  </div>-->
+                  <div fxLayout="column" *ngIf="ruleItemData.currentData && ruleItemData.currentData.length > 0">
+                    <ng-container
+                      [ngTemplateOutlet]="ruleCreator"
+                      [ngTemplateOutletContext]="{$implicit:
+                      ruleItemData.nextRightData === null
+                      ? createRuleFragmentData(ruleItemData, true)
+                      : ruleItemData.nextRightData}">
+                    </ng-container>
+
+                    <ng-container
+                      [ngTemplateOutlet]="ruleCreator"
+                      [ngTemplateOutletContext]="{$implicit:
+                      ruleItemData.nextLeftData === null
+                      ? createRuleFragmentData(ruleItemData, false)
+                      : ruleItemData.nextLeftData}">
+                    </ng-container>
+                  </div>
                 </div>
               </ng-template>
             </div>
-
-            <div cdkDropList *ngFor="let list of lists"></div>
           </div>
         </ng-container>
 
